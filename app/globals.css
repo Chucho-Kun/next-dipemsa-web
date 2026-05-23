@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@layer components {
+  .slider-responsive {
+    @apply w-full h-35 sm:h-80 md:h-96 lg:h-104 object-cover
+  }
+}
+
 @layer base {
   :root {
     --font-jost: "Jost", system-ui, sans-serif;
@@ -21,5 +27,3 @@
     background-color: #ff5e00;
     color: white;
 }
-
-
