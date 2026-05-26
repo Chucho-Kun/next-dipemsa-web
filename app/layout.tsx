@@ -9,7 +9,8 @@ const jost = Jost({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
-  preload: true
+  preload: true,
+  adjustFontFallback: false
 });
 
 export const metadata: Metadata = {

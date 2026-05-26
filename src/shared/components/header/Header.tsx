@@ -13,9 +13,9 @@ export default function Header() {
       {/* Top Bar - Envíos Gratis */}
       <div className="banner-promo text-white font-bold text-center text-sm py-2 px-4">
         ENVÍOS GRATIS EN COMPRAS MAYORES A $5,000 MXN (aplica CDMX y Área Metropolitana) 
-        <a href="#" className="underline hover:text-orange-400 ml-1">
+        <Link href="/terminos-y-condiciones/" className="underline hover:text-orange-400 ml-1">
           Términos y Condiciones
-        </a>
+        </Link>
       </div>
 
       {/* Main Header */}
@@ -39,7 +39,7 @@ export default function Header() {
             </div>
 
             {/* Search Bar */}
-            <div className="flex-1 max-w-xl">
+            <div className="flex-1 w-full">
               <div className="relative">
                 <input
                   type="text"
@@ -141,7 +141,7 @@ export default function Header() {
       {/* Brands Bar */}
       <div className="bg-white py-3 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-center gap-6 md:gap-2 text-xs md:text-sm font-bold text-gray-600 flex-wrap">
+          <div className="hidden md:flex items-center justify-center gap-2 md:gap-2 text-xs md:text-sm font-bold text-gray-600 flex-wrap">
             <span>ARMSTRONG</span>
             <span>•</span>
             <span>CEMPANEL</span>

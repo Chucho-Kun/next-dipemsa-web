@@ -1,5 +1,6 @@
 'use client';
 
+import ProductCard from "@/src/shared/components/ProductCard";
 import Link from "next/link";
 
 export default function ContactoPage() {
