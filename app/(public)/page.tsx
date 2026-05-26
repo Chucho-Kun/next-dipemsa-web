@@ -1,3 +1,4 @@
+import CompraConNosotros from "@/src/shared/components/CompraConNosotros";
 import ProductsSection from "@/src/shared/components/ProductsSection";
 import RecommendedProducts from "@/src/shared/components/RecommendedProducts";
 import SliderMain from "@/src/shared/components/SliderMain";
@@ -21,6 +22,10 @@ export default function page() {
             </h2>
             <ProductsSection productos={productos} />  
           </div>
+        </section>
+
+        <section>
+          <CompraConNosotros />
         </section>
 
     </>

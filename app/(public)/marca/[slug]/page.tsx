@@ -1,6 +1,7 @@
+import SearchResults from "@/src/shared/components/SearchResults";
 
 export default function MarcaResultPage() {
   return (
-    <div>Pagina de Productos por Marca</div>
+    <SearchResults />
   )
 }

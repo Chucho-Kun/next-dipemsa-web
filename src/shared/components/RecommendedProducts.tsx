@@ -95,7 +95,7 @@ export default function RecommendedProducts() {
             <div className="flex gap-6 p-2">
               {productosRecomendados.map((producto) => (
                 <div key={producto.id} className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.33%] xl:flex-[0_0_25%] min-w-0">
-                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                  <div className="bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                     
                     {/* Badge */}
                     <div className="bg-[#FF5E00] text-white text-xs font-bold px-4 py-1 w-fit">
@@ -133,7 +133,7 @@ export default function RecommendedProducts() {
                         <p className="text-xs text-gray-500 mt-1">CLAVE: {producto.clave}</p>
                       </div>
 
-                      <button className="mt-5 w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3 rounded-xl transition">
+                      <button className="mt-5 w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3 transition">
                         AGREGAR AL CARRITO
                       </button>
                     </div>

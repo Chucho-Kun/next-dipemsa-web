@@ -17,7 +17,7 @@ export default function TerminosYCondicionesPage() {
           
           <h2 className="text-2xl font-bold text-gray-800 mt-10 mb-4">Envíos</h2>
           <p>
-            Envíos Gratis sólo aplican en compras mayores a <strong>$2,999 MXN</strong> 
+            Envíos Gratis sólo aplican en compras mayores a <strong>$5,000 MXN</strong> 
             (Solo aplica para CDMX y Área Metropolitana, únicamente a compras hechas en www.dipemsa.com.mx).
           </p>
           <p className="mt-4">

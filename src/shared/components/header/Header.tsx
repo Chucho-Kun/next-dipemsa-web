@@ -142,9 +142,13 @@ export default function Header() {
       <div className="bg-white py-3 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
           <div className="hidden md:flex items-center justify-center gap-2 md:gap-2 text-xs md:text-sm font-bold text-gray-600 flex-wrap">
-            <span>ARMSTRONG</span>
+            <Link href={'/marca/armstrong'}>
+              <span>ARMSTRONG</span>
+            </Link>
             <span>•</span>
-            <span>CEMPANEL</span>
+            <Link href={'/marca/cempanel'}>
+              <span>CEMPANEL</span>
+            </Link>
             <span>•</span>
             <span>DIPEMSA</span>
             <span>•</span>

@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { ProductosType } from "../types/db"
+import Link from "next/link"
 
 type Props = {
     productos: ProductosType[]
@@ -8,11 +9,12 @@ type Props = {
 export default function ProductsSection({productos}: Props) {
   return (
     <>
+      <Link href={'/categoria/aislantes'}>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 cursor-pointer">
           {productos.map((producto, index) => (
             <div
-              key={index}
-              className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+            key={index}
+            className="group bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100"
             >
               {/* Imagen */}
               <div className="relative h-48 bg-gray-200">
@@ -22,7 +24,7 @@ export default function ProductsSection({productos}: Props) {
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 768px) 100vw, 50vw"
-                />
+                  />
               </div>
 
               {/* Nombre del producto */}
@@ -34,6 +36,7 @@ export default function ProductsSection({productos}: Props) {
             </div>
           ))}
         </div>
+      </Link>
     </>
   )
 }

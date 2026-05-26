@@ -1,6 +1,7 @@
+import SearchResults from "@/src/shared/components/SearchResults";
 
 export default function ResultadosPage() {
   return (
-    <div>Pagina de Resultados del Buscador</div>
+    <SearchResults />
   )
 }
