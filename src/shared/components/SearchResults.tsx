@@ -1,9 +1,13 @@
 import Image from "next/image"
-import { resultados } from "../db/resultados"
+import { ResultadosType } from "../db/resultados"
+import { getProductsByMarca } from "../db/queries"
 
-const productos = resultados
+//const productos = resultados
 
-export default function SearchResults() {
+export default async function SearchResults() {
+
+  const productos = await getProductsByMarca('Truper')
+
   return (
     <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-6">
@@ -25,8 +29,9 @@ export default function SearchResults() {
                   {/* Imagen */}
                   <div className="relative h-52 bg-white flex items-center justify-center p-6">
                     <Image
-                      src={producto.imagen}
-                      alt={producto.nombre}
+                      // src= {`/fotos/${producto.id}.jpg`}
+                      src={'/fotos/1750.jpg'}
+                      alt={'por definir'}
                       fill
                       className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -37,16 +42,18 @@ export default function SearchResults() {
                   <div className="p-5">
                     <p className="text-xs font-medium text-gray-500">{producto.marca}</p>
                     <h3 className="font-semibold text-lg leading-tight mt-1 mb-2 line-clamp-2">
-                      {producto.nombre}
+                      {producto.descripcion}
                     </h3>
                     <p className="text-sm text-gray-600">{producto.descripcion}</p>
     
                     <div className="mt-4 flex items-baseline gap-2">
-                      <span className="line-through text-gray-400 text-sm">
-                        ${producto.precioOriginal}.00
-                      </span>
+                        { producto.precioant && (
+                          <span className="line-through text-gray-400 text-sm">
+                            { producto.precioant }
+                          </span>
+                        ) }
                       <span className="text-2xl font-bold text-[#E30613]">
-                        ${producto.precioActual}.00
+                        {producto.precio}
                       </span>
                     </div>
     

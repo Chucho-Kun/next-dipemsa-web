@@ -1,73 +1,38 @@
 export type ResultadosType = {
-    id: number
-    marca: string
-    nombre: string
-    descripcion: string
-    precioOriginal: number
-    precioActual: number
+    id: string
     clave: string
-    imagen: string
+    variante: string
+    descripcion: string
+    informacion: string
+    disponible: string
+    marca: string
+    categoria: string
+    existencias: number | null
+    precioant: string
+    precio: string
+    destacado: boolean
+    createdat: string
 }
 
 export const resultados: ResultadosType[] = [
   {
-    id: 1,
-    marca: "PENNSYLVANIA",
-    nombre: "Sellador Duretán Pennsylvania",
-    descripcion: "Cartucho Blanco 300ml",
-    precioOriginal: 1990,
-    precioActual: 1490,
-    clave: "1010101",
-    imagen: "/fotos/1428.jpg",
-  },
-  {
-    id: 2,
-    marca: "PENNSYLVANIA",
-    nombre: "Sellador Duretán Pennsylvania",
-    descripcion: "Cartucho Blanco 300ml",
-    precioOriginal: 1990,
-    precioActual: 1490,
-    clave: "1010101",
-    imagen: "/fotos/1428.jpg",
-  },
-  {
-    id: 3,
-    marca: "PENNSYLVANIA",
-    nombre: "Sellador Duretán Pennsylvania",
-    descripcion: "Cartucho Blanco 300ml",
-    precioOriginal: 1990,
-    precioActual: 1490,
-    clave: "1010101",
-    imagen: "/fotos/1428.jpg",
-  },
-  {
-    id: 4,
-    marca: "PENNSYLVANIA",
-    nombre: "Sellador Duretán Pennsylvania",
-    descripcion: "Cartucho Blanco 300ml",
-    precioOriginal: 1990,
-    precioActual: 1490,
-    clave: "1010101",
-    imagen: "/fotos/1428.jpg",
-  },
-  {
-    id: 5,
-    marca: "PENNSYLVANIA",
-    nombre: "Sellador Duretán Pennsylvania",
-    descripcion: "Cartucho Blanco 300ml",
-    precioOriginal: 1990,
-    precioActual: 1490,
-    clave: "1010101",
-    imagen: "/fotos/1428.jpg",
-  },
-  {
-    id: 6,
-    marca: "PENNSYLVANIA",
-    nombre: "Sellador Duretán Pennsylvania",
-    descripcion: "Cartucho Blanco 300ml",
-    precioOriginal: 1990,
-    precioActual: 1490,
-    clave: "1010101",
-    imagen: "/fotos/1428.jpg",
-  },
+    id: '1769',
+    clave: '22627',
+    variante: 'JZ4',
+    descripcion: 'Pinza de punta y corte 8" mango de PVC, | 22627',
+    informacion: '\n' +
+      'Fabricada en acero al carbono\n' +
+      '\n' +
+      'Mango cubierto de PVC antiderrapante\n' +
+      '\n' +
+      'Cuchillas afiladas para cortes rápidos y precisos',
+    disponible: '1 día',
+    marca: 'Truper',
+    categoria: 'Herramientas',
+    existencias: null,
+    precioant: '',
+    precio: '$88.00',
+    destacado: false,
+    createdat: "2026-05-27T20:27:44.216Z"
+  }
 ];

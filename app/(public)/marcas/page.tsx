@@ -37,9 +37,9 @@ export default function MarcasPage() {
                   <Image
                     src={marca.src}
                     alt={marca.name}
-                    width={180}
-                    height={90}
-                    className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                    fill
+                    className="object-contain grayscale-0 lg:grayscale lg:group-hover:grayscale-0 transition-all duration-300"
+                    sizes='(max-width: 768px) 100vw, 180px'
                     />
                 </div>
               </div>

@@ -3,16 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "import:csv": "tsx scripts/import-csv.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "csv-parse": "^6.2.1",
+    "csv-parser": "^3.2.1",
+    "drizzle-orm": "^0.45.2",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^1.16.0",
     "next": "16.2.6",
+    "pg": "^8.21.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hot-toast": "^2.6.0"
@@ -20,8 +25,10 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "tailwindcss": "^4",

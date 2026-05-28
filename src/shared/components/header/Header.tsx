@@ -100,7 +100,7 @@ export default function Header() {
 
               {/* Mobile Menu Button */}
               <button 
-                className="lg:hidden text-gray-700"
+                className="md:hidden text-gray-700"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -113,7 +113,7 @@ export default function Header() {
       {/* Navigation Menu */}
       <nav className="bg-[#1E2A44] text-white">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="hidden lg:flex items-center justify-center gap-14 py-4 font-bold text-large">
+          <div className="hidden md:flex items-center justify-center gap-14 py-4 font-bold text-large">
             
             <Link href={'/'} className='hover:text-[#FF5E00] transition'>HOME</Link>
             <Link href={'/marcas'} className='hover:text-[#FF5E00] transition'>MARCAS</Link>
