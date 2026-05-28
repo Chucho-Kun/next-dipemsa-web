@@ -1,12 +1,13 @@
 import RecommendedProductsServer from '@/src/shared/components/RecommendedProductsServer';
-import SearchResults from '@/src/shared/components/SearchResults';
-import Image from 'next/image';
-import Link from 'next/link';
+import TrademarckResults from '@/src/shared/components/TrademarckResults';
 
 export default function CategoriaResultPage() {
+
+  
+
   return (
     <>
-      <SearchResults />
+      {/* <TrademarckResults /> */}
 
       <RecommendedProductsServer />
     </>

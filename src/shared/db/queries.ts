@@ -1,13 +1,32 @@
 // db/queries.ts
 import { db } from '@/src/shared/db';
 import { productos } from '@/src/shared/db/schema/productList';
-import { eq, like, desc, asc, sql } from 'drizzle-orm';
+import { eq, like, desc, asc, sql, ilike } from 'drizzle-orm';
 
-export async function getProductsByMarca( marca: string ) {
-    return await db.select()
-        .from(productos)
-        .where(eq(productos.marca, marca))
-        .orderBy(desc(productos.createdat))
+export function slugToMarca(slug: string): string {
+  const mapa: Record<string, string> = {
+    'owens-corning': 'Owens corning',
+    'gram-bel': 'Gram bel',
+    'panel-rey': 'Panel Rey',
+    'trim-tex': 'Trim-Tex',
+    'cempanel': 'Cempanel',
+    // Agrega más según necesites
+  };
+
+  return mapa[slug] || slug
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, char => char.toUpperCase());
+}
+
+export async function getProductsByMarca(slug: string) {
+  const marcaReal = slugToMarca(slug);   // "gram-bel" → "Gram Bel"
+
+  return await db.select()
+    .from(productos)
+    .where(
+      ilike(productos.marca, `%${marcaReal}%`)
+    )
+    .orderBy(desc(productos.destacado), desc(productos.createdat));
 }
 
 export async function getRecomendedProducts() {

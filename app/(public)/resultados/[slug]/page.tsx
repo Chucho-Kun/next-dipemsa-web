@@ -1,7 +1,9 @@
-import SearchResults from "@/src/shared/components/SearchResults";
+import TrademarckResults from "@/src/shared/components/TrademarckResults";
 
 export default function ResultadosPage() {
   return (
-    <SearchResults />
+    <>
+    </>
+    // <TrademarckResults />
   )
 }

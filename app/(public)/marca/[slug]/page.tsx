@@ -1,7 +1,10 @@
-import SearchResults from "@/src/shared/components/SearchResults";
+import TrademarckResults from "@/src/shared/components/TrademarckResults";
 
-export default async function MarcaResultPage() {
+export default async function MarcaResultPage(props: PageProps<'/marca/[slug]'>) {
+
+  const { slug } = await props.params
+
   return (
-        <SearchResults />
+        <TrademarckResults slug={ slug } />
   )
 }

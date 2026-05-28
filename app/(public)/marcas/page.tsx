@@ -2,21 +2,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const marcas = [
-  { name: "Owens Corning", src: "/marcas/owens-corning.jpeg" },
-  { name: "Dipemsa", src: "/marcas/dipemsa.jpeg" },
-  { name: "Gram-Bel", src: "/marcas/gram-bel.jpeg" },
-  { name: "USG", src: "/marcas/usg.jpeg" },
-  { name: "Cem Panel", src: "/marcas/cempanel.jpeg" },
-  { name: "Panel Rey", src: "/marcas/panel-rey.jpeg" },
-  { name: "Truper", src: "/marcas/truper.jpeg" },
-  { name: "Armstrong", src: "/marcas/armstrong.jpeg" },
-  { name: "Stabilit", src: "/marcas/stabilit.jpeg" },
-  { name: "Riho", src: "/marcas/riho.jpeg" },
-  { name: "Fischer", src: "/marcas/fischer.jpeg" },
-  { name: "Trim-Tex", src: "/marcas/trim-tex.jpeg" },
-  { name: "Mapei", src: "/marcas/mapei.jpeg" },
-  { name: "Pennsylvania", src: "/marcas/pennsylvania.jpeg" },
-  { name: "Plaka", src: "/marcas/plaka.jpeg" },
+  { name: "owens-corning", src: "/marcas/owens-corning.jpeg" },
+  { name: "dipemsa", src: "/marcas/dipemsa.jpeg" },
+  { name: "gram-bel", src: "/marcas/gram-bel.jpeg" },
+  { name: "usg", src: "/marcas/usg.jpeg" },
+  { name: "cempanel", src: "/marcas/cempanel.jpeg" },
+  { name: "panel-rey", src: "/marcas/panel-rey.jpeg" },
+  { name: "truper", src: "/marcas/truper.jpeg" },
+  { name: "armstrong", src: "/marcas/armstrong.jpeg" },
+  { name: "stabilit", src: "/marcas/stabilit.jpeg" },
+  { name: "riho", src: "/marcas/riho.jpeg" },
+  { name: "fischer", src: "/marcas/fischer.jpeg" },
+  { name: "trim-tex", src: "/marcas/trim-tex.jpeg" },
+  { name: "mapei", src: "/marcas/mapei.jpeg" },
+  { name: "pennsylvania", src: "/marcas/pennsylvania.jpeg" },
+  { name: "plaka", src: "/marcas/plaka.jpeg" },
 ];
 
 export default function MarcasPage() {
@@ -29,7 +29,7 @@ export default function MarcasPage() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {marcas.map((marca, index) => (
-            <Link key={index} href={'/marca/owens-corning'} >
+            <Link key={index} href={ `/marca/${ marca.name }`} >
               <div
                 className="group bg-white rounded-2xl p-6 flex items-center justify-center aspect-square border border-gray-100 hover:border-[#FF5E00] hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
                 >
