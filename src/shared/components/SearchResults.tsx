@@ -16,8 +16,14 @@ export default async function SearchResults() {
             </h2>
     
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {productos.map((producto) => (
-                <div
+              {productos.map((producto) => {
+
+                const [ nombre, detalles ] = producto.descripcion!
+                  .split("|")
+                  .map( txt  => txt.replaceAll(/"/g, "").trim())
+
+                return (
+                  <div
                   key={producto.id}
                   className="bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group"
                 >
@@ -29,8 +35,8 @@ export default async function SearchResults() {
                   {/* Imagen */}
                   <div className="relative h-52 bg-white flex items-center justify-center p-6">
                     <Image
-                      // src= {`/fotos/${producto.id}.jpg`}
-                      src={'/fotos/1750.jpg'}
+                      src= {`/fotos/${producto.id}.jpg`}
+                      // src={'/fotos/1750.jpg'}
                       alt={'por definir'}
                       fill
                       className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
@@ -42,9 +48,9 @@ export default async function SearchResults() {
                   <div className="p-5">
                     <p className="text-xs font-medium text-gray-500">{producto.marca}</p>
                     <h3 className="font-semibold text-lg leading-tight mt-1 mb-2 line-clamp-2">
-                      {producto.descripcion}
+                      { nombre }
                     </h3>
-                    <p className="text-sm text-gray-600">{producto.descripcion}</p>
+                    <p className="text-sm text-gray-600">{ detalles }</p>
     
                     <div className="mt-4 flex items-baseline gap-2">
                         { producto.precioant && (
@@ -57,14 +63,16 @@ export default async function SearchResults() {
                       </span>
                     </div>
     
-                    <p className="text-xs text-gray-500 mt-1">CLAVE: {producto.clave}</p>
+                    <p className="text-xs text-gray-500 mt-1">CLAVE: {producto.clave} VARIANTE: {producto.variante}</p>
     
                     <button className="mt-6 w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3 transition text-sm">
                       AGREGAR AL CARRITO
                     </button>
                   </div>
                 </div>
-              ))}
+                )
+              }
+              )}
             </div>
           </div>
         </section>

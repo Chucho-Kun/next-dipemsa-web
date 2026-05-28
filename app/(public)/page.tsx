@@ -1,6 +1,6 @@
 import CompraConNosotros from "@/src/shared/components/CompraConNosotros";
 import ProductsSection from "@/src/shared/components/ProductsSection";
-import RecommendedProducts from "@/src/shared/components/RecommendedProducts";
+import RecommendedProductsServer from "@/src/shared/components/RecommendedProductsServer";
 import SliderMain from "@/src/shared/components/SliderMain";
 import { productos } from "@/src/shared/db/productos";
 
@@ -12,7 +12,7 @@ export default function page() {
         </section>
 
         <section>
-          <RecommendedProducts />
+          <RecommendedProductsServer />
         </section>
 
         <section className="py-16 bg-gray-50">

@@ -1,7 +1,5 @@
 // db/queries.ts
 import { db } from '@/src/shared/db';
-
-db
 import { productos } from '@/src/shared/db/schema/productList';
 import { eq, like, desc, asc, sql } from 'drizzle-orm';
 
@@ -11,6 +9,23 @@ export async function getProductsByMarca( marca: string ) {
         .where(eq(productos.marca, marca))
         .orderBy(desc(productos.createdat))
 }
+
+export async function getRecomendedProducts() {
+        return await db.select()
+            .from(productos)
+            .where(eq(productos.destacado, true))
+}
+
+// export async function getRecomendedProducts(limit = 12) {
+//     return await db.select()
+//         .from(productos)
+//         .where(eq(productos.destacado, true))
+//         .limit(limit);
+// }
+
+
+
+
 
 // 1. Obtener todos los productos (con paginación)
 export async function getAllProducts(page = 1, limit = 20) {
@@ -53,13 +68,6 @@ export async function getProductsByCategory(categoria: string) {
     .orderBy(desc(productos.destacado));
 }
 
-// 4. Productos destacados
-export async function getFeaturedProducts(limit = 8) {
-  return await db.select()
-    .from(productos)
-    .where(eq(productos.destacado, true))
-    .limit(limit);
-}
 
 // 5. Obtener un producto por ID o Clave
 export async function getProductById(id: string) {

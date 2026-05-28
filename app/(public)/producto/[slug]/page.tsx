@@ -1,5 +1,5 @@
 import ProductCard from "@/src/shared/components/ProductCard";
-import RecommendedProducts from "@/src/shared/components/RecommendedProducts";
+import RecommendedProductsServer from "@/src/shared/components/RecommendedProductsServer";
 
 export default function SlugPage() {
   return (
@@ -9,7 +9,7 @@ export default function SlugPage() {
         </section>
 
         <section>
-          <RecommendedProducts />
+          <RecommendedProductsServer />
         </section>
     </>
   )

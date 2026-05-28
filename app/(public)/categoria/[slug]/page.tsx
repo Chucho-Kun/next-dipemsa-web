@@ -1,4 +1,4 @@
-import RecommendedProducts from '@/src/shared/components/RecommendedProducts';
+import RecommendedProductsServer from '@/src/shared/components/RecommendedProductsServer';
 import SearchResults from '@/src/shared/components/SearchResults';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,7 +8,7 @@ export default function CategoriaResultPage() {
     <>
       <SearchResults />
 
-      <RecommendedProducts />
+      <RecommendedProductsServer />
     </>
   );
 }
