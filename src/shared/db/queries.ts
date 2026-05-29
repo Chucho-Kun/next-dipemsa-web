@@ -43,6 +43,43 @@ export async function getProductsByMarca(slug: string) {
     .orderBy(desc(productos.destacado), desc(productos.createdat));
 }
 
+
+///// NUEVO FEATURE DE AGRUGAR RESULTADOS POR VARIANTE
+export async function getProductsByGroups(categoria: string) {
+  const marcaReal = slugToMarca(categoria);
+
+  const rawProducts = await db.select()
+    .from(productos)
+    .where(
+      ilike(productos.marca, `%${marcaReal}%`)
+    )
+    .orderBy(desc(productos.destacado), desc(productos.createdat));
+    
+  // === Agrupación por nombre base ===
+  const grouped = rawProducts.reduce((acc, producto) => {
+    const fullDesc = producto.descripcion || '';
+    const baseName = fullDesc.split('|')[0].trim(); // Todo antes del "|"
+
+    if (!acc[baseName]) {
+      acc[baseName] = [];
+    }
+
+    acc[baseName].push(producto);
+    return acc;
+  }, {} as Record<string, any[]>);
+
+  // Convertimos a array ordenado
+  return Object.entries(grouped).map(([baseName, variants]) => ({
+    baseName,
+    variants: variants.sort((a, b) => {
+      // Ordenar variantes por precio o existencias
+      return parseFloat(a.precio || '0') - parseFloat(b.precio || '0');
+    })
+  }));
+}
+
+/////
+
 export async function getRecomendedProducts() {
         return await db.select()
             .from(productos)
