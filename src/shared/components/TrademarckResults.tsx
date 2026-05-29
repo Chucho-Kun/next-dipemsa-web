@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { ResultadosType } from "../db/resultados";
 import { getProductsByMarca } from "../db/queries";
 
 type Props = {

@@ -10,6 +10,20 @@ export function slugToMarca(slug: string): string {
     'panel-rey': 'Panel Rey',
     'trim-tex': 'Trim-Tex',
     'cempanel': 'Cempanel',
+  };
+
+  return mapa[slug] || slug
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, char => char.toUpperCase());
+}
+
+export function slugToCategory(slug: string): string {
+  const mapa: Record<string, string> = {
+    'owens-corning': 'Anclajes y químicos epoxicos ',
+    'gram-bel': 'Sistemas de fijacion convencional.',
+    'panel-rey': 'Perfiles galvanizados ',
+    'trim-tex': 'Liner panel ',
+    'cempanel': 'Herramientas',
     // Agrega más según necesites
   };
 
@@ -33,6 +47,17 @@ export async function getRecomendedProducts() {
         return await db.select()
             .from(productos)
             .where(eq(productos.destacado, true))
+}
+
+export async function getProductsByCategory(categoria: string) {
+  const categoriaReal = slugToCategory(categoria);   // "gram-bel" → "Gram Bel"
+
+  return await db.select()
+    .from(productos)
+    .where(
+      ilike(productos.categoria, `%${categoriaReal}%`)
+    )
+    .orderBy(desc(productos.destacado), desc(productos.createdat));
 }
 
 // export async function getRecomendedProducts(limit = 12) {
@@ -78,15 +103,6 @@ export async function searchProducts(searchTerm: string) {
     )
     .orderBy(desc(productos.destacado));
 }
-
-// 3. Productos por categoría
-export async function getProductsByCategory(categoria: string) {
-  return await db.select()
-    .from(productos)
-    .where(eq(productos.categoria, categoria))
-    .orderBy(desc(productos.destacado));
-}
-
 
 // 5. Obtener un producto por ID o Clave
 export async function getProductById(id: string) {

@@ -1,4 +1,7 @@
-import { ProductosType } from "../types/db";
+export type ProductosType = {
+    name: string
+    src: string
+}
 
 export const productos: ProductosType[] = [
   { name: "AISLANTES", src: "/productos/aislantes.jpg" },

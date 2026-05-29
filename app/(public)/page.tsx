@@ -11,9 +11,16 @@ export default function page() {
           <SliderMain />
         </section>
 
-        <section>
-          <RecommendedProductsServer />
-        </section>
+        <div className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-6">
+              <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
+                PRODUCTOS RECOMENDADOS
+              </h2>
+              <section>
+                <RecommendedProductsServer />
+              </section>
+          </div>
+        </div>
 
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-6">

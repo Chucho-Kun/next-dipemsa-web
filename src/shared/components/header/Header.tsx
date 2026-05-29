@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Search, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { marcas } from '../../db/marcas';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -141,38 +142,17 @@ export default function Header() {
       {/* Brands Bar */}
       <div className="bg-white py-3 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="hidden md:flex items-center justify-center gap-2 md:gap-2 text-xs md:text-sm font-bold text-gray-600 flex-wrap">
-            <Link href={'/marca/armstrong'}>
-              <span>ARMSTRONG</span>
-            </Link>
-            <span>•</span>
-            <Link href={'/marca/cempanel'}>
-              <span>CEMPANEL</span>
-            </Link>
-            <span>•</span>
-            <span>DIPEMSA</span>
-            <span>•</span>
-            <span>FISCHER</span>
-            <span>•</span>
-            <span>GRAM BEL</span>
-            <span>•</span>
-            <span>GYPROG</span>
-            <span>•</span>
-            <span>MAPEI</span>
-            <span>•</span>
-            <span>OWENS CORNING</span>
-            <span>•</span>
-            <span>PANEL REY</span>
-            <span>•</span>
-            <span>PENNSYLVANIA</span>
-            <span>•</span>
-            <span>STABILIT</span>
-            <span>•</span>
-            <span>TRIM-TEX</span>
-            <span>•</span>
-            <span>TRUPER</span>
-            <span>•</span>
-            <span>USG</span>
+          <div className="max-w-225 mx-auto hidden md:flex items-center justify-center gap-2 md:gap-2 text-xs md:text-sm font-bold text-gray-600 flex-wrap">
+            
+            { marcas.map( (marca, index) => (
+                <React.Fragment key={marca.name}>
+                  <Link href={ `/marca/${ marca.name }`  } className='hover:text-amber-600 transition' >
+                    <span className='uppercase'>{ marca.name.replace('-', ' ') }</span>
+                  </Link>
+                  { index < marcas.length - 1 && <span>•</span> }
+                </React.Fragment>
+            )) }
+
           </div>
         </div>
       </div>

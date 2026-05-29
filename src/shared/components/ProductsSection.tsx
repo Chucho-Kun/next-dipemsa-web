@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { ProductosType } from "../types/db"
+import { ProductosType } from "../db/productos"
 import Link from "next/link"
 
 type Props = {
