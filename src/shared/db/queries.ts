@@ -19,8 +19,8 @@ export function slugToMarca(slug: string): string {
 
 export function slugToCategory(slug: string): string {
   const mapa: Record<string, string> = {
-    'owens-corning': 'Anclajes y químicos epoxicos ',
-    'gram-bel': 'Sistemas de fijacion convencional.',
+    'anclajes-y-quimicos-epoxicos': 'Anclajes y químicos epoxicos ',
+    'sistemas-de-fijacion-convencional': 'Sistemas de fijacion convencional.',
     'panel-rey': 'Perfiles galvanizados ',
     'trim-tex': 'Liner panel ',
     'cempanel': 'Herramientas',
@@ -32,21 +32,21 @@ export function slugToCategory(slug: string): string {
     .replace(/\b\w/g, char => char.toUpperCase());
 }
 
-export async function getProductsByMarca(slug: string) {
-  const marcaReal = slugToMarca(slug);   // "gram-bel" → "Gram Bel"
+// export async function getProductsByMarca(slug: string) {
+//   const marcaReal = slugToMarca(slug);   // "gram-bel" → "Gram Bel"
 
-  return await db.select()
-    .from(productos)
-    .where(
-      ilike(productos.marca, `%${marcaReal}%`)
-    )
-    .orderBy(desc(productos.destacado), desc(productos.createdat));
-}
+//   return await db.select()
+//     .from(productos)
+//     .where(
+//       ilike(productos.marca, `%${marcaReal}%`)
+//     )
+//     .orderBy(desc(productos.destacado), desc(productos.createdat));
+// }
 
 
-///// NUEVO FEATURE DE AGRUGAR RESULTADOS POR VARIANTE
-export async function getProductsByGroups(categoria: string) {
-  const marcaReal = slugToMarca(categoria);
+///// NUEVO FEATURE DE AGRUPAR RESULTADOS POR VARIANTE EN MARCAS
+export async function getProductsByGroupsofTrademarks(marca: string) {
+  const marcaReal = slugToMarca(marca);
 
   const rawProducts = await db.select()
     .from(productos)
@@ -77,7 +77,44 @@ export async function getProductsByGroups(categoria: string) {
     })
   }));
 }
+/////
 
+///// NUEVO FEATURE DE AGRUPAR RESULTADOS POR VARIANTE EN CATEGORIAS
+export async function getProductsByGroupsofCategories(categoria: string) {
+  const categoriaReal = slugToCategory(categoria);
+
+  console.log(categoriaReal);
+  
+
+  const rawProducts = await db.select()
+    .from(productos)
+    .where(
+      ilike(productos.categoria, `%${categoriaReal}%`)
+    )
+    .orderBy(desc(productos.destacado), desc(productos.createdat));
+    
+  // === Agrupación por nombre base ===
+  const grouped = rawProducts.reduce((acc, producto) => {
+    const fullDesc = producto.descripcion || '';
+    const baseName = fullDesc.split('|')[0].trim(); // Todo antes del "|"
+
+    if (!acc[baseName]) {
+      acc[baseName] = [];
+    }
+
+    acc[baseName].push(producto);
+    return acc;
+  }, {} as Record<string, any[]>);
+
+  // Convertimos a array ordenado
+  return Object.entries(grouped).map(([baseName, variants]) => ({
+    baseName,
+    variants: variants.sort((a, b) => {
+      // Ordenar variantes por precio o existencias
+      return parseFloat(a.precio || '0') - parseFloat(b.precio || '0');
+    })
+  }));
+}
 /////
 
 export async function getRecomendedProducts() {
