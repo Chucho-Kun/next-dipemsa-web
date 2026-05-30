@@ -45,7 +45,7 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
 
       {/* Contenido */}
       <div className="flex-1 flex flex-col p-5">
-        <p className="text-xs font-medium text-gray-500">{ group.variants[0].marca }</p>
+        <p className="text-xs font-medium text-gray-500 uppercase">{ group.variants[0].marca }</p>
         
         <h3 className="font-semibold text-lg leading-tight mt-1 mb-4 line-clamp-2">
           {mainName}
