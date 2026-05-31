@@ -32,19 +32,7 @@ export function slugToCategory(slug: string): string {
     .replace(/\b\w/g, char => char.toUpperCase());
 }
 
-// export async function getProductsByMarca(slug: string) {
-//   const marcaReal = slugToMarca(slug);   // "gram-bel" → "Gram Bel"
-
-//   return await db.select()
-//     .from(productos)
-//     .where(
-//       ilike(productos.marca, `%${marcaReal}%`)
-//     )
-//     .orderBy(desc(productos.destacado), desc(productos.createdat));
-// }
-
-
-///// NUEVO FEATURE DE AGRUPAR RESULTADOS POR VARIANTE EN MARCAS
+///// AGRUPAR RESULTADOS POR VARIANTE EN MARCAS
 export async function getProductsByGroupsofTrademarks(marca: string) {
   const marcaReal = slugToMarca(marca);
 
@@ -79,7 +67,7 @@ export async function getProductsByGroupsofTrademarks(marca: string) {
 }
 /////
 
-///// NUEVO FEATURE DE AGRUPAR RESULTADOS POR VARIANTE EN CATEGORIAS
+///// AGRUPAR RESULTADOS POR VARIANTE EN CATEGORIAS
 export async function getProductsByGroupsofCategories(categoria: string) {
   const categoriaReal = slugToCategory(categoria);
 
@@ -116,6 +104,21 @@ export async function getProductsByGroupsofCategories(categoria: string) {
   }));
 }
 /////
+
+////// BUSCAR PRODUCTOS POR EL TEXTO DE LA URL
+export async function getProductById(id: string) {
+  const result = await db.select()
+    .from(productos)
+    .where(eq(productos.id, id))
+    .limit(1);
+
+  return result[0];
+}
+/////
+
+
+
+
 
 export async function getRecomendedProducts() {
         return await db.select()
@@ -168,25 +171,8 @@ export async function getAllProducts(page = 1, limit = 20) {
   };
 }
 
-// 2. Buscar productos (búsqueda por nombre o descripción)
-export async function searchProducts(searchTerm: string) {
-  return await db.select()
-    .from(productos)
-    .where(
-      like(productos.descripcion, `%${searchTerm}%`)
-    )
-    .orderBy(desc(productos.destacado));
-}
 
-// 5. Obtener un producto por ID o Clave
-export async function getProductById(id: string) {
-  const result = await db.select()
-    .from(productos)
-    .where(eq(productos.id, id))
-    .limit(1);
 
-  return result[0];
-}
 
 // 6. Productos con stock bajo
 export async function getLowStockProducts(threshold = 10) {

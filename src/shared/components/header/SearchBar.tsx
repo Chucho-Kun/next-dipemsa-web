@@ -96,7 +96,7 @@ export default function SearchBar() {
               value={product.descripcion}
               onSelect={() => {
                 router.push(
-                  `/producto/${product.descripcion.replace(/\s+/g, ' ')
+                  `/producto/${ product.id }/${product.descripcion.replace(/\s+/g, ' ')
                                                      .trim()
                                                      .replaceAll('|','-')
                                                      .replaceAll(' ','-')

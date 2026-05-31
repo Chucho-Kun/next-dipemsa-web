@@ -3,8 +3,14 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { Minus, Plus, ShoppingCart } from 'lucide-react';
+import { ResultadosType } from '../db/resultados';
 
-export default function ProductCard() {
+type Props = {
+  producto: ResultadosType
+}
+
+export default async function ProductCard({producto}: Props) {
+  
   const [quantity, setQuantity] = useState(1);
 
   const increase = () => setQuantity(prev => prev + 1);
@@ -14,7 +20,7 @@ export default function ProductCard() {
     <div className="max-w-7xl mx-auto px-6 py-8">
       {/* Breadcrumb */}
       <nav className="text-sm text-orange-600 mb-8">
-        HOME &gt; HERRAMIENTAS &gt; FOSET &gt; <span className="text-gray-800 font-medium">CALENTADOR SOLAR DE AGUA</span>
+        HOME &gt; { producto.marca?.toUpperCase() } &gt; <span className="text-gray-800 font-medium">{ producto.categoria?.toUpperCase() }</span>
       </nav>
 
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
@@ -22,8 +28,8 @@ export default function ProductCard() {
         {/* Imagen del producto */}
         <div className="relative bg-white rounded-2xl overflow-hidden shadow-sm">
           <Image
-            src="/fotos/1428.jpg"
-            alt="Calentador Solar de Agua Foset"
+            src={`/fotos/${ producto.id }.jpg`} 
+            alt={ producto.descripcion! }
             width={800}
             height={600}
             className="w-full h-auto object-contain"
@@ -34,14 +40,17 @@ export default function ProductCard() {
         {/* Información del producto */}
         <div className="space-y-6">
           <h1 className="text-3xl font-bold text-gray-800 leading-tight">
-            Calentador solar de agua, 15 tubos, 195L, 5 personas, Foset
+            { producto.descripcion?.split('|')[0]}
           </h1>
-          <p className="text-gray-600">Calentador 15</p>
+          <p className="text-gray-600">{ producto.descripcion?.split('|')[1]}</p>
 
           {/* Precios */}
           <div className="flex items-center gap-4">
-            <span className="text-4xl font-bold text-[#E30613]">$1490.00</span>
-            <span className="text-2xl line-through text-gray-400">$1900.00</span>
+            <span className="text-4xl font-bold text-[#E30613]">{ producto.precio }</span>
+            { producto.precioant && (
+              <span className="text-2xl line-through text-gray-400">{ producto.precioant }</span>
+            ) }
+            
           </div>
 
           <div className="inline-block bg-red-600 text-white text-sm font-bold px-5 py-2 rounded">
