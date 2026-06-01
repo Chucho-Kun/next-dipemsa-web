@@ -30,9 +30,9 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
   return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-6">
-        {/* <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
+        <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
           PRODUCTOS RECOMENDADOS
-        </h2> */}
+        </h2>
 
         <div className="relative">
           {/* Slider */}
@@ -49,9 +49,9 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
                         <div className="bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                           
                           {/* Badge */}
-                          {/* <div className="bg-[#FF5E00] text-white text-xs font-bold px-4 py-1 w-fit">
-                            PRODUCTO DESTACADO
-                          </div> */}
+                          <div className="bg-[#FF5E00] text-white text-xs font-bold px-4 py-1 w-fit">
+                            PRODUCTO RECOMENDADO
+                          </div>
 
                           {/* Imagen */}
                           <div className="relative h-52 bg-white flex items-center justify-center p-6 overflow-hidden rounded-t-2xl">

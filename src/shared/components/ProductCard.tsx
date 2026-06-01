@@ -4,12 +4,13 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Minus, Plus, ShoppingCart } from 'lucide-react';
 import { ResultadosType } from '../db/resultados';
+import Link from 'next/link';
 
 type Props = {
   producto: ResultadosType
 }
 
-export default async function ProductCard({producto}: Props) {
+export default function ProductCard({producto}: Props) {
   
   const [quantity, setQuantity] = useState(1);
 
@@ -19,20 +20,25 @@ export default async function ProductCard({producto}: Props) {
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
       {/* Breadcrumb */}
-      <nav className="text-sm text-orange-600 mb-8">
-        HOME &gt; { producto.marca?.toUpperCase() } &gt; <span className="text-gray-800 font-medium">{ producto.categoria?.toUpperCase() }</span>
+      <nav className="text-sm text-gray-500 mb-8 font-bold">
+        <Link href="/" >HOME</Link> &gt;{' '}
+        <Link href={`/marca/${ producto.marca?.toLowerCase() }` } >{ producto.marca?.toUpperCase() } &gt; </Link>
+        <Link href={`/categoria/${ producto.categoria?.toLowerCase() }`}>
+          <span className="text-orange-600 font-bold">{ producto.categoria?.toUpperCase() }</span>
+        </Link> 
+         
       </nav>
 
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
         
         {/* Imagen del producto */}
-        <div className="relative bg-white rounded-2xl overflow-hidden shadow-sm">
+        <div className="flex items-center justify-center relative bg-white overflow-hidden">
           <Image
             src={`/fotos/${ producto.id }.jpg`} 
             alt={ producto.descripcion! }
-            width={800}
-            height={600}
-            className="w-full h-auto object-contain"
+            width={366}
+            height={214}
+            className="h-auto object-contain"
             priority
           />
         </div>
@@ -86,11 +92,7 @@ export default async function ProductCard({producto}: Props) {
           {/* Descripción */}
           <div className="pt-6 border-t">
             <p className="text-gray-700 leading-relaxed">
-              Utiliza la energía del sol para calentar el agua, funciona sin gas. 
-              Tanque interno y estructura fabricados de acero inoxidable. 
-              Tanque con aislamiento térmico de alto nivel que conserva el agua caliente por más tiempo. 
-              Alcanza temperaturas superiores a 70°C. 
-              Tubos colectores de radiación solar.
+              { producto.informacion }
             </p>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import RecommendedProductsServer from "@/src/shared/components/RecommendedProductsServer";
 import TrademarckResults from "@/src/shared/components/TrademarckResults";
 import { slugToMarca } from "@/src/shared/db/queries";
 import { Metadata } from "next";
@@ -21,6 +22,10 @@ export default async function MarcaResultPage(props: PageProps<'/marca/[slug]'>)
   const { slug } = await props.params
   
   return (
+      <>
         <TrademarckResults slug={ slug } />
+        <RecommendedProductsServer />
+      </>
+
   )
 }
