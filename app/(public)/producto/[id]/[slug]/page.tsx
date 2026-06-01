@@ -28,8 +28,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: `Compra ${tituloProducto} - Marca: ${producto.marca || 'Dipemsa'}. Precio: $${producto.precio}. Disponible en nuestra tienda en línea.`,
     
     openGraph: {
-      title: `${tituloProducto} | Dipemsa`,
-      description: `Compra ${tituloProducto} al mejor precio. Marca: ${producto.marca || 'Dipemsa'}`,
+      title: `${tituloProducto} | ${ producto.marca }`,
+      // description: `Compra ${tituloProducto} al mejor precio. Marca: ${producto.marca || 'Dipemsa'}`,
+      description: `${ producto.descripcion?.split('|')[1] } - [ ${ producto.id } ]`,
       url: `https://dipemsa.com.mx/producto/${id}/${producto.descripcion?.split('|')[0] || ''}`,
       images: [
         {
