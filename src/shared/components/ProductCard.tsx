@@ -3,6 +3,9 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { Minus, Plus, ShoppingCart } from 'lucide-react';
+import { ResultadosType } from '../db/resultados';
+import Link from 'next/link';
+import { whatsAppNumber } from '../db/contact-info';
 
 export default function ProductCard() {
   const [quantity, setQuantity] = useState(1);
@@ -69,10 +72,32 @@ export default function ProductCard() {
           </div>
 
           {/* Botón Agregar al carrito */}
-          <button className="w-full bg-[#0033A0] hover:bg-[#002280] text-white font-semibold py-4 rounded-2xl flex items-center justify-center gap-3 transition text-lg">
+          {/* <button className="w-full bg-[#0033A0] hover:bg-[#002280] text-white font-semibold py-4 rounded-2xl flex items-center justify-center gap-3 transition text-lg">
             <ShoppingCart size={24} />
             AGREGAR AL CARRITO
-          </button>
+          </button> */}
+
+          <div className="p-5 pt-0 mt-auto">
+        <Link 
+            href={ `https://api.whatsapp.com/send?phone=${whatsAppNumber}&text=${
+                encodeURIComponent(`Hola me interesa cotizar *${ 
+                  producto.descripcion?.split('|')[0].trim()
+                  }* ${
+                  producto.descripcion?.split('|')[1]
+                  } - [${ producto.id }]`)}` 
+              }
+            className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-bold px-6 py-2 w-50 rounded-lg flex items-center gap-2 transition text-sm whitespace-nowrap">
+          COTIZA AHORA
+          <span className="text-xl">
+            <Image 
+              src={'/icons/whatsapp.svg'}
+              alt="whatsapp icon"
+              width={25}
+              height={25}
+            />
+          </span>
+        </Link>
+      </div>
 
           {/* Descripción */}
           <div className="pt-6 border-t">

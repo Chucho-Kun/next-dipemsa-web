@@ -28,7 +28,7 @@ export default function Header() {
 
               <Link href={'/'} className="cursor-pointer">
                   <Image 
-                    src={'/logo.jpg'}
+                    src={'/logo.webp'}
                     width={200}
                     height={70}
                     alt='Logo Dipemsa'
@@ -63,10 +63,9 @@ export default function Header() {
              
 
               {/**Icono carrito en movil */}
-              <button 
+              {/* <button 
                 className="flex items-center gap-2 hover:text-[#E30613] transition fixed bottom-6 right-6 md:static md:bottom-auto md:right-auto z-50 md:z-auto bg-white rounded-4xl p-2.25"
               >
-                {/* Icono del carrito */}
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
                   fill="none" 
@@ -79,15 +78,15 @@ export default function Header() {
                     d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" 
                   />
                 </svg>
-
-                {/* Badge de cantidad */}
                 <span className="cart-label bg-[#FF5E00] text-white w-5 h-5 rounded-full text-sm" >
                   3
                 </span>
-              </button>
+              </button> */}
 
               {/* Cotiza Ahora Button */}
-              <button className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-bold px-6 py-2 rounded-lg flex items-center gap-2 transition text-sm whitespace-nowrap">
+              <Link 
+                  href={ 'https://api.whatsapp.com/send?phone=5532651039' }
+                  className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-bold px-6 py-2 rounded-lg flex items-center gap-2 transition text-sm whitespace-nowrap">
                 COTIZA AHORA
                 <span className="text-xl">
                   <Image 
@@ -97,7 +96,7 @@ export default function Header() {
                     height={25}
                   />
                 </span>
-              </button>
+              </Link>
 
               {/* Mobile Menu Button */}
               <button 
