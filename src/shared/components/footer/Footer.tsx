@@ -12,7 +12,7 @@ export default function Footer() {
           <div className="lg:col-span-4">
             <div className="mb-6">
               <Image
-                src={'/logoBlanco.png'}
+                src={'/logoBlanco.webp'}
                 alt='Logo Transparente DIPEMSA'
                 width={136}
                 height={34}

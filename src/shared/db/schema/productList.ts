@@ -11,8 +11,8 @@ export const productos = pgTable('productos', {
   marca: varchar('marca', { length: 50 }),
   categoria: varchar('categoria', { length: 50 }),
   existencias: integer('existencias').default(0),
-  precioant: numeric('precioant', { precision: 12, scale: 2 }),
-  precio: numeric('precio', { precision: 12, scale: 2 }),         
+  precioant: varchar('precioant', { length: 30 }),
+  precio: varchar('precio', { length: 30 }),         
   destacado: boolean('destacado').default(false),
   createdat: timestamp('createdat').defaultNow(),
 });

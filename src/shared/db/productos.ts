@@ -18,6 +18,6 @@ export const productos: ProductosType[] = [
   { name: "anclajes-y-quimicos-epoxicos", src: "/productos/anclajes-y-quimicos-epoxicos.jpg" },
   { name: "perfiles-plasticos", src: "/productos/perfiles-plasticos.jpg" },
   { name: "sellado", src: "/productos/sellado.jpg" },
-  { name: "pintura", src: "/productos/pintura.jpg" },
+  // { name: "pintura", src: "/productos/pintura.jpg" },
   { name: "adhesivos-y-nivelantes", src: "/productos/adhesivos-y-nivelantes.jpg" },
 ];
