@@ -11,5 +11,5 @@ CREATE TABLE "productos" (
 	"precioant" numeric(12, 2),
 	"precio" numeric(12, 2),
 	"destacado" boolean DEFAULT false,
-	"createdAt" timestamp DEFAULT now()
+	"createdat" timestamp DEFAULT now()
 );

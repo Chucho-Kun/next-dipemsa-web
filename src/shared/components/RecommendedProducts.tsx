@@ -7,6 +7,8 @@ import { useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { getRecomendedProducts } from '../db/queries';
 import { ResultadosType } from '../db/resultados';
+import Link from 'next/link';
+import { whatsAppNumber } from '../db/contact-info';
 
 type Props = {
   productosRecomendados: ResultadosType[]
@@ -86,9 +88,30 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
                               <p className="text-xs text-gray-500 mt-1">CLAVE: {producto.clave}</p>
                             </div>
 
-                            <button className="mt-5 w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3 transition">
+                            {/* <button className="mt-5 w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3 transition">
                               AGREGAR AL CARRITO
-                            </button>
+                            </button> */}
+                            <div className="p-5 pt-0 mt-auto">
+                              <Link 
+                                  href={ `https://api.whatsapp.com/send?phone=${whatsAppNumber}&text=${
+                                      encodeURIComponent(`Hola me interesa cotizar *${ 
+                                        nombre
+                                        }* ${
+                                        detalles 
+                                        } - [${ producto.id }]`)}` 
+                                    }
+                                  className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-bold px-6 py-2 w-50 mx-auto rounded-lg flex items-center gap-2 transition text-sm whitespace-nowrap">
+                                COTIZA AHORA
+                                <span className="text-xl">
+                                  <Image 
+                                    src={'/icons/whatsapp.svg'}
+                                    alt="whatsapp icon"
+                                    width={25}
+                                    height={25}
+                                  />
+                                </span>
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>
