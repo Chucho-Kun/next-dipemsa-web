@@ -65,7 +65,7 @@ export default function ProductCard({producto}: Props) {
           </div>
 
           {/* Selector de cantidad */}
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <span className="font-medium text-gray-700">Cantidad:</span>
             <div className="flex items-center border border-gray-300 rounded-xl">
               <button 
@@ -82,7 +82,7 @@ export default function ProductCard({producto}: Props) {
                 <Plus size={18} />
               </button>
             </div>
-          </div>
+          </div> */}
 
           {/* Botón Agregar al carrito */}
           {/* <button className="w-full bg-[#0033A0] hover:bg-[#002280] text-white font-semibold py-4 rounded-2xl flex items-center justify-center gap-3 transition text-lg">
