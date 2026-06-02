@@ -76,7 +76,7 @@ export default function SearchBar() {
           />
         </div>
 
-        <Command.List className="max-h-[400px] overflow-auto p-2">
+        <Command.List className="max-h-100 overflow-auto p-2">
           {loading && (
             <Command.Loading>
               Cargando...

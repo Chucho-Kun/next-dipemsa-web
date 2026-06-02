@@ -25,6 +25,7 @@ export default function Footer() {
               <p className="font-medium">Atención telefónica inmediata</p>
               <p>Número Fijo: <span className="font-semibold">(55) 8751 2193</span></p>
               <p>WhatsApp: <span className="font-semibold">55 3265 1039</span></p>
+              <p>E-mail: <span className="font-semibold">contacto@dipemsa.com.mx</span></p>
             </div>
 
             {/* Redes Sociales */}
