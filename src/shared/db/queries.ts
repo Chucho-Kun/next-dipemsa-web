@@ -19,8 +19,8 @@ export function slugToMarca(slug: string): string {
 
 export function slugToCategory(slug: string): string {
   const mapa: Record<string, string> = {
-    'owens-corning': 'Anclajes y químicos epoxicos ',
-    'gram-bel': 'Sistemas de fijacion convencional.',
+    'anclajes-y-quimicos-epoxicos': 'Anclajes y químicos epoxicos ',
+    'sistemas-de-fijacion-convencional': 'Sistemas de fijacion convencional.',
     'panel-rey': 'Perfiles galvanizados ',
     'trim-tex': 'Liner panel ',
     'cempanel': 'Herramientas',
@@ -32,16 +32,93 @@ export function slugToCategory(slug: string): string {
     .replace(/\b\w/g, char => char.toUpperCase());
 }
 
-export async function getProductsByMarca(slug: string) {
-  const marcaReal = slugToMarca(slug);   // "gram-bel" → "Gram Bel"
+///// AGRUPAR RESULTADOS POR VARIANTE EN MARCAS
+export async function getProductsByGroupsofTrademarks(marca: string) {
+  const marcaReal = slugToMarca(marca);
 
-  return await db.select()
+  const rawProducts = await db.select()
     .from(productos)
     .where(
       ilike(productos.marca, `%${marcaReal}%`)
     )
     .orderBy(desc(productos.destacado), desc(productos.createdat));
+    
+  // === Agrupación por nombre base ===
+  const grouped = rawProducts.reduce((acc, producto) => {
+    const fullDesc = producto.descripcion || '';
+    const baseName = fullDesc.split('|')[0].trim(); // Todo antes del "|"
+
+    if (!acc[baseName]) {
+      acc[baseName] = [];
+    }
+
+    acc[baseName].push(producto);
+    return acc;
+  }, {} as Record<string, any[]>);
+
+  // Convertimos a array ordenado
+  return Object.entries(grouped).map(([baseName, variants]) => ({
+    baseName,
+    variants: variants.sort((a, b) => {
+      // Ordenar variantes por precio o existencias
+      return parseFloat(a.precio || '0') - parseFloat(b.precio || '0');
+    })
+  }));
 }
+/////
+
+///// AGRUPAR RESULTADOS POR VARIANTE EN CATEGORIAS
+export async function getProductsByGroupsofCategories(categoria: string) {
+  const categoriaReal = slugToCategory(categoria);
+
+  console.log(categoriaReal);
+  
+
+  const rawProducts = await db.select()
+    .from(productos)
+    .where(
+      ilike(productos.categoria, `%${categoriaReal}%`)
+    )
+    .orderBy(desc(productos.destacado), desc(productos.createdat));
+    
+  // === Agrupación por nombre base ===
+  const grouped = rawProducts.reduce((acc, producto) => {
+    const fullDesc = producto.descripcion || '';
+    const baseName = fullDesc.split('|')[0].trim(); // Todo antes del "|"
+
+    if (!acc[baseName]) {
+      acc[baseName] = [];
+    }
+
+    acc[baseName].push(producto);
+    return acc;
+  }, {} as Record<string, any[]>);
+
+  // Convertimos a array ordenado
+  return Object.entries(grouped).map(([baseName, variants]) => ({
+    baseName,
+    variants: variants.sort((a, b) => {
+      // Ordenar variantes por precio o existencias
+      return parseFloat(a.precio || '0') - parseFloat(b.precio || '0');
+    })
+  }));
+}
+/////
+
+////// BUSCAR PRODUCTOS POR EL TEXTO DE LA URL
+export async function getProductById(id: string) {
+  const result = await db.select()
+    .from(productos)
+    .where(eq(productos.id, id))
+    .limit(1);
+
+  return result[0];
+}
+/////
+
+
+
+
 
 export async function getRecomendedProducts() {
         return await db.select()
@@ -94,25 +171,8 @@ export async function getAllProducts(page = 1, limit = 20) {
   };
 }
 
-// 2. Buscar productos (búsqueda por nombre o descripción)
-export async function searchProducts(searchTerm: string) {
-  return await db.select()
-    .from(productos)
-    .where(
-      like(productos.descripcion, `%${searchTerm}%`)
-    )
-    .orderBy(desc(productos.destacado));
-}
 
-// 5. Obtener un producto por ID o Clave
-export async function getProductById(id: string) {
-  const result = await db.select()
-    .from(productos)
-    .where(eq(productos.id, id))
-    .limit(1);
 
-  return result[0];
-}
 
 // 6. Productos con stock bajo
 export async function getLowStockProducts(threshold = 10) {

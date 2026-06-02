@@ -1,18 +1,17 @@
-import Image from "next/image";
-import { getProductsByGroupsofTrademarks } from "../db/queries";
+import { getProductsByGroupsofCategories } from "../db/queries";
 import GroupCard from "./GroupCard";
 
 type Props = {
   slug: string
 }
 
-export default async function TrademarckResults({ slug }: Props) {
+export default async function CategoryResults({ slug }: Props) {
   
   //const productos = await getProductsByMarca( slug );
-  const groupedProducts = await getProductsByGroupsofTrademarks( slug )
+  const groupedProducts = await getProductsByGroupsofCategories( slug )
+  
   console.log(groupedProducts);
   
-
   return (
    <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">

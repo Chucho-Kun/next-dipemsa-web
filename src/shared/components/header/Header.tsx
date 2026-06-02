@@ -5,6 +5,7 @@ import { Search, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { marcas } from '../../db/marcas';
+import SearchBar from './SearchBar';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +22,7 @@ export default function Header() {
 
       {/* Main Header */}
       <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Logo */}
             <div className="shrink-0">
@@ -39,28 +40,11 @@ export default function Header() {
 
             </div>
 
-            {/* Search Bar */}
-            <div className="flex-1 w-full">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Buscar productos..."
-                  className="w-full h-12 border-2 border-[#FF5E00] rounded-xl py-3 px-5 pr-16 focus:outline-none focus:border-[#E30613] text-sm bg-white"
-                />
-                
-                <button 
-                  className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#FF5E00] hover:bg-[#E30613] cursor-pointer text-white px-6 py-3 rounded-r-xl transition-all active:scale-95"
-                >
-                  <Search size={22} strokeWidth={2.5} />
-                </button>
-              </div>
-            </div>
+              <SearchBar />
 
-            {/* Cart and Quote Button */}
-            <div className="flex items-center gap-4">
-              {/* Cart */}
-
-             
+               {/* Cart and Quote Button */}
+               <div className="flex items-center gap-4">
+               {/* Cart */}
 
               {/**Icono carrito en movil */}
               {/* <button 
