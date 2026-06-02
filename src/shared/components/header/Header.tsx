@@ -84,6 +84,7 @@ export default function Header() {
 
               {/* Mobile Menu Button */}
               <button 
+                aria-label='abrir menu movil'
                 className="md:hidden text-gray-700"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >

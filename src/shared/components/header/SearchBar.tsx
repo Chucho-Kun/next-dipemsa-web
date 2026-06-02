@@ -160,6 +160,7 @@ export default function SearchBar() {
         />
 
         <button
+          aria-label='Boton Buscar'
           onClick={() => setOpen(true)}
           className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#FF5E00] hover:bg-[#E30613] text-white px-6 py-3 rounded-r-xl transition-all"
         >

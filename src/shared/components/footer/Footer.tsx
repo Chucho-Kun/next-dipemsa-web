@@ -31,13 +31,13 @@ export default function Footer() {
             {/* Redes Sociales */}
             <div className="flex gap-4 mt-8">
               <Link href={'tel:5587512193'} target='_blank' className='p-2 rounded-full hover:bg-taupe-800 transition'>
-                <img width={25} height={25} src={'/icons/phone.svg'} />
+                <img aria-label='llamar a sucursal' width={25} height={25} src={'/icons/phone.svg'} alt='icono telefono'/>
               </Link>
               <Link href={'https://wa.me/5532651039'} target='_blank' className='p-2 rounded-full hover:bg-taupe-800 transition'>
-                <img className='hove:text-yellow-300' width={25} height={25} src={'/icons/whatsapp.svg'} />
+                <img aria-label='whatsapp de sucursal' className='hove:text-yellow-300' width={25} height={25} src={'/icons/whatsapp.svg'} alt='icono whatsApp' />
               </Link>
               <Link href={'https://www.facebook.com/Dipemsa/'} target='_blank' className='p-2 rounded-full hover:bg-taupe-800 transition'>
-                <img width={25} height={25} src={'/icons/facebook.svg'} />
+                <img aria-label='facebook de sucursal' width={25} height={25} src={'/icons/facebook.svg'} alt='icono facebook' />
               </Link>
               
             </div>

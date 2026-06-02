@@ -14,55 +14,55 @@ export default function SliderMain() {
     <div className="overflow-hidden" ref={emblaRef}>
       <div className="flex pb-5 cursor-grab">
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/1.jpg" alt="Prueba 1" className="slider-responsive" />
+          <img src="/sliders/mainSlider/1.webp" alt="Dipemsa web" className="slider-responsive" fetchPriority='high' />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/1b.jpg" alt="Prueba 2" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/1b.webp" alt="Mayoristas o constructores" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/2.jpg" alt="Prueba 3" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/2.webp" alt="Contamos con toda la linea Panel Rey" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/3.jpg" alt="Prueba 4" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/3.webp" alt="Plafones y suspensiones" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/4.jpg" alt="Prueba 1" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/4.webp" alt="Grambel Sistemas de Fijación" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/A2.jpg" alt="Prueba 2" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/A2.webp" alt="Sellado con productos Pennsylvania" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/AR1.jpg" alt="Prueba 1" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/AR1.webp" alt="Plafones y suspension Armstrong" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/AR3.jpg" alt="Prueba 2" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/AR3.webp" alt="Venta de productos Dipemsa" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/AR4.jpg" alt="Prueba 1" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/AR4.webp" alt="Glass liner y liner panel disponibles" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/AR5.jpg" alt="Prueba 2" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/AR5.webp" alt="Plafones y suspensiones de todas las marcas" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/basecoat.jpg" alt="Prueba 1" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/basecoat.webp" alt="Productos USG basecoat, durok, redimix" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/mapei.jpg" alt="Prueba 2" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/mapei.webp" alt="Adhesivos y nivelantes Mapei" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/plasticos.jpg" alt="Prueba 1" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/plasticos.webp" alt="Perfiles plasticos trim-tex" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/sliderA.jpg" alt="Prueba 2" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/sliderA.webp" alt="Cita tapagoteras duretan de productos pennsylvania" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/sliderB.jpg" alt="Prueba 2" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/sliderB.webp" alt="Todos los productos de la marca Fischer" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/sliderC.jpg" alt="Prueba 2" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/sliderC.webp" alt="productos cempanel para aplicaciones arquitectonicas" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
-          <img src="/sliders/mainSlider/sliderD.jpg" alt="Prueba 2" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/sliderD.webp" alt="Sistema de obra blanca con productos pega duro" className="slider-responsive" />
         </div>
       </div>
     </div>

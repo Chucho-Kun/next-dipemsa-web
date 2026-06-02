@@ -51,67 +51,104 @@ export const metadata: Metadata = {
 export default function page() {
   return (
     <>
-      {/* Schema.org JSON-LD */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": "Dipemsa",
-            "description": "Somos DIPEMSA una empresa distribuidora de materiales para construcción ligera, contamos con las mejores marcas y stock siempre en existencia. Surtimos desde una pieza hasta una obra completa.",
-            "url": "https://dipemsa.com.mx",
-            "logo": "https://dipemsa.com.mx/logo.webp",
-            "image": "https://dipemsa.com.mx/logoDipemsa.jpg",
-            
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "Manzana 014, Anahuac 2da Secc, 55882 Tepexpan, Méx Tepexpan, 55882 México, Méx.",
-              "addressLocality": "Ecatepec de Morelos",
-              "addressRegion": "Estado de México",
-              "postalCode": "55882",
-              "addressCountry": "MX"
-            },
-            
-            "geo": {
-              "@type": "GeoCoordinates",
-              "latitude": 19.612469596852044,
-              "longitude": -98.95722941415411
-            },
-            
-            "telephone": "+52-55-3265-1039",
-            "email": "contacto@dipemsa.com.mx",   // Cambia si tienes uno oficial
-            
-            "openingHoursSpecification": [
-              {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                "opens": "08:00",
-                "closes": "18:00"
-              },
-              {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": "Saturday",
-                "opens": "08:00",
-                "closes": "14:00"
-              }
-            ],
-            
-            "priceRange": "$$",
-            "paymentAccepted": ["Cash", "Credit Card", "Transferencia", "Mercado Pago"],
-            
-            "areaServed": {
-              "@type": "City",
-              "name": "Ecatepec de Morelos"
-            },
-            
-            "sameAs": [
-              "https://www.facebook.com/Dipemsa/"
-            ]
-          })
-        }} />
+      
+      {/* Schema.org JSON-LD - Organización con 2 Sucursales */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "Dipemsa",
+                "description": "Somos DIPEMSA una empresa distribuidora de materiales para construcción ligera, contamos con las mejores marcas y stock siempre en existencia. Surtimos desde una pieza hasta una obra completa.",
+                "url": "https://dipemsa.com.mx",
+                "logo": "https://dipemsa.com.mx/logo.webp",
+                "image": "https://dipemsa.com.mx/logoDipemsa.jpg",
 
-      <section>
+                // Sucursales
+                "location": [
+                  {
+                    "@type": "Place",
+                    "name": "DIPEMSA SUCURSAL ECATEPEC",
+                    "address": {
+                      "@type": "PostalAddress",
+                      "streetAddress": "Av Insurgentes Esq 3a. Privada Allende El, Capulín 7730",
+                      "addressLocality": "Ecatepec de Morelos",
+                      "addressRegion": "Estado de México",
+                      "postalCode": "55037",
+                      "addressCountry": "MX"
+                    },
+                    "geo": {
+                      "@type": "GeoCoordinates",
+                      "latitude": 19.593784328073735,
+                      "longitude": -99.04405754907754
+                    },
+                    "telephone": "+52-55-9236-8879",
+                    "openingHoursSpecification": [
+                      {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                        "opens": "08:30",
+                        "closes": "18:00"
+                      },
+                      {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": "Saturday",
+                        "opens": "08:30",
+                        "closes": "15:00"
+                      }
+                    ]
+                  },
+                  {
+                    "@type": "Place",
+                    "name": "DIPEMSA SUCURSAL TEXCOCO",
+                    "address": {
+                      "@type": "PostalAddress",
+                      "streetAddress": "Lechería - Texcoco km 27.5, San Francisco Acuexcomac",
+                      "addressLocality": "San Francisco Acuexcomac",
+                      "addressRegion": "Estado de México",
+                      "postalCode": "56300",
+                      "addressCountry": "MX"
+                    },
+                    "geo": {
+                      "@type": "GeoCoordinates",
+                      "latitude": 19.558544270236247,
+                      "longitude": -98.91190823558253
+                    },
+                    "telephone": "+52-55-9298-6436",
+                    "openingHoursSpecification": [
+                      {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                        "opens": "08:30",
+                        "closes": "18:00"
+                      },
+                      {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": "Saturday",
+                        "opens": "08:30",
+                        "closes": "15:00"
+                      }
+                    ]
+                  }
+                ],
+
+                "telephone": "+52-55-9236-8879",
+                "email": "contacto@dipemsa.com.mx",
+
+                "priceRange": "$$",
+                "paymentAccepted": ["Cash", "Credit Card", "Transferencia", "Mercado Pago"],
+
+                "sameAs": [
+                  "https://www.facebook.com/Dipemsa/"
+                ]
+              })
+            }}
+          />
+
+      <main>
         <SliderMain />
-      </section>
+      </main>
 
       <RecommendedProductsServer />
 
