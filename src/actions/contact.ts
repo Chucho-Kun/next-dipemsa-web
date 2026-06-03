@@ -13,7 +13,7 @@ export async function sendContactEmail(formData: FormData) {
 
   try {
     const transporter = nodemailer.createTransport({
-      host: "mail.hospedalia.com",
+      host: "smtp.hospedalia.com",//"mail.hospedalia.com",
       port: 587,
       secure: false,
       auth: {
