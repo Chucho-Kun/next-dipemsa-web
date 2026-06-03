@@ -104,7 +104,7 @@ export default function Header() {
             <Link href={'/marcas'} className='hover:text-[#FF5E00] transition'>MARCAS</Link>
             <Link href={'/productos'} className='hover:text-[#FF5E00] transition'>PRODUCTOS</Link>
             <Link href={'/soy-mayorista'} className='hover:text-[#FF5E00] transition'>SOY MAYORISTA</Link>
-            <Link href={'/compra-pactada'} className='hover:text-[#FF5E00] transition'>COMPRA PACTADA</Link>
+            {/* <Link href={'/compra-pactada'} className='hover:text-[#FF5E00] transition'>COMPRA PACTADA</Link> */}
             <Link href={'/contacto'} className='hover:text-[#FF5E00] transition'>CONTACTO</Link>
 
           </div>
@@ -116,7 +116,7 @@ export default function Header() {
               <Link href={'/marcas'} className='hover:text-[#FF5E00] transition'>MARCAS</Link>
               <Link href={'/productos'} className='hover:text-[#FF5E00] transition'>PRODUCTOS</Link>
               <Link href={'/soy-mayorista'} className='hover:text-[#FF5E00] transition'>SOY MAYORISTA</Link>
-              <Link href={'/compra-pactada'} className='hover:text-[#FF5E00] transition'>COMPRA PACTADA</Link>
+              {/* <Link href={'/compra-pactada'} className='hover:text-[#FF5E00] transition'>COMPRA PACTADA</Link> */}
               <Link href={'/contacto'} className='hover:text-[#FF5E00] transition'>CONTACTO</Link>
             </div>
           )}

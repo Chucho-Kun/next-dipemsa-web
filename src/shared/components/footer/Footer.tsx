@@ -17,7 +17,8 @@ export default function Footer() {
                 width={136}
                 height={34}
                 loading='lazy'
-                className='ml-6'
+                className="ml-6 h-auto w-50"
+                sizes="(max-width: 768px) 100vw, 200px"
               />
             </div>
             

@@ -28,6 +28,7 @@ export default function RootLayout({
     <html
       lang="es"
       className={`${jost.variable} h-full bg-white antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-jost">
         {children}

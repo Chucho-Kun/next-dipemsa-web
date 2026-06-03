@@ -1,9 +1,31 @@
 'use client';
 
-import ProductCard from "@/src/shared/components/ProductCard";
+import { sendContactEmail } from "@/src/actions/contact";
 import Link from "next/link";
+import React, { useState, useRef } from "react";
 
 export default function ContactoPage() {
+  const [status, setStatus] = useState<{ success?: boolean; message?: string }>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);   // ← Agregado
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setStatus({});
+
+    const formData = new FormData(e.currentTarget);
+    
+    const result = await sendContactEmail(formData);
+    
+    setStatus(result);
+    setIsLoading(false);
+
+    if (result.success) {
+      formRef.current?.reset();     // ← Forma más segura
+    }
+  };
+
   return (
     <section className="bg-gray-100 py-16">
       <div className="max-w-6xl mx-auto px-6">
@@ -13,8 +35,8 @@ export default function ContactoPage() {
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           
-          {/* Columna Izquierda - Información de Contacto */}
-          <div className="space-y-8">
+          {/* Columna Izquierda - Información */}
+           <div className="space-y-8">
             <div>
               <h3 className="text-orange-600 font-bold text-xl mb-6">CONTACTO</h3>
               
@@ -58,11 +80,13 @@ export default function ContactoPage() {
 
           {/* Columna Derecha - Formulario */}
           <div className="bg-white p-8 rounded-3xl shadow-sm">
-            <form className="space-y-6">
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <input
                   type="text"
+                  name="nombre"
                   placeholder="Nombre Completo:"
+                  required
                   className="w-full border border-gray-300 rounded-xl px-5 py-4 focus:outline-none focus:border-orange-500 transition"
                 />
               </div>
@@ -70,25 +94,36 @@ export default function ContactoPage() {
               <div>
                 <input
                   type="email"
+                  name="email"
                   placeholder="Correo Electrónico:"
+                  required
                   className="w-full border border-gray-300 rounded-xl px-5 py-4 focus:outline-none focus:border-orange-500 transition"
                 />
               </div>
 
               <div>
                 <textarea
+                  name="mensaje"
                   placeholder="Mensaje:"
                   rows={6}
+                  required
                   className="w-full border border-gray-300 rounded-2xl px-5 py-4 focus:outline-none focus:border-orange-500 transition resize-y"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-4 rounded-2xl transition text-lg"
+                disabled={isLoading}
+                className="w-full bg-[#1E2937] hover:bg-black disabled:bg-gray-400 text-white font-semibold py-4 rounded-2xl transition text-lg flex items-center justify-center"
               >
-                ENVIAR
+                {isLoading ? "ENVIANDO..." : "ENVIAR MENSAJE"}
               </button>
+
+              {status.message && (
+                <p className={`text-center mt-4 font-medium ${status.success ? 'text-green-600' : 'text-red-600'}`}>
+                  {status.message}
+                </p>
+              )}
             </form>
           </div>
         </div>
