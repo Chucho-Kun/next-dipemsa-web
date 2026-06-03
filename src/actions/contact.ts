@@ -18,13 +18,13 @@ export async function sendContactEmail(formData: FormData) {
       port: 587,
       secure: false,
       auth: {
-        user: "avisos@dipemsa.com.mx",
-        pass: process.env.EMAIL_PASSWORD,
+        user: process.env.EMAIL_PASSWORD,
+        pass: "@#Avisos123#@",
       },
     });
 
     await transporter.sendMail({
-      from: `"Sitio Web Dipemsa" <contacto@dipemsa.com.mx>`,
+      from: `"Sitio Web Dipemsa" ${ process.env.EMAIL_PASSWORD }`,
       to: "gameroapp@gmail.com", //"contacto@dipemsa.com.mx",
       replyTo: email,   // Para que puedas responder directamente
       subject: `Nuevo mensaje desde el sitio web - ${nombre}`,
