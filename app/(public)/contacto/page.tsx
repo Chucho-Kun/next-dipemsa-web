@@ -1,6 +1,7 @@
 'use client';
 
 import { sendContactEmail } from "@/src/actions/contact";
+import { whatsAppNumber } from "@/src/shared/db/contact-info";
 import Link from "next/link";
 import React, { useState, useRef } from "react";
 
@@ -11,20 +12,35 @@ export default function ContactoPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
-    setStatus({});
+    //setIsLoading(true);
+    //setStatus({});
 
     const formData = new FormData(e.currentTarget);
+    const nombre = formData.get('nombre') as string;
+    const email = formData.get('email') as string;
+    const mensaje = formData.get('mensaje') as string;
     
-    const result = await sendContactEmail(formData);
-    
-    setStatus(result);
-    setIsLoading(false);
+    //const result = await sendContactEmail(formData);
+    //setStatus(result);
+    //setIsLoading(false);
 
-    if (result.success) {
-      formRef.current?.reset();     // ← Forma más segura
-    }
+    // if (result.success) {
+    //   formRef.current?.reset();     // ← Forma más segura
+    // }
+
+// no dentar, la posición de los campos se modifica
+const consulta = `https://api.whatsapp.com/send?phone=${whatsAppNumber}&text=${
+encodeURIComponent(`
+*Nombre:* ${ nombre } 
+*Email:* ${ email } 
+*Mensaje:* 
+${ mensaje }`)}` 
+// `*Nombre:*%20${ nombre }%0A*Email:*%20${ email }%0A*Mensaje:* ${ mensaje }`}` 
+
+window.open(consulta)
   };
+
+    
 
   return (
     <section className="bg-gray-100 py-16">
@@ -73,9 +89,9 @@ export default function ContactoPage() {
             </div>
 
             {/* Botón Enviar Mensaje */}
-            <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3.5 rounded-full transition text-lg">
+            {/* <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3.5 rounded-full transition text-lg">
               ENVÍANOS UN MENSAJE
-            </button>
+            </button> */}
           </div>
 
           {/* Columna Derecha - Formulario */}
