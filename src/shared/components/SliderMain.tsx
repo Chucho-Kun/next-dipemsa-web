@@ -61,9 +61,6 @@ export default function SliderMain() {
         <div className="flex-[0_0_100%] min-w-0">
           <img loading="lazy" src="/sliders/mainSlider/sliderC.webp" alt="productos cempanel para aplicaciones arquitectonicas" className="slider-responsive" />
         </div>
-        <div className="flex-[0_0_100%] min-w-0">
-          <img loading="lazy" src="/sliders/mainSlider/sliderD.webp" alt="Sistema de obra blanca con productos pega duro" className="slider-responsive" />
-        </div>
       </div>
     </div>
   );

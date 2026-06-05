@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import { whatsAppNumber } from '../db/contact-info';
 
 export default function SoyMayorista() {
   return (
@@ -55,9 +57,11 @@ export default function SoyMayorista() {
 
         {/* Botón principal */}
         <div className="flex justify-center mt-10">
-          <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-lg px-10 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl">
+          <Link
+           href={ `https://api.whatsapp.com/send?phone=${whatsAppNumber}&text=${ encodeURIComponent('Hola me intereza conocer más del programa de mayoristas y constructores') }`}
+           className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-lg px-10 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl">
             QUIERO SER PARTE DEL PROGRAMA DE MAYORISTAS Y CONSTRUCTORES
-          </button>
+          </Link>
         </div>
       </div>
     </section>
