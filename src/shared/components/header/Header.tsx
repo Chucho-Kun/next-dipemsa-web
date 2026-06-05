@@ -126,7 +126,7 @@ export default function Header() {
       {/* Brands Bar */}
       <div className="bg-white py-3 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="max-w-225 mx-auto hidden md:flex items-center justify-center gap-2 md:gap-2 text-xs md:text-sm font-bold text-gray-600 flex-wrap">
+          <div className="max-w-full mx-auto hidden md:flex items-center justify-center gap-2 md:gap-1 text-xs md:text-sm font-bold text-gray-600 flex-wrap">
             
             { marcas.map( (marca, index) => (
                 <React.Fragment key={marca.name}>

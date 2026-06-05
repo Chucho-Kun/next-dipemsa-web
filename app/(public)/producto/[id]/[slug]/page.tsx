@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${tituloProducto} | ${ producto.marca }`,
       description: `${ producto.descripcion?.split('|')[1] } - [ ${ producto.id } ]`,
-      url: `https://dipemsa.com.mx/producto/${id}/${producto.descripcion?.split('|')[0] || ''}`,
+      url: `https://www.dipemsa.com.mx/producto/${id}/${producto.descripcion?.split('|')[0] || ''}`,
       images: [
         {
           url: `/fotos/${id}.jpg`,
@@ -78,25 +78,25 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
                     "@type": "ListItem",
                     "position": 1,
                     "name": "Inicio",
-                    "item": "https://dipemsa.com.mx"
+                    "item": "https://www.dipemsa.com.mx"
                   },
                   {
                     "@type": "ListItem",
                     "position": 2,
                     "name": "Marca",
-                    "item": `https://dipemsa.com.mx/marca/${ producto.marca }`
+                    "item": `https://www.dipemsa.com.mx/marca/${ producto.marca }`
                   },
                   {
                     "@type": "ListItem",
                     "position": 3,
                     "name": "Producto",
-                    "item": `https://dipemsa.com.mx/categoria/${ producto.categoria }`
+                    "item": `https://www.dipemsa.com.mx/categoria/${ producto.categoria }`
                   },
                   {
                     "@type": "ListItem",
                     "position": 4,
                     "name": tituloProducto,
-                    "item": `https://dipemsa.com.mx/producto/${id}/${ slug } || ''}`
+                    "item": `https://www.dipemsa.com.mx/producto/${id}/${ slug } || ''}`
                   }
                 ]
               })
@@ -113,14 +113,14 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
                 "name": tituloProducto,
                 "description": tituloDesc || "varios modelos",
                 "sku": producto.clave,
-                "image": `https://dipemsa.com.mx/fotos/${id}.jpg`,
+                "image": `https://www.dipemsa.com.mx/fotos/${id}.jpg`,
                 "brand": {
                   "@type": "Brand",
                   "name": producto.marca || "Dipemsa"
                 },
                 "offers": {
                   "@type": "Offer",
-                  "url": `https://dipemsa.com.mx/producto/${id}/${ slug || ''}`,
+                  "url": `https://www.dipemsa.com.mx/producto/${id}/${ slug || ''}`,
                   "priceCurrency": "MXN",
                   "price": parseFloat(producto.precio?.replace(/[$,]/g, '') || "0"),
                   "priceValidUntil": "2026-12-31",

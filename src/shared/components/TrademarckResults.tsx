@@ -8,10 +8,7 @@ type Props = {
 
 export default async function TrademarckResults({ slug }: Props) {
   
-  //const productos = await getProductsByMarca( slug );
   const groupedProducts = await getProductsByGroupsofTrademarks( slug )
-  console.log(groupedProducts);
-  
 
   return (
    <section className="py-16 bg-gray-50">

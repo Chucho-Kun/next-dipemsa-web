@@ -25,11 +25,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Dipemsa | Materiales de Construcción Ligera",
     description: "Somos DIPEMSA una empresa distribuidora de materiales para construcción ligera, contamos con las mejores marcas y stock siempre en existencia. Surtimos desde una pieza hasta una obra completa.",
-    url: "https://dipemsa.com.mx/",
+    url: "https://www.dipemsa.com.mx/",
     siteName: "Dipemsa",
     images: [
       {
-        url: "https://dipemsa.com.mx/logoDipemsa.jpg",   // Cambia por tu imagen real
+        url: "https://www.dipemsa.com.mx/logoDipemsa.jpg",   // Cambia por tu imagen real
         width: 1200,
         height: 630,
         alt: "Dipemsa - Materiales de Construcción",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Dipemsa | Materiales de Construcción Ligera",
     description: "Somos DIPEMSA una empresa distribuidora de materiales para construcción ligera, contamos con las mejores marcas y stock siempre en existencia. Surtimos desde una pieza hasta una obra completa.",
-    images: ["https://dipemsa.com.mx/logoDipemsa.jpg"],
+    images: ["https://www.dipemsa.com.mx/logoDipemsa.jpg"],
   },
 };
 // =====================================================
@@ -61,9 +61,9 @@ export default function page() {
                 "@type": "Organization",
                 "name": "Dipemsa",
                 "description": "Somos DIPEMSA una empresa distribuidora de materiales para construcción ligera, contamos con las mejores marcas y stock siempre en existencia. Surtimos desde una pieza hasta una obra completa.",
-                "url": "https://dipemsa.com.mx",
-                "logo": "https://dipemsa.com.mx/logo.webp",
-                "image": "https://dipemsa.com.mx/logoDipemsa.jpg",
+                "url": "https://www.dipemsa.com.mx",
+                "logo": "https://www.dipemsa.com.mx/logo.webp",
+                "image": "https://www.dipemsa.com.mx/logoDipemsa.jpg",
 
                 // Sucursales
                 "location": [

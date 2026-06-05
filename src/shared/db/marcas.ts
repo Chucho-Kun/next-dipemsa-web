@@ -14,7 +14,7 @@ export const marcas: marcasType[] = [
   { name: "owens-corning", src: "/marcas/owens-corning.jpeg" },
   { name: "panel-rey", src: "/marcas/panel-rey.jpeg" },
   { name: "pennsylvania", src: "/marcas/pennsylvania.jpeg" },
-  { name: "riho", src: "/marcas/riho.jpeg" },
+  // { name: "riho", src: "/marcas/riho.jpeg" },
   { name: "stabilit", src: "/marcas/stabilit.jpeg" },
   { name: "trim-tex", src: "/marcas/trim-tex.jpeg" },
   { name: "truper", src: "/marcas/truper.jpeg" },
