@@ -94,12 +94,35 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
       </div>
 
       {/* Botón */}
-      {/* <div className="p-5 pt-0 mt-auto">
-        <button className="w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3.5 transition text-sm">
-          AGREGAR AL CARRITO
-        </button>
-      </div> */}
       <div className="p-5 pt-0 mt-auto">
+        <button className="w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3.5 transition text-sm">
+          <Link href={`/producto/${ selectedVariant.id }/${ selectedVariant.descripcion.replace(/\s+/g, ' ')
+                                                     .trim()
+                                                     .replaceAll('|','-')
+                                                     .replaceAll(' ','-')
+                                                     .replaceAll('.','')
+                                                    .split(',')[0]
+                                                    .split('|')[0]
+                                                    .trim()
+                                                    .normalize('NFD')                  // separa acentos
+                                                    .replace(/[\u0300-\u036f]/g, '')   // elimina acentos
+                                                    .toLowerCase()
+                                                    .replace(/["'`]/g, '')
+                                                    .replaceAll(' ','-')
+                                                    .replaceAll('/','-')
+                                                    .replaceAll('---','-')
+                                                    .replaceAll('--','-')
+                                                    .replaceAll('#','no')
+                                                }`
+                
+              }>
+          VER PRODUCTO
+          </Link>
+          
+        </button>
+      </div>
+
+      {/*<div className="p-5 pt-0 mt-auto">
         <Link 
             href={ `https://api.whatsapp.com/send?phone=${whatsAppNumber}&text=${
                 encodeURIComponent(`Hola me interesa cotizar *${ 
@@ -119,7 +142,8 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
             />
           </span>
         </Link>
-      </div>
+      </div> */}
+
     </div>
   );
 }

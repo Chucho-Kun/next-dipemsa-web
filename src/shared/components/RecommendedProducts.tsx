@@ -88,10 +88,33 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
                               <p className="text-xs text-gray-500 mt-1">CLAVE: {producto.clave}</p>
                             </div>
 
-                            {/* <button className="mt-5 w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3 transition">
-                              AGREGAR AL CARRITO
-                            </button> */}
-                            <div className="p-5 pt-0 mt-auto">
+                            <button className="mt-5 w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3 transition">
+                              <Link href={`/producto/${ producto.id }/${ producto.descripcion!.replace(/\s+/g, ' ')
+                                                     .trim()
+                                                     .replaceAll('|','-')
+                                                     .replaceAll(' ','-')
+                                                     .replaceAll('.','')
+                                                    .split(',')[0]
+                                                    .split('|')[0]
+                                                    .trim()
+                                                    .normalize('NFD')                  // separa acentos
+                                                    .replace(/[\u0300-\u036f]/g, '')   // elimina acentos
+                                                    .toLowerCase()
+                                                    .replace(/["'`]/g, '')
+                                                    .replaceAll(' ','-')
+                                                    .replaceAll('/','-')
+                                                    .replaceAll('---','-')
+                                                    .replaceAll('--','-')
+                                                    .replaceAll('#','no')
+                                                }`
+                
+                                          }>
+                              VER PRODUCTO
+                              </Link>
+                              
+                            </button>
+
+                            {/*<div className="p-5 pt-0 mt-auto">
                               <Link 
                                   href={ `https://api.whatsapp.com/send?phone=${whatsAppNumber}&text=${
                                       encodeURIComponent(`Hola me interesa cotizar *${ 
@@ -111,7 +134,8 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
                                   />
                                 </span>
                               </Link>
-                            </div>
+                            </div> */}
+
                           </div>
                         </div>
                       </div>
