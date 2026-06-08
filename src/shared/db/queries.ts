@@ -20,7 +20,7 @@ export function slugToMarca(slug: string): string {
 export function slugToCategory(slug: string): string {
   const mapa: Record<string, string> = {
     'anclajes-y-quimicos-epoxicos': 'Anclajes y químicos epoxicos',
-    'sistemas-de-fijacion-convencional': 'Sistemas de fijacion convencional.',
+    'sistemas-de-fijacion-directa': 'Sistemas de fijacion convencional.',
     'panel-rey': 'Perfiles galvanizados ',
     'trim-tex': 'Liner panel ',
     'cempanel': 'Cempanel',
@@ -41,12 +41,20 @@ export async function getProductsByGroupsofTrademarks(marca: string) {
     .where(
       ilike(productos.marca, `%${marcaReal}%`)
     )
-    .orderBy(desc(productos.destacado), desc(productos.createdat));
-    
+    .orderBy(desc(productos.orden_cat));   // ← Cambiado a orden_prod
+
+  // console.log("Productos crudos por marca (orden_prod):", 
+  //   rawProducts.map(p => ({ 
+  //     descripcion: p.descripcion?.substring(0, 60) + '...', 
+  //     orden_prod: p.orden_prod,
+  //     orden_cat: p.orden_cat 
+  //   }))
+  //);
+
   // === Agrupación por nombre base ===
   const grouped = rawProducts.reduce((acc, producto) => {
     const fullDesc = producto.descripcion || '';
-    const baseName = fullDesc.split('|')[0].trim(); // Todo antes del "|"
+    const baseName = fullDesc.split('|')[0].trim();
 
     if (!acc[baseName]) {
       acc[baseName] = [];
@@ -56,14 +64,21 @@ export async function getProductsByGroupsofTrademarks(marca: string) {
     return acc;
   }, {} as Record<string, any[]>);
 
-  // Convertimos a array ordenado
-  return Object.entries(grouped).map(([baseName, variants]) => ({
-    baseName,
-    variants: variants.sort((a, b) => {
-      // Ordenar variantes por precio o existencias
-      return parseFloat(a.precio || '0') - parseFloat(b.precio || '0');
-    })
-  }));
+  // Convertimos a array y ordenamos los grupos
+  return Object.entries(grouped)
+    .map(([baseName, variants]) => ({
+      baseName,
+      variants: variants.sort((a, b) => {
+        // Ordenar variantes dentro del grupo por precio
+        return parseFloat(a.precio || '0') - parseFloat(b.precio || '0');
+      })
+    }))
+    // ← Orden final de los GRUPOS por orden_prod (mayor a menor)
+    .sort((a, b) => {
+      const ordenA = a.variants[0]?.orden_cat ?? 0;
+      const ordenB = b.variants[0]?.orden_cat ?? 0;
+      return ordenB - ordenA; // Mayor a menor
+    });
 }
 /////
 
@@ -71,37 +86,47 @@ export async function getProductsByGroupsofTrademarks(marca: string) {
 export async function getProductsByGroupsofCategories(categoria: string) {
   const categoriaReal = slugToCategory(categoria);
 
-  console.log(categoriaReal);
-  
-
   const rawProducts = await db.select()
     .from(productos)
     .where(
       ilike(productos.categoria, `%${categoriaReal}%`)
     )
-    .orderBy(desc(productos.destacado), desc(productos.createdat));
-    
+    .orderBy(desc(productos.orden_prod));     // ← Cambiado a orden_cat
+
+  // console.log("Productos crudos ordenados por orden_cat:", 
+  //   rawProducts.map(p => ({ 
+  //     descripcion: p.descripcion?.substring(0, 50), 
+  //     orden_cat: p.orden_cat,
+  //     orden_prod: p.orden_prod 
+  //   }))
+  // );
+
   // === Agrupación por nombre base ===
   const grouped = rawProducts.reduce((acc, producto) => {
     const fullDesc = producto.descripcion || '';
-    const baseName = fullDesc.split('|')[0].trim(); // Todo antes del "|"
+    const baseName = fullDesc.split('|')[0].trim();
 
     if (!acc[baseName]) {
       acc[baseName] = [];
     }
-
     acc[baseName].push(producto);
     return acc;
   }, {} as Record<string, any[]>);
 
-  // Convertimos a array ordenado
-  return Object.entries(grouped).map(([baseName, variants]) => ({
-    baseName,
-    variants: variants.sort((a, b) => {
-      // Ordenar variantes por precio o existencias
-      return parseFloat(a.precio || '0') - parseFloat(b.precio || '0');
-    })
-  }));
+  // Convertimos a array y ordenamos los grupos
+  return Object.entries(grouped)
+    .map(([baseName, variants]) => ({
+      baseName,
+      variants: variants.sort((a, b) => {
+        return parseFloat(a.precio || '0') - parseFloat(b.precio || '0');
+      })
+    }))
+    // Orden final de los GRUPOS por orden_cat (mayor a menor)
+    .sort((a, b) => {
+      const ordenA = a.variants[0]?.orden_prod ?? 0;
+      const ordenB = b.variants[0]?.orden_prod ?? 0;
+      return ordenB - ordenA;   // ← Mayor a menor
+    });
 }
 /////
 

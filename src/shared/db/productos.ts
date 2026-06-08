@@ -11,7 +11,7 @@ export const productos: ProductosType[] = [
   { name: "plafones-y-suspension", src: "/productos/plafones.webp" },
   { name: "cempanel", src: "/productos/cempanel.webp" },
   { name: "sellado", src: "/productos/sellado.webp" },
-  { name: "sistemas-de-fijacion-convencional", src: "/productos/sistemas-de-fijacion-convencional.webp" },
+  { name: "sistemas-de-fijacion-directa", src: "/productos/sistemas-de-fijacion-convencional.webp" },
   { name: "anclajes-y-quimicos-epoxicos", src: "/productos/anclajes-y-quimicos-epoxicos.webp" },
   { name: "tornilleria", src: "/productos/tornilleria.webp" },
   { name: "aislantes", src: "/productos/aislantes.webp" },
@@ -19,6 +19,6 @@ export const productos: ProductosType[] = [
   { name: "adhesivos-y-nivelantes", src: "/productos/adhesivos-y-nivelantes.webp" },
   { name: "herramientas", src: "/productos/herramientas.webp" },
   // { name: "liner-panel", src: "/productos/liner-panel.webp" },
-  { name: "suspension", src: "/productos/suspension.webp" },
+  // { name: "suspension", src: "/productos/suspension.webp" },
   // { name: "pintura", src: "/productos/pintura.webp" },
 ];

@@ -11,5 +11,7 @@ export type ResultadosType = {
     precioant: string | null
     precio: string | null
     destacado: boolean | null
+    orden_prod: number | null
+    orden_cat: number | null
     createdat: Date | string | null
 }

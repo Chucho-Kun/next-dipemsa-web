@@ -1,4 +1,4 @@
-CREATE TABLE "productos_" (
+CREATE TABLE "productos" (
 	"id" varchar(10) PRIMARY KEY NOT NULL,
 	"clave" varchar(100),
 	"variante" varchar(100),
@@ -11,7 +11,5 @@ CREATE TABLE "productos_" (
 	"precioant" varchar(100),
 	"precio" varchar(100),
 	"destacado" boolean DEFAULT false,
-	"orden_prod" integer DEFAULT 0,
-	"orden_cat" integer DEFAULT 0,
 	"createdat" timestamp DEFAULT now()
 );

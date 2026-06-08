@@ -68,7 +68,7 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
 
                           {/* Información */}
                           <div className="p-5 flex-1 flex flex-col">
-                            <p className="text-sm font-medium text-gray-500">{producto.marca}</p>
+                            <p className="text-sm font-medium text-gray-500 uppercase">{producto.marca}</p>
                             <h3 className="font-semibold text-lg leading-tight mt-1 mb-2">
                               { nombre }
                             </h3>

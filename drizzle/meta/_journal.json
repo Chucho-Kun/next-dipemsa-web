@@ -22,6 +22,20 @@
       "when": 1780333778111,
       "tag": "0002_flaky_namor",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1780942935662,
+      "tag": "0003_square_galactus",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1780949048265,
+      "tag": "0004_dusty_roland_deschain",
+      "breakpoints": true
     }
   ]
 }
