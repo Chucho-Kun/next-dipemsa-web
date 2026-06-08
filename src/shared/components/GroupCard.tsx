@@ -95,7 +95,6 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
 
       {/* Botón */}
       <div className="p-5 pt-0 mt-auto">
-        <button className="w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3.5 transition text-sm">
           <Link href={`/producto/${ selectedVariant.id }/${ selectedVariant.descripcion.replace(/\s+/g, ' ')
                                                      .trim()
                                                      .replaceAll('|','-')
@@ -114,12 +113,13 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
                                                     .replaceAll('--','-')
                                                     .replaceAll('#','no')
                                                 }`
-                
               }>
-          VER PRODUCTO
+            <button className="w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3.5 transition text-sm">
+              VER PRODUCTO
+            </button>
           </Link>
           
-        </button>
+        
       </div>
 
       {/*<div className="p-5 pt-0 mt-auto">
