@@ -9,7 +9,7 @@ export default function Marcas() {
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
-          PRODUCTOS POR MARCA
+          MARCAS
         </h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-6">

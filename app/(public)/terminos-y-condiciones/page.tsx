@@ -17,16 +17,16 @@ export default function TerminosYCondicionesPage() {
           
           <h2 className="text-2xl font-bold text-gray-800 mt-10 mb-4">Envíos</h2>
           <p>
-            Envíos Gratis sólo aplican en compras mayores a <strong>$5,000 MXN</strong> 
-            (Solo aplica para CDMX y Área Metropolitana, únicamente a compras hechas en www.dipemsa.com.mx).
+            Envíos gratis sólo aplican en compras mayores a <strong>$5,000 MXN</strong> (Solo aplica para CDMX y Área Metropolitana, únicamente a compras hechas en www.dipemsa.com.mx).
           </p>
           <p className="mt-4">
-            En caso de requerir envío a otro Estado de la República, favor de cotizar con una de nuestras vendedoras:
+            En caso de requerir envío a otro estado de la república o las zonas no mencionadas, favor de cotizar con el equipo de ventas.
           </p>
-          <p className="font-medium mt-2">
-            Teléfono: (55) 8751 2193<br />
-            Teléfono: (55) 8558 5451
-          </p>
+          <p>Teléfonos fijos:</p>
+              <p><span className="font-semibold">(55) 8751 2193</span></p>
+              <p><span className="font-semibold">(55) 8751 2194</span></p>
+              <p><span className="font-semibold">(55) 5770 8512</span></p>
+              <p>WhatsApp: <span className="font-semibold">55 3265 1039</span></p>
 
           <h2 className="text-2xl font-bold text-gray-800 mt-12 mb-4">Política de Aceptación de Órdenes</h2>
           <p>

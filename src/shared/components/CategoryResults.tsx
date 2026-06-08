@@ -8,9 +8,11 @@ type Props = {
 export default async function CategoryResults({ slug }: Props) {
   
   //const productos = await getProductsByMarca( slug );
+  //console.log('buscando...', slug );
+  
   const groupedProducts = await getProductsByGroupsofCategories( slug )
   
-  console.log(groupedProducts);
+  //console.log(groupedProducts);
   
   return (
    <section className="py-16 bg-gray-50">
@@ -19,7 +21,7 @@ export default async function CategoryResults({ slug }: Props) {
           { slug.replace(/-/g, ' ').toUpperCase()}
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {groupedProducts.map((group) => (
             <GroupCard key={group.baseName} group={group} />
           ))}

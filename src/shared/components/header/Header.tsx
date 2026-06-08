@@ -71,7 +71,7 @@ export default function Header() {
               <Link 
                   href={ 'https://api.whatsapp.com/send?phone=5532651039' }
                   className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-bold px-6 py-2 rounded-lg flex items-center gap-2 transition text-sm whitespace-nowrap">
-                COTIZA AHORA
+                COTIZA POR WHATSAPP
                 <span className="text-xl">
                   <Image 
                     src={'/icons/whatsapp.svg'}
@@ -128,7 +128,8 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="max-w-full mx-auto hidden md:flex items-center justify-center gap-2 md:gap-1 text-xs md:text-sm font-bold text-gray-600 flex-wrap">
             
-            { marcas.map( (marca, index) => (
+            { marcas.sort((a,b) => a.name.localeCompare(b.name))
+                    .map( (marca, index) => (
                 <React.Fragment key={marca.name}>
                   <Link href={ `/marca/${ marca.name }`  } className='hover:text-amber-600 transition' >
                     <span className='uppercase'>{ marca.name.replace('-', ' ') }</span>

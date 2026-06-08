@@ -24,7 +24,10 @@ export default function Footer() {
             
             <div className="space-y-3 text-sm">
               <p className="font-medium">Atención telefónica inmediata</p>
-              <p>Número Fijo: <span className="font-semibold">(55) 8751 2193</span></p>
+              <p>Números Fijos:</p>
+              <p><span className="font-semibold">(55) 8751 2193</span></p>
+              <p><span className="font-semibold">(55) 8751 2194</span></p>
+              <p><span className="font-semibold">(55) 5770 8512</span></p>
               <p>WhatsApp: <span className="font-semibold">55 3265 1039</span></p>
               <p>E-mail: <span className="font-semibold">contacto@dipemsa.com.mx</span></p>
             </div>
@@ -41,13 +44,13 @@ export default function Footer() {
                 <img aria-label='facebook de sucursal' width={25} height={25} src={'/icons/facebook.svg'} alt='icono facebook' />
               </Link>
               <Link href={'https://www.tiktok.com/@dipemsa_construccionlig'} target='_blank' className='p-2 rounded-full hover:bg-taupe-800 transition'>
-                <img aria-label='cuenta de tiktok de Dipemsa' width={25} height={25} src={'/icons/tiktok.svg'} alt='icono facebook' />
+                <img aria-label='cuenta de tiktok de Dipemsa' width={25} height={25} src={'/icons/tiktok.svg'} alt='icono tiktok' />
               </Link>
               <Link href={'https://www.instagram.com/dipemsa_/'} target='_blank' className='p-2 rounded-full hover:bg-taupe-800 transition'>
-                <img aria-label='cuenta de tiktok de Dipemsa' width={25} height={25} src={'/icons/instagram.svg'} alt='icono facebook' />
+                <img aria-label='cuenta de tiktok de Dipemsa' width={25} height={25} src={'/icons/instagram.svg'} alt='icono instagram' />
               </Link>
               <Link href={'https://www.youtube.com/@DIPEMSACONSTRUCCIONLIGERA'} target='_blank' className='p-2 rounded-full hover:bg-taupe-800 transition'>
-                <img aria-label='cuenta de tiktok de Dipemsa' width={25} height={25} src={'/icons/youtube.svg'} alt='icono facebook' />
+                <img aria-label='cuenta de tiktok de Dipemsa' width={25} height={25} src={'/icons/youtube.svg'} alt='icono youtube' />
               </Link>
               
             </div>

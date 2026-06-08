@@ -41,11 +41,11 @@ ${mensaje}`)}`;
             <div>
               <h3 className="text-orange-600 font-bold text-xl mb-6">CONTACTO</h3>
               <div className="space-y-4 text-gray-700">
-                <p><strong>Facebook:</strong> DIPEMSA</p>
                 <p><strong>Teléfono:</strong> (55) 8751 2193</p>
+                <p><strong>Teléfono:</strong> (55) 8751 2194</p>
                 <p><strong>Teléfono:</strong> (55) 5770 8512</p>
                 <p><strong>WhatsApp:</strong> 55 3265 1039</p>
-                <p><strong>Correo:</strong> contacto@dipemsa.com.mx</p>
+                <p><strong>Correo:</strong>contacto@dipemsa.com.mx</p>
               </div>
             </div>
             <div>
@@ -64,6 +64,15 @@ ${mensaje}`)}`;
               </Link>
               <Link href={'https://www.facebook.com/Dipemsa/'} target='_blank' className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition">
                 <img width={25} height={25} src={'/icons/facebook.svg'} alt="facebook" />
+              </Link>
+              <Link href={'https://www.tiktok.com/@dipemsa_construccionlig'} target='_blank' className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition">
+                <img width={25} height={25} src={'/icons/tiktok.svg'} alt="tiktok" />
+              </Link>
+              <Link href={'https://www.instagram.com/dipemsa_/'} target='_blank' className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition">
+                <img width={25} height={25} src={'/icons/instagram.svg'} alt="instagram" />
+              </Link>
+              <Link href={'https://www.youtube.com/@DIPEMSACONSTRUCCIONLIGERA'} target='_blank' className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition">
+                <img width={25} height={25} src={'/icons/youtube.svg'} alt="youtube" />
               </Link>
             </div>
           </div>
