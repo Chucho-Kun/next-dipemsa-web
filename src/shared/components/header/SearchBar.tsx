@@ -10,6 +10,7 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 type ProductSearch = {
   id: string;
   descripcion: string;
+  precioant: string;
   precio: string;
   marca: string;
 };
@@ -142,6 +143,11 @@ export default function SearchBar() {
                 </p>
               </div>
 
+              { product.precioant && (
+                <div className='text-md line-through text-gray-400'>
+                  {product.precioant}
+                </div>
+              ) }
               <div className="font-bold text-[#E30613]">
                 {product.precio}
               </div>
