@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
   const results = await db.select({
     id: productos.id,
     descripcion: productos.descripcion,
+    precioant: productos.precioant,
     precio: productos.precio,
     marca: productos.marca,
   })
