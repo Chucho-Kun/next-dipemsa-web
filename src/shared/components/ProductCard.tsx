@@ -32,9 +32,9 @@ export default function ProductCard({producto}: Props) {
       descripcion: detalle,
       precioant: producto.precioant || "",
       precio: producto.precio || "",
-      imagen: producto.clave || "",
       clave: producto.clave || "",
-      cantidad: quantity
+      cantidad: quantity,
+      marca: producto.marca || ""
     })
 
     toast.success(
@@ -55,16 +55,22 @@ export default function ProductCard({producto}: Props) {
           href="/" >HOME</Link> &gt;{' '}
         <Link
           className='hover:underline' 
-          href={`/marca/${ producto.marca?.toLowerCase().replaceAll(' ','-') }` } >{ producto.marca?.toUpperCase() } &gt; </Link>
-        <Link href={
-            `/categoria/${ producto.categoria
-                                            ?.normalize("NFD")
-                                            .replace(/[\u0300-\u036f]/g, "")
-                                            .toLowerCase()
-                                            .replaceAll(' ','-') }
-          `}>
-          <span className="text-orange-600 font-bold hover:underline">{ producto.categoria?.toUpperCase() }</span>
-        </Link> 
+          href={`/marca/${ producto.marca?.toLowerCase().replaceAll(' ','-') }` } >{ producto.marca?.toUpperCase() }</Link>
+
+        { producto.categoria && (
+          <>
+            <span> &gt; </span> 
+            <Link href={
+                `/categoria/${ producto.categoria
+                                                ?.normalize("NFD")
+                                                .replace(/[\u0300-\u036f]/g, "")
+                                                .toLowerCase()
+                                                .replaceAll(' ','-') }
+              `}>
+              <span className="text-orange-600 font-bold hover:underline">{ producto.categoria?.toUpperCase() }</span>
+            </Link> 
+          </>
+        ) }
          
       </nav>
 
@@ -102,7 +108,7 @@ export default function ProductCard({producto}: Props) {
           </div>
 
           {/* Selector de cantidad */}
-          {/* <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4">
             <span className="font-medium text-gray-700">Cantidad:</span>
             <div className="flex items-center border border-gray-300 rounded-xl">
               <button 
@@ -119,19 +125,19 @@ export default function ProductCard({producto}: Props) {
                 <Plus size={18} />
               </button>
             </div>
-          </div> */}
+          </div>
 
           {/* Botón Agregar al carrito */}
-          {/* <button 
+          <button 
             onClick={ handleAddToCart }
             className="w-full bg-[#0033A0] hover:bg-[#002280] text-white font-semibold py-4 rounded-2xl flex items-center justify-center gap-3 transition text-lg"
           >
             <ShoppingCart size={24} />
             AGREGAR AL CARRITO
-          </button> */}
+          </button>
 
           {/* BOTON DE WHATSAPP */}
-          <div className="p-5 pt-0 mt-auto">
+          {/* <div className="p-5 pt-0 mt-auto">
             <Link 
                 href={ `https://api.whatsapp.com/send?phone=${whatsAppNumber}&text=${
                     encodeURIComponent(`Hola me interesa cotizar *${ 
@@ -151,7 +157,7 @@ export default function ProductCard({producto}: Props) {
                 />
               </span>
             </Link>
-          </div>
+          </div> */}
 
           {/* Descripción */}
           <div className="pt-6 border-t">

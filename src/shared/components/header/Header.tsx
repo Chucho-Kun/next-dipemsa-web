@@ -48,7 +48,7 @@ export default function Header() {
                {/* Cart */}
 
               {/**Icono carrito en movil */}
-              {/* <CartModule /> */}
+              <CartModule />
 
               {/* Cotiza Ahora Button */}
               <Link 
@@ -87,7 +87,7 @@ export default function Header() {
             <Link href={'/marcas'} className='hover:text-[#FF5E00] transition'>MARCAS</Link>
             <Link href={'/productos'} className='hover:text-[#FF5E00] transition'>PRODUCTOS</Link>
             <Link href={'/soy-mayorista'} className='hover:text-[#FF5E00] transition'>SOY MAYORISTA</Link>
-            {/* <Link href={'/carrito-de-compra'} className='hover:text-[#FF5E00] transition'>CARRITO DE COMPRA</Link> */}
+            <Link href={'/carrito-de-compra'} className='hover:text-[#FF5E00] transition'>CARRITO DE COMPRA</Link>
             <Link href={'/contacto'} className='hover:text-[#FF5E00] transition'>CONTACTO</Link>
 
           </div>
@@ -99,7 +99,7 @@ export default function Header() {
               <Link href={'/marcas'} className='hover:text-[#FF5E00] transition'>MARCAS</Link>
               <Link href={'/productos'} className='hover:text-[#FF5E00] transition'>PRODUCTOS</Link>
               <Link href={'/soy-mayorista'} className='hover:text-[#FF5E00] transition'>SOY MAYORISTA</Link>
-              {/* <Link href={'/carrito-de-compra'} className='hover:text-[#FF5E00] transition'>CARRITO DE COMPRA</Link> */}
+              <Link href={'/carrito-de-compra'} className='hover:text-[#FF5E00] transition'>CARRITO DE COMPRA</Link>
               <Link href={'/contacto'} className='hover:text-[#FF5E00] transition'>CONTACTO</Link>
             </div>
           )}

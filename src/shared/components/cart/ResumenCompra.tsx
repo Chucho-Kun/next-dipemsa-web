@@ -4,56 +4,150 @@ import EntregaComponent from '@/src/shared/components/cart/EntregaComponent';
 import MediosdePagoComponent from '@/src/shared/components/cart/MediosdePagoComponent';
 import ProductComponent from '@/src/shared/components/cart/ProductComponent';
 import { useCartStore } from '@/src/store/cartStore';
+import Image from 'next/image';
+import Link from 'next/link';
+import { whatsAppNumber } from '../../db/contact-info';
+import toast from 'react-hot-toast';
+import { useEffect } from 'react';
 
 export default function ResumenCompraPage() {
-    const { items, totalItems, totalPrice } = useCartStore()
+    const { items, totalPrice , shippingCost, subTotal, isLoaded, loadCart } = useCartStore()
+
+    useEffect(() => {
+      loadCart()
+    },[ loadCart ])
+
+    console.log(items);
+
+    const totalxcantidad = ( precio: string, cantidad: number ) => {
+        // (parseFloat( item.precio.replace(/\$/g, "")) * item.cantidad).toFixed(2)
+        if (!precio) return "0.00";
+        // Limpiar el precio: eliminar $ , y espacios
+        const precioLimpio = precio
+            .replace(/[\$,]/g, '')   // Elimina dólares y comas
+            .trim();
+        const precioNumerico = parseFloat(precioLimpio);
+        if (isNaN(precioNumerico)) return "0.00";
+        return (precioNumerico * cantidad).toFixed(2);
+    }
+
+const cotizaWhatsApp = () => {
+  try {
+    const subtotal = subTotal();
+    const shipping = shippingCost();
+    const total = totalPrice();
+
+    console.log("Valores calculados:", { subtotal, shipping, total });
+
+    const mensaje = `*🛒 Nuevo Pedido desde la Web*\n\n` +
+      items.map((item, index) => 
+        `${index + 1}. *${item.titulo}*\n` +
+        `   ${item.descripcion}\n` +
+        `   Cant: ${item.cantidad} × ${totalxcantidad(item.precio, item.cantidad)}`
+      ).join('\n\n') +
+      `\n────────────────────\n` +
+      `*Subtotal:* $${subtotal.toFixed(2)}\n` +
+      `*Envío:* $${shipping.toFixed(2)}\n` +
+      `*TOTAL:* $${total.toFixed(2)}`;
+
+    window.open(
+      `https://api.whatsapp.com/send?phone=${ whatsAppNumber }&text=${encodeURIComponent(mensaje)}`,
+      '_blank'
+    );
+  } catch (error) {
+    console.error("Error al generar mensaje WhatsApp:", error);
+    toast.error("Hubo un error al generar el pedido");
+  }
+};
 
   return (
+
     <div className="max-w-7xl mx-auto px-6 py-12">
       <div className="grid lg:grid-cols-2 gap-10">
         
         {/* === Columna Izquierda: Resumen del Pedido === */}
         <div className="bg-white border border-gray-200 rounded-2xl p-6">
           <h2 className="text-2xl font-bold mb-6">
-            Resumen del Pedido  `6 articulos`
+            Resumen del Pedido:
             {/* ({`${totalItems}`} {totalItems === 1 ? 'artículo' : 'artículos'}) */}
           </h2>
 
-          {/* Producto 1 */}
-          <ProductComponent />
+          {/* Productos del Carrito */}
+          <div className='space-y-6'>
+            { !isLoaded ? (
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-12 h-12 border-4 border-[#FF5E00] border-t-transparent rounded-full animate-spin"></div>
+                <p className="text-gray-600 text-lg">Cargando Carrito de Compras...</p>
+              </div>
+            ) : (
+              <>
+                { items.length === 0 ? (
+                  <p className='text-center text-gray-500 py-8'>No hay productos en el carrito</p>
+                ) : (
+                  items.map( item => (
+                    <ProductComponent key={item.id} item={ item } />
+                  )
+                )
+                )}
+              </>
+            )
+          }
 
-          {/* Producto 2 */}
-          
+
+          </div>
 
           {/* Totales */}
-          <div className="pt-6 space-y-3">
+          { items.length > 0 && (
+            <div className="pt-6 space-y-3">
             <div className="flex justify-between text-lg">
               <span className="text-gray-600">SUBTOTAL</span>
-              <span className="font-semibold">$272.00</span>
+              <span className="font-semibold">${ subTotal().toFixed(2) }</span>
             </div>
             <div className="flex justify-between text-lg">
               <span className="text-gray-600">COSTO DE ENVÍO</span>
-              <span className="font-semibold">$300.00</span>
+              <span className="font-semibold">${ shippingCost().toFixed(2) }</span>
             </div>
             
             <div className="flex justify-between text-2xl font-bold border-t pt-4">
               <span>TOTAL</span>
-              <span className="text-[#E30613]">$572.00</span>
+              <span className="text-[#E30613]">${ totalPrice().toFixed(2) }</span>
             </div>
 
             <div className="inline-block bg-orange-600 text-white text-sm font-medium px-4 py-1 rounded">
               IVA INCLUIDO
             </div>
           </div>
+          ) }
+
+          {/* COTIZA TU CARRITA POR WHATS APP */}
+          <div className='mt-4 text-center flex justify-center-safe'>
+            <Link 
+                href={ 'https://api.whatsapp.com/send?phone=5532651039' }
+                className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-bold px-6 py-3 rounded-lg flex items-center gap-2 transition text-sm whitespace-nowrap">
+              COTIZA POR WHATSAPP
+              <span onClick={ cotizaWhatsApp } className="text-xl">
+                <Image 
+                  src={'/icons/whatsapp.svg'}
+                  alt="whatsapp icon"
+                  width={25}
+                  height={25}
+                  />
+              </span>
+            </Link>
+          </div>
+
+        {/* <div onClick={ clearCart }>VACIAR CARRITO</div> */}
+        
         </div>
+
 
         {/* === Columna Derecha: Entrega y Pago === */}
         <div className="space-y-8">
           {/* Formulario de Entrega */}
-          <EntregaComponent />
+          {/* <EntregaComponent /> */}
 
           {/* Medios de Pago */}
-          <MediosdePagoComponent />
+          {/* <MediosdePagoComponent /> */}
         </div>
       </div>
     </div>
