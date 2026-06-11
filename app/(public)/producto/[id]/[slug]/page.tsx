@@ -128,7 +128,50 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
                   "seller": {
                     "@type": "Organization",
                     "name": "Dipemsa"
-                  }
+                  },
+
+                              // === NUEVO: Shipping Details ===
+                    "shippingDetails": {
+                      "@type": "OfferShippingDetails",
+                      "shippingRate": {
+                        "@type": "MonetaryAmount",
+                        "value": "300",                    // Cambia si tienes costo de envío
+                        "currency": "MXN"
+                      },
+                      "shippingDestination": {
+                        "@type": "DefinedRegion",
+                        "addressCountry": "MX"
+                      },
+                      "deliveryTime": {
+                        "@type": "ShippingDeliveryTime",
+                        "handlingTime": {
+                          "@type": "QuantitativeValue",
+                          "minValue": 1,
+                          "maxValue": 2,
+                          "unitCode": "d"
+                        },
+                        "transitTime": {
+                          "@type": "QuantitativeValue",
+                          "minValue": 3,
+                          "maxValue": 7,
+                          "unitCode": "d"
+                        }
+                      }
+                    },
+
+                                // === NUEVO: Return Policy ===
+                    "hasMerchantReturnPolicy": {
+                      "@type": "MerchantReturnPolicy",
+                      "applicableCountry": ["MX"],
+                      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+                      "merchantReturnDays": 30,                    // Días para devolver
+                      "returnMethods": ["https://schema.org/ReturnByMail"],
+                      "returnShippingFeesAmount": {
+                        "@type": "MonetaryAmount",
+                        "value": "0",
+                        "currency": "MXN"
+                      }
+                    }
                 }
               })
             }}
