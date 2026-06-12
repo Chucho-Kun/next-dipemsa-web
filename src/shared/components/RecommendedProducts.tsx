@@ -9,6 +9,7 @@ import { getRecomendedProducts } from '../db/queries';
 import { ResultadosType } from '../db/resultados';
 import Link from 'next/link';
 import { whatsAppNumber } from '../db/contact-info';
+import { slugify } from '@/src/utils/slugify';
 
 type Props = {
   productosRecomendados: ResultadosType[]
@@ -87,24 +88,7 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
                               </div>
                               <p className="text-xs text-gray-500 mt-1">CLAVE: {producto.clave}</p>
                             </div>
-                              <Link href={`/producto/${ producto.id }/${ producto.descripcion!.replace(/\s+/g, ' ')
-                                                     .trim()
-                                                     .replaceAll('|','-')
-                                                     .replaceAll(' ','-')
-                                                     .replaceAll('.','')
-                                                    .split(',')[0]
-                                                    .split('|')[0]
-                                                    .trim()
-                                                    .normalize('NFD')                  // separa acentos
-                                                    .replace(/[\u0300-\u036f]/g, '')   // elimina acentos
-                                                    .toLowerCase()
-                                                    .replace(/["'`]/g, '')
-                                                    .replaceAll(' ','-')
-                                                    .replaceAll('/','-')
-                                                    .replaceAll('---','-')
-                                                    .replaceAll('--','-')
-                                                    .replaceAll('#','no')
-                                                }`
+                              <Link href={`/producto/${ producto.id }/${ slugify( producto.descripcion! ) }`
                                           }>
                                 <button className="mt-5 w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3 transition">
                                   VER PRODUCTO

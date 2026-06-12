@@ -2,6 +2,7 @@ import { CartItem, useCartStore } from "@/src/store/cartStore";
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { useDeleteFromCart } from "@/src/hooks/useDeleteToast";
+import { totalxcantidad } from "@/src/utils/formatPrice";
 
 type Props = {
     item: CartItem
@@ -10,19 +11,6 @@ type Props = {
 export default function ProductComponent({ item }: Props) {
 
     const { updateQuantity , removeFromCart } = useCartStore()
-
-    const totalxcantidad = ( precio: string, cantidad: number ) => {
-        // (parseFloat( item.precio.replace(/\$/g, "")) * item.cantidad).toFixed(2)
-        if (!precio) return "0.00";
-        // Limpiar el precio: eliminar $ , y espacios
-        const precioLimpio = precio
-            .replace(/[\$,]/g, '')   // Elimina dólares y comas
-            .trim();
-        const precioNumerico = parseFloat(precioLimpio);
-        if (isNaN(precioNumerico)) return "0.00";
-        return (precioNumerico * cantidad).toFixed(2);
-    }
-
     const { deleteItem } = useDeleteFromCart()
 
   return (

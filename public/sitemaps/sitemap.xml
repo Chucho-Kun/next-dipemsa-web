@@ -2,7 +2,7 @@
 <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 <!-- XML Sitemap created by the unregistered version of Sitemap Automator https://www.ragesw.com -->
 <url>
-    <loc>https://www.dipemsa.com.mx/</loc>
+    <loc>https://www.dipemsa.com.mx</loc>
     <priority>1</priority>
 </url>
 <url>
@@ -19,6 +19,10 @@
 </url>
 <url>
     <loc>https://www.dipemsa.com.mx/soy-mayorista</loc>
+    <priority>1</priority>
+</url>
+<url>
+    <loc>https://www.dipemsa.com.mx/carrito-de-compra</loc>
     <priority>1</priority>
 </url>
 <url>
@@ -39,6 +43,10 @@
 </url>
 <url>
     <loc>https://www.dipemsa.com.mx/marca/fischer</loc>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://www.dipemsa.com.mx/marca/glasliner</loc>
     <priority>0.5</priority>
 </url>
 <url>
@@ -66,10 +74,6 @@
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://www.dipemsa.com.mx/marca/stabilit</loc>
-    <priority>0.5</priority>
-</url>
-<url>
     <loc>https://www.dipemsa.com.mx/marca/trim-tex</loc>
     <priority>0.5</priority>
 </url>
@@ -81,9 +85,8 @@
     <loc>https://www.dipemsa.com.mx/marca/usg</loc>
     <priority>0.5</priority>
 </url>
-
 <url>
-    <loc>https://www.dipemsa.com.mx/categoria/aislantes</loc>
+    <loc>https://www.dipemsa.com.mx/categoria/tablaroca-y-durock</loc>
     <priority>0.5</priority>
 </url>
 <url>
@@ -91,11 +94,15 @@
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://www.dipemsa.com.mx/categoria/sistemas-de-fijacion-convencional</loc>
+    <loc>https://www.dipemsa.com.mx/categoria/compuestos-y-cintas</loc>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://www.dipemsa.com.mx/categoria/compuestos-y-cintas</loc>
+    <loc>https://www.dipemsa.com.mx/categoria/glasliner</loc>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://www.dipemsa.com.mx/categoria/plafones-y-suspension</loc>
     <priority>0.5</priority>
 </url>
 <url>
@@ -103,27 +110,11 @@
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://www.dipemsa.com.mx/categoria/tornilleria</loc>
+    <loc>https://www.dipemsa.com.mx/categoria/sellado</loc>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://www.dipemsa.com.mx/categoria/herramientas</loc>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://www.dipemsa.com.mx/categoria/tablaroca</loc>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://www.dipemsa.com.mx/categoria/plafones</loc>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://www.dipemsa.com.mx/categoria/liner-panel</loc>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://www.dipemsa.com.mx/categoria/suspension</loc>
+    <loc>https://www.dipemsa.com.mx/categoria/sistemas-de-fijacion-directa</loc>
     <priority>0.5</priority>
 </url>
 <url>
@@ -131,18 +122,25 @@
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://www.dipemsa.com.mx/categoria/perfiles-plasticos</loc>
+    <loc>https://www.dipemsa.com.mx/categoria/tornilleria</loc>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://www.dipemsa.com.mx/categoria/sellado</loc>
+    <loc>https://www.dipemsa.com.mx/categoria/aislantes</loc>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://www.dipemsa.com.mx/categoria/perfiles-plasticos</loc>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://www.dipemsa.com.mx/categoria/adhesivos-y-nivelantes</loc>
     <priority>0.5</priority>
 </url>
-
+<url>
+    <loc>https://www.dipemsa.com.mx/categoria/herramientas</loc>
+    <priority>0.5</priority>
+</url>
 <!-- XML Sitemap created by Sitemap Automator https://www.ragesw.com -->
 </urlset>
 

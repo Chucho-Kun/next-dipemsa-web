@@ -6,6 +6,7 @@ import { Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import * as Dialog from '@radix-ui/react-dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { slugify } from '@/src/utils/slugify';
 
 type ProductSearch = {
   id: string;
@@ -97,24 +98,7 @@ export default function SearchBar() {
               value={product.descripcion}
               onSelect={() => {
                 router.push(
-                  `/producto/${ product.id }/${product.descripcion.replace(/\s+/g, ' ')
-                                                     .trim()
-                                                     .replaceAll('|','-')
-                                                     .replaceAll(' ','-')
-                                                     .replaceAll('.','')
-                                                    .split(',')[0]
-                                                    .split('|')[0]
-                                                    .trim()
-                                                    .normalize('NFD')                  // separa acentos
-                                                    .replace(/[\u0300-\u036f]/g, '')   // elimina acentos
-                                                    .toLowerCase()
-                                                    .replace(/["'`]/g, '')
-                                                    .replaceAll(' ','-')
-                                                    .replaceAll('/','-')
-                                                    .replaceAll('---','-')
-                                                    .replaceAll('--','-')
-                                                    .replaceAll('#','no')
-                                                }`
+                  `/producto/${ product.id }/${ slugify( product.descripcion ) }`
                 );
                 setOpen(false);
                 setQuery('');

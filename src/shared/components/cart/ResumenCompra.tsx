@@ -1,7 +1,5 @@
 'use client';
 
-import EntregaComponent from '@/src/shared/components/cart/EntregaComponent';
-import MediosdePagoComponent from '@/src/shared/components/cart/MediosdePagoComponent';
 import ProductComponent from '@/src/shared/components/cart/ProductComponent';
 import { useCartStore } from '@/src/store/cartStore';
 import Image from 'next/image';
@@ -9,6 +7,7 @@ import Link from 'next/link';
 import { whatsAppNumber } from '../../db/contact-info';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
+import { totalxcantidad } from '@/src/utils/formatPrice';
 
 export default function ResumenCompraPage() {
     const { items, totalPrice , shippingCost, subTotal, isLoaded, loadCart } = useCartStore()
@@ -16,20 +15,6 @@ export default function ResumenCompraPage() {
     useEffect(() => {
       loadCart()
     },[ loadCart ])
-
-    console.log(items);
-
-    const totalxcantidad = ( precio: string, cantidad: number ) => {
-        // (parseFloat( item.precio.replace(/\$/g, "")) * item.cantidad).toFixed(2)
-        if (!precio) return "0.00";
-        // Limpiar el precio: eliminar $ , y espacios
-        const precioLimpio = precio
-            .replace(/[\$,]/g, '')   // Elimina dólares y comas
-            .trim();
-        const precioNumerico = parseFloat(precioLimpio);
-        if (isNaN(precioNumerico)) return "0.00";
-        return (precioNumerico * cantidad).toFixed(2);
-    }
 
 const cotizaWhatsApp = () => {
   try {
@@ -93,7 +78,6 @@ const cotizaWhatsApp = () => {
             )
           }
 
-
           </div>
 
           {/* Totales */}
@@ -138,7 +122,6 @@ const cotizaWhatsApp = () => {
         {/* <div onClick={ clearCart }>VACIAR CARRITO</div> */}
         
         </div>
-
 
         {/* === Columna Derecha: Entrega y Pago === */}
         <div className="space-y-8">
