@@ -36,7 +36,7 @@ const cotizaWhatsApp = () => {
       `*TOTAL:* $${total.toFixed(2)}`;
 
     window.open(
-      `https://api.whatsapp.com/send?phone=${ whatsAppNumber }&text=${encodeURIComponent(mensaje)}`,
+      `https://api.whatsapp.com/send?phone=5537091930&text=${encodeURIComponent(mensaje)}`,
       '_blank'
     );
   } catch (error) {
@@ -107,7 +107,7 @@ const cotizaWhatsApp = () => {
           <div onClick={ cotizaWhatsApp } className='mt-4 text-center flex justify-center-safe cursor-pointer'>
             <div 
                 className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-bold px-6 py-3 rounded-lg flex items-center gap-2 transition text-sm whitespace-nowrap">
-              COTIZA POR WHATSAPP
+              COMPRAR AHORA
               <span className="text-xl">
                 <Image 
                   src={'/icons/whatsapp.svg'}

@@ -25,7 +25,7 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
 
   const mainName = group.baseName;
 
-  console.log( `https://www.dipemsa.com.mx/producto/${ selectedVariant.id }/${ slugify( selectedVariant.descripcion ) }`)
+  //console.log( `https://www.dipemsa.com.mx/producto/${ selectedVariant.id }/${ slugify( selectedVariant.descripcion ) }`)
 
   return (
     <div className="bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full">
