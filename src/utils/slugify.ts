@@ -13,6 +13,7 @@ export function slugify(text: string): string {
     .replace(/["'`]/g, '')
     .replaceAll(' ', '-')
     .replaceAll('/', '-')
+    .replaceAll('%', 'porciento')
     .replaceAll('#', 'no')
     .replace(/-+/g, '-');
 }

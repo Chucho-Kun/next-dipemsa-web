@@ -118,6 +118,50 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
                   "@type": "Brand",
                   "name": producto.marca || "Dipemsa"
                 },
+
+                // === AGGREGATE RATING (estrellas en Google) ===
+                  "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": 4.8,        // Valor promedio (ej: 4.5, 4.8, etc.)
+                    "reviewCount": 23,         // Cantidad total de reseñas
+                    "bestRating": 5,
+                    "worstRating": 1
+                  },
+
+                  // === REVIEWS (puedes agregar varias) ===
+                  "review": [
+                    {
+                      "@type": "Review",
+                      "author": {
+                        "@type": "Person",
+                        "name": "Dany Trejo"
+                      },
+                      "datePublished": "2026-05-20",
+                      "reviewBody": "Gracias por la paciencia, muy recomendables y exelente servicio 👏",
+                      "reviewRating": {
+                        "@type": "Rating",
+                        "ratingValue": 5,
+                        "bestRating": 5,
+                        "worstRating": 1
+                      }
+                    },
+                    {
+                      "@type": "Review",
+                      "author": {
+                        "@type": "Person",
+                        "name": "Mauricio Reygadas"
+                      },
+                      "datePublished": "2026-04-15",
+                      "reviewBody": "Muy buen servicio y materiales de gran calidad👌🏻👍🏻",
+                      "reviewRating": {
+                        "@type": "Rating",
+                        "ratingValue": 5,
+                        "bestRating": 5,
+                        "worstRating": 1
+                      }
+                    }
+                  ],
+
                 "offers": {
                   "@type": "Offer",
                   "url": `https://www.dipemsa.com.mx/producto/${id}/${ slug || ''}`,
@@ -159,19 +203,21 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
                       }
                     },
 
-                                // === NUEVO: Return Policy ===
+                      // === NUEVO: Return Policy ===
                     "hasMerchantReturnPolicy": {
-                      "@type": "MerchantReturnPolicy",
-                      "applicableCountry": ["MX"],
-                      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-                      "merchantReturnDays": 30,                    // Días para devolver
-                      "returnMethods": ["https://schema.org/ReturnByMail"],
-                      "returnShippingFeesAmount": {
-                        "@type": "MonetaryAmount",
-                        "value": "0",
-                        "currency": "MXN"
-                      }
-                    }
+                    "@type": "MerchantReturnPolicy",
+                    "applicableCountry": ["MX"],
+                    "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+                    "merchantReturnDays": 30,
+                    "returnMethod": "https://schema.org/ReturnByMail",
+                    "returnShippingFeesAmount": {
+                      "@type": "MonetaryAmount",
+                      "value": "0",
+                      "currency": "MXN"
+                    },
+                    "returnFees": "https://schema.org/FreeReturn"   // FreeReturn, ReturnFeesCustomerResponsibility, etc.
+                  }
+
                 }
               })
             }}
