@@ -12,7 +12,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="w-full">
+    <header className="w-full sticky top-0 z-50 bg-white shadow-md">
       {/* Top Bar - Envíos Gratis */}
       <div className="banner-promo text-white font-bold text-center text-sm py-2 px-4">
         ENVÍOS GRATIS EN COMPRAS MAYORES A $5,000 MXN (aplica CDMX y Área Metropolitana) 
@@ -22,7 +22,7 @@ export default function Header() {
       </div>
 
       {/* Main Header */}
-      <div className="bg-white border-b">
+      <div className="bg-white">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Logo */}
