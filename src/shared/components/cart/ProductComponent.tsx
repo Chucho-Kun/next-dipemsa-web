@@ -48,7 +48,7 @@ export default function ProductComponent({ item }: Props) {
                         <span className="px-3 py-1 text-sm font-semibold border-x border-gray-300">{ item.cantidad }</span>
                         <button 
                             onClick={ () => {
-                                if(item.cantidad < 10) {
+                                if(item.cantidad < 1000) {
                                     updateQuantity( item.id, item.cantidad + 1) }
                                 }
                             } 
