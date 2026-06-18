@@ -1,5 +1,6 @@
 'use client';
 
+import { useCartStore } from '@/src/store/cartStore';
 import { Payment } from '@mercadopago/sdk-react';
 import { initMercadoPago } from '@mercadopago/sdk-react';
 import { useState } from 'react';
@@ -17,6 +18,8 @@ interface Props {
 
 export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Props) {
     const [ resetKey,  setResetKey ] = useState(0)
+
+    const { shippingCost, subTotal, totalPrice, items } = useCartStore()
 
     const handleReset = () => {
         setResetKey( prev => prev + 1)
@@ -52,7 +55,24 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
             console.log("Respuesta del servidor:", result);
 
             if (result.status === 'approved' || result.status === 'in_process') {
+
+            // Enviar correo
+            await fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                orderData: {
+                    paymentId: result.payment_id,
+                    items: items,           // tu carrito
+                    subtotal: subTotal(),
+                    shipping: shippingCost(),
+                    total: totalPrice(),
+                },
+                customerEmail: "gameroapp@gmail.com"
+                })
+            });
             onSuccess?.(result);
+            
             } else {
 
                 if(result.status_detail == "cc_rejected_insufficient_amount") {

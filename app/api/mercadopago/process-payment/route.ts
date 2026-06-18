@@ -9,18 +9,18 @@ const client = new MercadoPagoConfig({
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
-    console.log("🔍 Datos recibidos:", JSON.stringify(body, null, 2));
-
-    // Extraer el monto correctamente (está dentro de formData)
     const formData = body.formData || body;
-    
-    const transactionAmount = Number(formData.transaction_amount);
 
-    if (!transactionAmount || isNaN(transactionAmount)) {
+    // ← CORRECCIÓN IMPORTANTE: Redondear a 2 decimales
+    const transactionAmount = Math.round(Number(formData.transaction_amount) * 100) / 100;
+
+    console.log("🔍 Monto original:", formData.transaction_amount);
+    console.log("✅ Monto corregido:", transactionAmount);
+
+    if (!transactionAmount || isNaN(transactionAmount) || transactionAmount <= 0) {
       return NextResponse.json({ 
-        error: "No se pudo obtener el monto de la transacción",
-        receivedData: body 
+        error: "transaction_amount inválido",
+        received: formData.transaction_amount 
       }, { status: 400 });
     }
 
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
         token: formData.token,
         issuer_id: formData.issuer_id,
         payment_method_id: formData.payment_method_id,
-        transaction_amount: transactionAmount,
+        transaction_amount: transactionAmount,     // ← Aquí va el monto corregido
         installments: Number(formData.installments) || 1,
         payer: {
           email: formData.payer?.email || "cliente@dipemsa.com.mx",
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    console.log("✅ Pago procesado correctamente:", response.status);
+    console.log("✅ Pago procesado:", response.status);
 
     return NextResponse.json({
       status: response.status,

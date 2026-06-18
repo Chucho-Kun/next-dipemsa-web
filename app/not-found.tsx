@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 export default function NotFound() {
   const router = useRouter();
 
-  useEffect(() => {
-    router.push('/'); // Redirige al home
-  }, [router]);
+  // useEffect(() => {
+  //   //router.push('/'); // Redirige al home
+  // }, [router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">
