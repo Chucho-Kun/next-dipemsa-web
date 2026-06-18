@@ -8,7 +8,7 @@ export default function EntregaComponent() {
 
   return (
      <div className="bg-white border border-gray-200 rounded-2xl p-6">
-        <h3 className="text-2xl font-bold mb-6">Entrega</h3>
+        <h3 className="text-2xl font-bold mb-6">Datos de entrega</h3>
         
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
@@ -72,26 +72,6 @@ export default function EntregaComponent() {
           
 
         </div>
-        {/* <div className="space-y-1">
-          <input
-            type="text" 
-            placeholder="Entre calles:" 
-            value={formData.entreCalles}
-            onChange={(e) => setFormData({ entreCalles: e.target.value })}
-            className={`border rounded-xl px-4 py-3 focus:outline-none w-full transition
-              ${errors.entreCalles 
-                ? 'border-red-500 focus:border-red-500' 
-                : 'border-gray-300 focus:border-orange-500'}`}
-          />
-          
-          {errors.entreCalles && (
-            <p className="text-red-500 text-sm ml-1 min-h-5">
-              {errors.entreCalles}
-            </p>
-          )}
-        </div> */}
-
-
         
         <div className="grid grid-cols-2 gap-4 mt-4">
           <div className="space-y-1">
@@ -108,13 +88,7 @@ export default function EntregaComponent() {
             <p  className={`${ errors.ciudad ? 'text-red-500' : 'text-white' } text-sm ml-1 min-h-5`}>{ errors.ciudad }</p>
 
           </div>
-        {/* <input
-          type="text"
-          placeholder="Ciudad / Municipio"
-          value={formData.ciudad}
-          onChange={(e) => setFormData({ ciudad: e.target.value })}
-          className="border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500"
-        /> */}
+      
         <div className="space-y-1">
             <input
               type="text" 
@@ -129,13 +103,7 @@ export default function EntregaComponent() {
             <p  className={`${ errors.cp ? 'text-red-500' : 'text-white' } text-sm ml-1 min-h-5`}>{ errors.cp }</p>
 
           </div>
-        {/* <input
-          type="text"
-          placeholder="CP:"
-          value={formData.cp}
-          onChange={(e) => setFormData({ cp: e.target.value })}
-          className="border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500"
-        /> */}
+      
       </div>
         
         <div className="space-y-1">
@@ -152,14 +120,6 @@ export default function EntregaComponent() {
           <p  className={`${ errors.telefono ? 'text-red-500' : 'text-white' } text-sm ml-1 min-h-5`}>{ errors.telefono }</p>
 
         </div>
-       
-        {/* <input
-          type="tel"
-          placeholder="Teléfono"
-          value={formData.telefono}
-          onChange={(e) => setFormData({ telefono: e.target.value })}
-          className="w-full mt-4 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500"
-        /> */}
         
     </div>
   )}
