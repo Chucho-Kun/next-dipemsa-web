@@ -87,7 +87,7 @@ export default function MediosdePagoComponent() {
   };
 
   return (
-    <div className="min-h-screen py-12">
+    <div className="min-h-125 py-12">
       <div className="max-w-2xl mx-auto px-4">
         {!preferenceId ? (
           <button

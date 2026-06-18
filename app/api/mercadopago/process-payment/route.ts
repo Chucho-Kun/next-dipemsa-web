@@ -10,13 +10,12 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    console.log("🔍 Datos completos recibidos:", JSON.stringify(body, null, 2));
+    console.log("🔍 Datos recibidos:", JSON.stringify(body, null, 2));
 
-    // Extraer el monto de diferentes posibles ubicaciones
-    let transactionAmount = 
-      Number(body.transaction_amount) || 
-      Number(body.amount) || 
-      Number(body.transactionAmount);
+    // Extraer el monto correctamente (está dentro de formData)
+    const formData = body.formData || body;
+    
+    const transactionAmount = Number(formData.transaction_amount);
 
     if (!transactionAmount || isNaN(transactionAmount)) {
       return NextResponse.json({ 
@@ -29,18 +28,18 @@ export async function POST(request: NextRequest) {
 
     const response = await payment.create({
       body: {
-        token: body.token,
-        issuer_id: body.issuer_id,
-        payment_method_id: body.payment_method_id,
+        token: formData.token,
+        issuer_id: formData.issuer_id,
+        payment_method_id: formData.payment_method_id,
         transaction_amount: transactionAmount,
-        installments: Number(body.installments) || 1,
+        installments: Number(formData.installments) || 1,
         payer: {
-          email: body.payer?.email || body.email || "cliente@dipemsa.com.mx",
+          email: formData.payer?.email || "cliente@dipemsa.com.mx",
         },
       },
     });
 
-    console.log("✅ Pago procesado:", response.status);
+    console.log("✅ Pago procesado correctamente:", response.status);
 
     return NextResponse.json({
       status: response.status,

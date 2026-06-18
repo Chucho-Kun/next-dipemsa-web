@@ -53,6 +53,7 @@ export default function Header() {
               {/* Cotiza Ahora Button */}
               <Link 
                   href={ 'https://api.whatsapp.com/send?phone=5532651039' }
+                  target='_blank'
                   className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-bold px-6 py-2 rounded-lg flex items-center gap-2 transition text-sm whitespace-nowrap">
                 COTIZA POR WHATSAPP
                 <span className="text-xl">
