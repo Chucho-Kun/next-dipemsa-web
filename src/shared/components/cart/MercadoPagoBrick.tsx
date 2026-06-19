@@ -64,7 +64,9 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
             // ==================== ENVÍO DE CORREO ====================
                 console.log("📧 Intentando enviar correo...");
 
-                toast.success('Se está generando el correo de confirmación...')
+                toast.success('Se está procesando su pago, favor de no salir de esta ventana...',{
+                    duration: 10000
+                })
 
                 const emailRes = await fetch('/api/send-email', {
                     method: 'POST',

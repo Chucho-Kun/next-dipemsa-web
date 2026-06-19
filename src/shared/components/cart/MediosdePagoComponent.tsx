@@ -33,12 +33,13 @@ export default function MediosdePagoComponent() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: items.map(item => ({
-            title: item.titulo,
-            description: item.descripcion,
+            // ← Mejorado para que Mercado Pago muestre bien el nombre
+            title: `${item.titulo} - ${item.descripcion || ''}`.trim(),
+            description: item.descripcion || '',
             quantity: item.cantidad,
             unit_price: parseFloat(item.precio.replace(/[$,]/g, '')) || 0,
             currency_id: 'MXN',
-            id: item.id
+            id: item.id,
           })),
           payer: {
             name: formData.nombre,
