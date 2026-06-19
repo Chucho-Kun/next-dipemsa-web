@@ -33,10 +33,12 @@ export default function MediosdePagoComponent() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: items.map(item => ({
-            title: `${item.titulo} - ${item.descripcion}`,
+            title: item.titulo,
+            description: item.descripcion,
             quantity: item.cantidad,
             unit_price: parseFloat(item.precio.replace(/[$,]/g, '')) || 0,
             currency_id: 'MXN',
+            id: item.id
           })),
           payer: {
             name: formData.nombre,
