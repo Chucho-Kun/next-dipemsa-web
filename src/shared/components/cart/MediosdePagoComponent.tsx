@@ -65,7 +65,7 @@ export default function MediosdePagoComponent() {
     const text = await res.text(); // Primero leemos como texto
 
       if (!res.ok) {
-        console.error("Error del servidor:", text);
+        // console.error("Error del servidor:", text);
         alert(`Error del servidor: ${res.status} - Revisa la consola`);
         return;
       }
@@ -78,7 +78,7 @@ export default function MediosdePagoComponent() {
         alert('Error: No se recibió preferenceId');
       }
     } catch (error) {
-      console.error('Error completo:', error);
+      // console.error('Error completo:', error);
       alert('Error al conectar con el servidor de pagos');
     } finally {
       setLoading(false);

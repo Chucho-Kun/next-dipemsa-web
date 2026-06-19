@@ -1,6 +1,7 @@
 'use client';
 
 import { useCartStore } from '@/src/store/cartStore';
+import { useDeliveryStore } from '@/src/store/deliveryStore';
 import { Payment } from '@mercadopago/sdk-react';
 import { initMercadoPago } from '@mercadopago/sdk-react';
 import { useState } from 'react';
@@ -18,6 +19,7 @@ interface Props {
 
 export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Props) {
     const [ resetKey,  setResetKey ] = useState(0)
+    const { formData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono } } = useDeliveryStore()
 
     const { shippingCost, subTotal, totalPrice, items } = useCartStore()
 
@@ -42,6 +44,9 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
           },
         }}
         onSubmit={async (formData, brick) => {
+
+            const { formData:{ payer} } = formData
+
         try {
             console.log("Enviando al backend:", formData);
 
@@ -56,21 +61,35 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
 
             if (result.status === 'approved' || result.status === 'in_process') {
 
-            // Enviar correo
-            await fetch('/api/send-email', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                orderData: {
-                    paymentId: result.payment_id,
-                    items: items,           // tu carrito
-                    subtotal: subTotal(),
-                    shipping: shippingCost(),
-                    total: totalPrice(),
-                },
-                customerEmail: "gameroapp@gmail.com"
-                })
-            });
+            // ==================== ENVÍO DE CORREO ====================
+                console.log("📧 Intentando enviar correo...");
+
+                const emailRes = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                    orderData: {
+                        paymentId: result.payment_id || 'N/A',
+                        items: items,
+                        subtotal: subTotal(),
+                        shipping: shippingCost(),
+                        total: totalPrice(),
+                    },
+                    customerEmail: payer.email ,
+                    deliveryData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono }
+                    })
+                });
+
+                const emailResult = await emailRes.json();
+
+                if (emailRes.ok) {
+                    console.log("✅ Correo enviado correctamente:", emailResult);
+                    toast.success("¡Pago exitoso! Te hemos enviado un correo de confirmación.");
+                } else {
+                    console.error("❌ Error enviando correo:", emailResult);
+                    toast.error("Pago exitoso, pero no se pudo enviar el correo de confirmación.");
+                }
+                // ========================================================
             onSuccess?.(result);
             
             } else {

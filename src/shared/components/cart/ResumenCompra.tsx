@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { totalxcantidad } from '@/src/utils/formatPrice';
 import MediosdePagoComponent from './MediosdePagoComponent';
 import EntregaComponent from './EntregaComponent';
+import { useDeliveryStore } from '@/src/store/deliveryStore';
 
 export default function ResumenCompraPage() {
     const { items, totalPrice , shippingCost, subTotal, isLoaded, loadCart } = useCartStore()
@@ -15,6 +16,8 @@ export default function ResumenCompraPage() {
     useEffect(() => {
       loadCart()
     },[ loadCart ])
+
+    const { formData } = useDeliveryStore()
 
 // const cotizaWhatsApp = () => {
 //   try {
@@ -97,8 +100,10 @@ export default function ResumenCompraPage() {
               <span className="text-[#E30613]">${ totalPrice().toFixed(2) }</span>
             </div>
 
-            <div className="inline-block bg-orange-600 text-white text-sm font-medium px-4 py-1 rounded">
-              IVA INCLUIDO
+            <div className='flex'>
+              <div className="inline-block ml-auto bg-orange-600 text-white text-sm font-medium px-4 py-1 rounded">
+                IVA INCLUIDO
+              </div>
             </div>
           </div>
           ) }
@@ -130,6 +135,7 @@ export default function ResumenCompraPage() {
 
           {/* Medios de Pago */}
           <MediosdePagoComponent />
+
         </div>
       </div>
     </div>
