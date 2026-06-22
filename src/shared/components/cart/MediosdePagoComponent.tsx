@@ -55,6 +55,30 @@ export default function MediosdePagoComponent() {
             }
           },
           // Datos adicionales útiles
+            // ==================== ADDITIONAL_INFO ====================
+          additional_info: {
+            items: items.map(item => ({
+              id: item.id,
+              title: item.titulo,
+              description: item.descripcion,
+              quantity: item.cantidad,
+              unit_price: parseFloat(item.precio.replace(/[$,]/g, '')) || 0,
+            })),
+            shipments: {
+              receiver_address: {
+                zip_code: formData.cp,
+                street_name: formData.direccion,
+              }
+            },
+            payer: {
+              first_name: formData.nombre,
+              last_name: formData.apellidos,
+              phone: {
+                area_code: "52",
+                number: formData.telefono.replace(/\D/g, '')
+              }
+            }
+          },
           metadata: {
             ciudad: formData.ciudad,
             entre_calles: formData.entreCalles,

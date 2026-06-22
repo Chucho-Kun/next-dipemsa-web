@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useCartStore } from '@/src/store/cartStore';
 import { CheckCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useDeliveryStore } from '@/src/store/deliveryStore';
 
 export default function PagoExitoso() {
   const searchParams = useSearchParams();
@@ -19,6 +20,9 @@ export default function PagoExitoso() {
 //     }
 //   }, [paymentId, clearCart]);
 
+  const { items, subTotal, shippingCost, totalPrice } = useCartStore()
+  const { formData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono } } = useDeliveryStore()
+
   const resendEmail = async () => {
     if (!paymentId) return;
 
@@ -30,16 +34,31 @@ export default function PagoExitoso() {
         body: JSON.stringify({
           orderData: {
             paymentId: paymentId,
-            // Puedes pasar items vacíos o reconstruirlos si los tienes guardados
-            items: [],
-            subtotal: 0,
-            shipping: 0,
-            total: 0,
+            items: items.map(item => ({
+              id: item.id,
+              titulo: item.titulo,
+              descripcion: item.descripcion,
+              cantidad: item.cantidad,
+              precio: item.precio,
+            })),               // ← Carrito completo
+            subtotal: subTotal(),            // ← Subtotal real
+            shipping: shippingCost(),        // ← Costo de envío
+            total: totalPrice(),             // ← Total final
           },
           customerEmail: "gameroapp@gmail.com", // Idealmente guardar el email del usuario
-          deliveryData: {} // Puedes guardar los datos de entrega también
+          deliveryData: { 
+            nombre, 
+            apellidos, 
+            direccion, 
+            entreCalles, 
+            ciudad, 
+            cp, 
+            telefono 
+        }
         })
       });
+
+      const data = await res.json();
 
       if (res.ok) {
         toast.success("✅ Correo reenviado correctamente");

@@ -43,6 +43,27 @@ export async function POST(request: NextRequest) {
         },
         statement_descriptor: "DIPEMSA",           // ← Aparece en el estado de cuenta
         external_reference: `ORD-${Date.now()}`,   // Referencia externa
+        additional_info: {
+           items: improvedItems.map((item: any) => ({
+              id: item.id,
+              title: item.title,
+              description: item.description,
+              quantity: item.quantity,
+              unit_price: item.unit_price,
+              currency_id: "MXN",
+            })),
+          shipments: {
+            receiver_address: {
+              zip_code: body.payer?.address?.zip_code || "",
+              street_name: body.payer?.address?.street_name || "",
+            }
+          },
+          payer: {
+            first_name: body.payer?.name || "",
+            last_name: body.payer?.surname || "",
+            phone: body.payer?.phone?.number || "",
+          }
+        } as any,
         metadata: {
           ...body.metadata,                    // ← Mantiene todo lo que enviaste
           source: "dipemsa-web",
