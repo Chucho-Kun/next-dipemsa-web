@@ -9,28 +9,35 @@ let transporter: any = null;
 const getTransporter = () => {
   if (transporter) return transporter;
 
-  console.log("📧 Creando transporter con:", {
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    user: process.env.EMAIL_USER,
-  });
+    const resolvedPort = Number(process.env.EMAIL_PORT) || 587;
+    const resolvedSecure = resolvedPort === 465;
 
-  transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: 587, //Number(process.env.EMAIL_PORT) || 587,
-    secure: false,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-    tls: {
-        rejectUnauthorized: false,
-        minVersion: 'TLSv1.2'
-    },
-    connectionTimeout: 30000,
-    greetingTimeout: 30000,
-    socketTimeout: 60000,
-  });
+    console.log("📧 Creando transporter con:", {
+        host: process.env.EMAIL_HOST,
+        port: resolvedPort,
+        secure: resolvedSecure,
+        user: process.env.EMAIL_USER,
+    });
+
+    transporter = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: resolvedPort,
+        secure: resolvedSecure,
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD,
+        },
+        tls: {
+            rejectUnauthorized: false,
+            minVersion: 'TLSv1.2'
+        },
+        // Set debug/logging if explicitly enabled via env var
+        logger: process.env.EMAIL_DEBUG === 'true',
+        debug: process.env.EMAIL_DEBUG === 'true',
+        connectionTimeout: 30000,
+        greetingTimeout: 30000,
+        socketTimeout: 60000,
+    });
 
   return transporter;
 };

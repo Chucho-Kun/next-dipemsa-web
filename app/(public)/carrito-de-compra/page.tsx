@@ -1,4 +1,5 @@
 import ResumenCompraPage from "@/src/shared/components/cart/ResumenCompra";
+import LoadingComponent from "@/src/shared/components/LoadingComponent";
 import { Suspense } from "react";
 
 export const metadata = {
@@ -23,7 +24,7 @@ export const metadata = {
 
 export default function CompraPage() {
   return (
-    <Suspense fallback={ <div>Cargando...</div> }>
+    <Suspense fallback={ <LoadingComponent /> }>
       <ResumenCompraPage />
     </Suspense>
   )
