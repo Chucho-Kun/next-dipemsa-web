@@ -4,7 +4,34 @@ import { totalxcantidad } from '@/src/utils/formatPrice';
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
+let transporter: any = null;
+
+const getTransporter = () => {
+  if (transporter) return transporter;
+
+  transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: Number(process.env.EMAIL_PORT) || 587,
+    secure: false,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+    // Timeouts importantes para Railway
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 20000,
+    pool: true,                    // Reutilizar conexiones
+  });
+
+  return transporter;
+};
+
 export async function POST(request: NextRequest) {
+    const startTime = Date.now();
 
   try {
     const { orderData, customerEmail, deliveryData } = await request.json();
@@ -18,18 +45,18 @@ export async function POST(request: NextRequest) {
     console.log("📧 [SEND-EMAIL] Total de productos:", orderData.items?.length);
 
     // Configuración para correo empresarial (SMTP)
-    const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,        // mail.dipemsa.com.mx
-      port: Number(process.env.EMAIL_PORT) || 587,
-      secure: false,                       // ← Importante para puerto 587
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-      tls: {
-        rejectUnauthorized: false,         // Ayuda con certificados
-      },
-    });
+    // const transporter = nodemailer.createTransport({
+    //   host: process.env.EMAIL_HOST,        // mail.dipemsa.com.mx
+    //   port: Number(process.env.EMAIL_PORT) || 587,
+    //   secure: false,                       // ← Importante para puerto 587
+    //   auth: {
+    //     user: process.env.EMAIL_USER,
+    //     pass: process.env.EMAIL_PASSWORD,
+    //   },
+    //   tls: {
+    //     rejectUnauthorized: false,         // Ayuda con certificados
+    //   },
+    // });
 
     console.log("📧 [SEND-EMAIL] Transporter creado correctamente");
     const htmlContent = `
@@ -218,6 +245,8 @@ export async function POST(request: NextRequest) {
     `;
 
     console.log("📧 [SEND-EMAIL] Enviando correo...");
+
+    const transporter = getTransporter();
 
     const info = await transporter.sendMail({
       from: `"DIPEMSA WEB" <${process.env.EMAIL_USER}>`,

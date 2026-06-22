@@ -81,7 +81,8 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
                     },
                     customerEmail: payer.email ,
                     deliveryData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono }
-                    })
+                    }),
+                    signal: AbortSignal.timeout(30000)
                 });
 
                 const emailResult = await emailRes.json();
