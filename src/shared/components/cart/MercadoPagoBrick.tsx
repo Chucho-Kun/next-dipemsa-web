@@ -27,6 +27,27 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
         setResetKey( prev => prev + 1)
     }
 
+        // Función para enviar correo sin bloquear
+    const sendEmailInBackground = async (data: any) => {
+    try {
+        const res = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        // No esperamos respuesta para no bloquear
+        });
+
+        if (res.ok) {
+        console.log("✅ Correo enviado en segundo plano");
+        } else {
+        console.error("❌ Error enviando correo en background");
+        }
+    } catch (err) {
+        console.error("Error en envío de correo background:", err);
+        // No mostramos toast aquí porque el usuario ya vio "Pago exitoso"
+    }
+    };
+
   return (
     <div className="max-w-lg mx-auto">
       <Payment
@@ -61,43 +82,30 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
 
             if (result.status === 'approved' || result.status === 'in_process') {
 
-            // ==================== ENVÍO DE CORREO ====================
-                console.log("📧 Intentando enviar correo...");
+                // ==================== ENVÍO DE CORREO EN BACKGROUND ====================
+      console.log("📧 Iniciando envío de correo en segundo plano...");
 
-                toast.success('Se está procesando su pago, favor de no salir de esta ventana...',{
-                    duration: 20000
-                })
+      // Enviamos el correo sin esperar (fire and forget)
+            sendEmailInBackground({
+                orderData: {
+                    paymentId: result.payment_id || 'N/A',
+                    items: items.map(item => ({
+                        id: item.id,
+                        titulo: item.titulo,
+                        descripcion: item.descripcion,
+                        cantidad: item.cantidad,
+                        precio: item.precio,
+                    })),  
+                    subtotal: subTotal(),
+                    shipping: shippingCost(),
+                    total: totalPrice(),
+                },
+                customerEmail: payer.email,
+                deliveryData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono }
+            });
 
-                const emailRes = await fetch('/api/send-email', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                    orderData: {
-                        paymentId: result.payment_id || 'N/A',
-                        items: items,
-                        subtotal: subTotal(),
-                        shipping: shippingCost(),
-                        total: totalPrice(),
-                    },
-                    customerEmail: payer.email ,
-                    deliveryData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono }
-                    }),
-                    signal: AbortSignal.timeout(30000)
-                });
-
-                const emailResult = await emailRes.json();
-
-                if (emailRes.ok) {
-                    console.log("✅ Correo enviado correctamente:", emailResult);
-                    toast.success("¡Pago exitoso! Te hemos enviado un correo de confirmación.");
-                } else {
-                    console.error("❌ Error enviando correo:", emailResult);
-                    toast.error("Pago exitoso, pero no se pudo enviar el correo de confirmación.");
-                }
-                // ========================================================
-                setTimeout(() => {
-                    onSuccess?.(result);
-                },2000)
+            toast.success("¡Pago exitoso! Te hemos enviado un correo de confirmación.");
+            // ========================================================
             
             } else {
 
