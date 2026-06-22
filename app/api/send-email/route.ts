@@ -9,6 +9,12 @@ let transporter: any = null;
 const getTransporter = () => {
   if (transporter) return transporter;
 
+  console.log("📧 Creando transporter con:", {
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    user: process.env.EMAIL_USER,
+  });
+
   transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: Number(process.env.EMAIL_PORT) || 587,
@@ -20,11 +26,9 @@ const getTransporter = () => {
     tls: {
       rejectUnauthorized: false,
     },
-    // Timeouts importantes para Railway
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 20000,
-    pool: true,                    // Reutilizar conexiones
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 30000,        
   });
 
   return transporter;
@@ -244,7 +248,7 @@ export async function POST(request: NextRequest) {
       </html>
     `;
 
-    console.log("📧 [SEND-EMAIL] Enviando correo...");
+    console.log("📧 Intentando enviar correo...");
 
     const transporter = getTransporter();
 
@@ -265,13 +269,15 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error: any) {
-    console.error("❌ [SEND-EMAIL] Error completo:", error);
-    console.error("❌ [SEND-EMAIL] Código de error:", error.code);
-    console.error("❌ [SEND-EMAIL] Respuesta del servidor:", error.response);
+    console.error("❌ [SEND-EMAIL] ERROR COMPLETO:", error);
+    console.error("❌ Código:", error.code);
+    console.error("❌ Mensaje:", error.message);
+    console.error("❌ Stack:", error.stack?.substring(0, 500));
 
     return NextResponse.json({ 
       error: 'Error enviando correo',
-      details: error.message 
+      code: error.code,
+      message: error.message 
     }, { status: 500 });
   }
 }
