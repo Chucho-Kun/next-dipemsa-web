@@ -1,32 +1,10 @@
 // app/api/send-email/route.ts
+import { useDeliveryStore } from '@/src/store/deliveryStore';
 import { totalxcantidad } from '@/src/utils/formatPrice';
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-let transporter: any = null;
-
-const getTransporter = () => {
-  if (!transporter) {
-    transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: Number(process.env.EMAIL_PORT) || 587,
-      secure: false,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-      tls: { rejectUnauthorized: false },
-      // Timeouts importantes para Railway
-      connectionTimeout: 8000,
-      greetingTimeout: 8000,
-      socketTimeout: 15000,
-    });
-  }
-  return transporter;
-};
-
 export async function POST(request: NextRequest) {
-  const start = Date.now();
 
   try {
     const { orderData, customerEmail, deliveryData } = await request.json();
@@ -34,10 +12,26 @@ export async function POST(request: NextRequest) {
     const subTotalReal = Math.round(Number(orderData.subtotal) * 100) / 100;
     const totalReal = Math.round(Number(orderData.total) * 100) / 100;
 
-    console.log(`📧 [SEND-EMAIL] Iniciando envío a ${customerEmail}`);
+    console.log("📧 [SEND-EMAIL] Solicitud recibida");
+    console.log("📧 [SEND-EMAIL] Email destino:", customerEmail);
+    console.log("📧 [SEND-EMAIL] Payment ID:", orderData.paymentId);
+    console.log("📧 [SEND-EMAIL] Total de productos:", orderData.items?.length);
 
-    const transporter = getTransporter();
+    // Configuración para correo empresarial (SMTP)
+    const transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,        // mail.dipemsa.com.mx
+      port: Number(process.env.EMAIL_PORT) || 587,
+      secure: false,                       // ← Importante para puerto 587
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+      tls: {
+        rejectUnauthorized: false,         // Ayuda con certificados
+      },
+    });
 
+    console.log("📧 [SEND-EMAIL] Transporter creado correctamente");
     const htmlContent = `
     <html lang="es"><head>
       <meta charset="utf-8">
@@ -223,22 +217,32 @@ export async function POST(request: NextRequest) {
       </html>
     `;
 
+    console.log("📧 [SEND-EMAIL] Enviando correo...");
+
     const info = await transporter.sendMail({
-      from: `"DIPEMSA" <${process.env.EMAIL_USER}>`,
+      from: `"DIPEMSA WEB" <${process.env.EMAIL_USER}>`,
       to: customerEmail,
-      bcc: "aviso@dipemsa.com.mx",
+      bcc: 'jesus_web_master@hotmail.com',
       subject: `Confirmación de compra - Orden #${orderData.paymentId}`,
       html: htmlContent,
     });
 
-    const duration = Date.now() - start;
-    console.log(`✅ [SEND-EMAIL] Correo enviado en ${duration}ms`);
+    console.log("✅ [SEND-EMAIL] Correo enviado exitosamente!");
+    console.log("📧 Message ID:", info.messageId);
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ 
+      success: true, 
+      messageId: info.messageId 
+    });
 
   } catch (error: any) {
-    const duration = Date.now() - start;
-    console.error(`❌ [SEND-EMAIL] Falló después de ${duration}ms:`, error.message);
-    return NextResponse.json({ error: 'Error enviando correo' }, { status: 500 });
+    console.error("❌ [SEND-EMAIL] Error completo:", error);
+    console.error("❌ [SEND-EMAIL] Código de error:", error.code);
+    console.error("❌ [SEND-EMAIL] Respuesta del servidor:", error.response);
+
+    return NextResponse.json({ 
+      error: 'Error enviando correo',
+      details: error.message 
+    }, { status: 500 });
   }
 }

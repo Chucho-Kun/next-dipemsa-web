@@ -10,36 +10,35 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // ==================== DEBUG ====================
-    console.log("🔍 [PREFERENCE] Items recibidos del frontend:");
-    console.log(JSON.stringify(body.items, null, 2));
-    // ===============================================
-    
+    console.log("🔍 Items recibidos del frontend:", JSON.stringify(body.items, null, 2));
 
-    // Mejorar los items antes de enviarlos a Mercado Pago
-    const improvedItems = body.items.map((item: any) => ({
-      title: item.title || item.titulo || "Producto Dipemsa",           // ← Prioridad al nombre
-      description: item.description || item.descripcion || "",
-      quantity: Number(item.quantity || item.cantidad),
-      unit_price: Number(item.unit_price || item.precio),
+    // ← Versión más agresiva para forzar el nombre
+    const itemsMP = body.items.map((item: any) => ({
+      title: `${item.titulo || item.title || "Producto Dipemsa"}`.trim(),
+      description: `${item.descripcion || item.description || ""}`.trim(),
+      quantity: Number(item.cantidad || item.quantity),
+      unit_price: Number(item.precio || item.unit_price),
       currency_id: "MXN",
-      id: item.id || undefined,
+      id: item.id?.toString(),
     }));
+
+    console.log("✅ Items enviados a Mercado Pago:", JSON.stringify(itemsMP, null, 2));
 
     const preference = new Preference(client);
 
     const response = await preference.create({
       body: {
-        items: improvedItems,
+        items: itemsMP,
         payer: body.payer,
         back_urls: {
           success: `${process.env.NEXT_PUBLIC_URL}/pago-exitoso`,
           failure: `${process.env.NEXT_PUBLIC_URL}/pago-fallido`,
           pending: `${process.env.NEXT_PUBLIC_URL}/pago-pendiente`,
         },
-        //auto_return: 'approved',
       },
     });
+
+    console.log("✅ Preferencia creada:", response.id);
 
     return NextResponse.json({ 
       preferenceId: response.id,

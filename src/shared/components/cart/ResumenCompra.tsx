@@ -9,9 +9,13 @@ import { totalxcantidad } from '@/src/utils/formatPrice';
 import MediosdePagoComponent from './MediosdePagoComponent';
 import EntregaComponent from './EntregaComponent';
 import { useDeliveryStore } from '@/src/store/deliveryStore';
+import { useSearchParams } from 'next/navigation';
 
 export default function ResumenCompraPage() {
     const { items, totalPrice , shippingCost, subTotal, isLoaded, loadCart } = useCartStore()
+
+    const params = useSearchParams()
+    const isDevView = params.get('dev') === 'true';
 
     useEffect(() => {
       loadCart()
@@ -19,34 +23,34 @@ export default function ResumenCompraPage() {
 
     const { formData } = useDeliveryStore()
 
-// const cotizaWhatsApp = () => {
-//   try {
-//     const subtotal = subTotal();
-//     const shipping = shippingCost();
-//     const total = totalPrice();
+const cotizaWhatsApp = () => {
+  try {
+    const subtotal = subTotal();
+    const shipping = shippingCost();
+    const total = totalPrice();
 
-//     console.log("Valores calculados:", { subtotal, shipping, total });
+    console.log("Valores calculados:", { subtotal, shipping, total });
 
-//     const mensaje = `*🛒 Nuevo Pedido desde la Web*\n\n` +
-//       items.map((item, index) => 
-//         `${index + 1}. *${item.titulo}*\n` +
-//         `   ${item.descripcion}\n` +
-//         `   Cant: ${item.cantidad} × ${totalxcantidad(item.precio, item.cantidad)}`
-//       ).join('\n\n') +
-//       `\n────────────────────\n` +
-//       `*Subtotal:* $${subtotal.toFixed(2)}\n` +
-//       `*Envío:* $${shipping.toFixed(2)}\n` +
-//       `*TOTAL:* $${total.toFixed(2)}`;
+    const mensaje = `*🛒 Nuevo Pedido desde la Web*\n\n` +
+      items.map((item, index) => 
+        `${index + 1}. *${item.titulo}*\n` +
+        `   ${item.descripcion}\n` +
+        `   Cant: ${item.cantidad} × ${totalxcantidad(item.precio, item.cantidad)}`
+      ).join('\n\n') +
+      `\n────────────────────\n` +
+      `*Subtotal:* $${subtotal.toFixed(2)}\n` +
+      `*Envío:* $${shipping.toFixed(2)}\n` +
+      `*TOTAL:* $${total.toFixed(2)}`;
 
-//     window.open(
-//       `https://api.whatsapp.com/send?phone=5537091930&text=${encodeURIComponent(mensaje)}`,
-//       '_blank'
-//     );
-//   } catch (error) {
-//     console.error("Error al generar mensaje WhatsApp:", error);
-//     toast.error("Hubo un error al generar el pedido");
-//   }
-// };
+    window.open(
+      `https://api.whatsapp.com/send?phone=5537091930&text=${encodeURIComponent(mensaje)}`,
+      '_blank'
+    );
+  } catch (error) {
+    console.error("Error al generar mensaje WhatsApp:", error);
+    toast.error("Hubo un error al generar el pedido");
+  }
+};
 
   return (
 
@@ -109,7 +113,7 @@ export default function ResumenCompraPage() {
           ) }
 
           {/* COTIZA TU CARRITA POR WHATS APP */}
-          {/* <div onClick={ cotizaWhatsApp } className='mt-4 text-center flex justify-center-safe cursor-pointer'>
+          <div onClick={ cotizaWhatsApp } className='mt-4 text-center flex justify-center-safe cursor-pointer'>
             <div 
                 className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-bold px-6 py-3 rounded-lg flex items-center gap-2 transition text-sm whitespace-nowrap">
               COMPRAR AHORA
@@ -122,21 +126,27 @@ export default function ResumenCompraPage() {
                   />
               </span>
             </div>
-          </div> */}
+          </div>
 
         {/* <div onClick={ clearCart }>VACIAR CARRITO</div> */}
         
         </div>
 
         {/* === Columna Derecha: Entrega y Pago === */}
-        <div className="space-y-8">
-          {/* Formulario de Entrega */}
-          <EntregaComponent />
 
-          {/* Medios de Pago */}
-          <MediosdePagoComponent />
+        { isDevView && (
 
-        </div>
+          <div className="space-y-8">
+            {/* Formulario de Entrega */}
+            <EntregaComponent />
+
+            {/* Medios de Pago */}
+            <MediosdePagoComponent />
+
+          </div>
+
+        ) }
+
       </div>
     </div>
   );

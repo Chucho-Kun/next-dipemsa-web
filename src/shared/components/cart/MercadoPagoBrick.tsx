@@ -94,7 +94,9 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
                     toast.error("Pago exitoso, pero no se pudo enviar el correo de confirmación.");
                 }
                 // ========================================================
-            onSuccess?.(result);
+                setTimeout(() => {
+                    onSuccess?.(result);
+                },2000)
             
             } else {
 
