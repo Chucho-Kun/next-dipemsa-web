@@ -24,12 +24,12 @@ const getTransporter = () => {
       pass: process.env.EMAIL_PASSWORD,
     },
     tls: {
-      rejectUnauthorized: false,
+        rejectUnauthorized: false,
+        minVersion: 'TLSv1.2'
     },
-    connectionTimeout: 20000,
-    greetingTimeout: 20000,
-    socketTimeout: 45000,           // Más tiempo
-    pool: true,      
+    connectionTimeout: 30000,
+    greetingTimeout: 30000,
+    socketTimeout: 60000,
   });
 
   return transporter;
