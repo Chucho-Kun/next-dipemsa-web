@@ -4,13 +4,16 @@ import { useState } from 'react';
 import { useCartStore } from '@/src/store/cartStore';
 import { useDeliveryStore } from '@/src/store/deliveryStore';
 import MercadoPagoBrick from './MercadoPagoBrick';
+import toast from 'react-hot-toast';
 
 export default function MediosdePagoComponent() {
-  const { items, totalPrice } = useCartStore();
+  const { items, totalPrice, subTotal, shippingCost } = useCartStore();
   const { formData, validateForm } = useDeliveryStore();
   
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const { formData:{ nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono } } = useDeliveryStore()
 
   const crearPreferencia = async () => {
     // 1. Validar que haya productos
@@ -132,6 +135,53 @@ export default function MediosdePagoComponent() {
             }}
           />
         )}
+
+        <button
+          onClick={async () => {
+            try {
+              const testData = {
+                orderData: {
+                  paymentId: "TEST-" + Date.now(),
+                  items: items.length > 0 ? items : [{
+                    titulo: "Producto de Prueba",
+                    descripcion: "Lija de agua",
+                    cantidad: 1,
+                    precio: "$450.00"
+                  }],
+                  subtotal: subTotal(),
+                  shipping: shippingCost(),
+                  total: totalPrice(),
+                },
+                customerEmail: "gameroapp@gmail.com",
+                deliveryData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono }
+              };
+
+              console.log("🧪 Enviando datos de prueba:", testData);
+
+              const res = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(testData)
+              });
+
+              const result = await res.json();
+
+              if (res.ok) {
+                toast.success("✅ Correo de prueba enviado correctamente");
+                console.log("✅ Respuesta:", result);
+              } else {
+                toast.error("❌ Error al enviar correo de prueba");
+                console.error("❌ Error:", result);
+              }
+            } catch (error) {
+              toast.error("Error de conexión");
+              console.error("❌ Error completo:", error);
+            }
+          }}
+          className="mt-4 bg-orange-600 text-white px-6 py-3 rounded-xl"
+        >
+          🔧 Probar Envío de Correo (Directo)
+        </button>
       </div>
     </div>
   );
