@@ -17,8 +17,8 @@ const getTransporter = () => {
 
   transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
-    port: 465, //Number(process.env.EMAIL_PORT) || 587,
-    secure: true,
+    port: 587, //Number(process.env.EMAIL_PORT) || 587,
+    secure: false,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASSWORD,
@@ -26,8 +26,10 @@ const getTransporter = () => {
     tls: {
       rejectUnauthorized: false,
     },
-    connectionTimeout: 15000,
-    socketTimeout: 30000,        
+    connectionTimeout: 20000,
+    greetingTimeout: 20000,
+    socketTimeout: 45000,           // Más tiempo
+    pool: true,      
   });
 
   return transporter;
