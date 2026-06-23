@@ -95,6 +95,14 @@ export default function MediosdePagoComponent() {
             ciudad: formData.ciudad,
             entre_calles: formData.entreCalles,
             telefono: formData.telefono,
+            // Enviar una versión reducida del carrito para depuración en backend
+            carrito_completo: items.map(i => ({
+              id: i.id,
+              titulo: i.titulo,
+              descripcion: i.descripcion,
+              cantidad: i.cantidad,
+              precio: i.precio
+            }))
           }
         }),
       });
