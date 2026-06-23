@@ -5,6 +5,7 @@ import { useCartStore } from '@/src/store/cartStore';
 import { useDeliveryStore } from '@/src/store/deliveryStore';
 import MercadoPagoBrick from './MercadoPagoBrick';
 import toast from 'react-hot-toast';
+import { useSearchParams } from 'next/navigation';
 
 export default function MediosdePagoComponent() {
   const { items, totalPrice, subTotal, shippingCost } = useCartStore();
