@@ -31,15 +31,24 @@ export default function MediosdePagoComponent() {
     setLoading(true);
 
     try {
+      console.log('🧭 CrearPreferencia: enviando items al backend', items);
+
+      const controller = new AbortController();
+      const timeoutMs = 15000;
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
       const res = await fetch('/api/mercadopago/preference', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: items.map(item => ({
-            title: `${item.titulo} - ${item.descripcion || ''}`.trim(),   // ← Lo más importante
+            // Enviar el nombre del producto en `title` separado de la `description`.
+            // Evita concatenar título+descripción en `title` — Mercado Pago puede
+            // mostrar 'Producto sin nombre' si `title` queda vacío o mal formateado.
+            title: item.titulo || `Producto Dipemsa ${item.id || ''}`,
             description: item.descripcion || '',
             quantity: item.cantidad,
-            unit_price: parseFloat(item.precio.replace(/[$,]/g, '')) || 0,
+            unit_price: parseFloat(String(item.precio).replace(/[$,]/g, '')) || 0,
             currency_id: 'MXN',
             id: item.id
           })),
@@ -91,24 +100,38 @@ export default function MediosdePagoComponent() {
       });
 
       // ← NUEVO: Mejor manejo de respuesta
-    const text = await res.text(); // Primero leemos como texto
+      clearTimeout(timeoutId);
+      const text = await res.text(); // Primero leemos como texto
 
       if (!res.ok) {
-        // console.error("Error del servidor:", text);
+        console.error('Error del servidor:', res.status, text);
         alert(`Error del servidor: ${res.status} - Revisa la consola`);
         return;
       }
 
-      const data = JSON.parse(text); // Solo parseamos si es JSON válido
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (err) {
+        console.error('Respuesta inválida al crear preferencia:', text);
+        alert('Respuesta inválida del servidor de pagos. Revisa la consola.');
+        return;
+      }
 
       if (data.preferenceId) {
         setPreferenceId(data.preferenceId);
       } else {
+        console.error('No se recibió preferenceId:', data);
         alert('Error: No se recibió preferenceId');
       }
     } catch (error) {
-      // console.error('Error completo:', error);
-      alert('Error al conectar con el servidor de pagos');
+      if ((error as any)?.name === 'AbortError') {
+        console.error('❌ CrearPreferencia: fetch aborted (timeout)');
+        alert('Tiempo de conexión agotado al crear preferencia. Intenta de nuevo.');
+      } else {
+        console.error('Error completo:', error);
+        alert('Error al conectar con el servidor de pagos');
+      }
     } finally {
       setLoading(false);
     }

@@ -18,13 +18,18 @@ export async function POST(request: NextRequest) {
 
     // Mejorar los items antes de enviarlos a Mercado Pago
     const improvedItems = body.items.map((item: any) => ({
-      title: item.title || item.titulo || "Producto Dipemsa",           // ← Prioridad al nombre
-      description: item.description || item.descripcion || "",
-      quantity: Number(item.quantity || item.cantidad),
-      unit_price: Number(item.unit_price || item.precio),
-      currency_id: "MXN",
+      // Aseguramos un title no vacío y con fallback consistente
+      title: (item.title || item.titulo || (`Producto Dipemsa ${item.id || ''}`)).toString().trim(),
+      description: (item.description || item.descripcion || '').toString(),
+      quantity: Number(item.quantity ?? item.cantidad ?? 1),
+      unit_price: Number(item.unit_price ?? item.precio ?? 0),
+      currency_id: 'MXN',
       id: item.id || undefined,
     }));
+
+    // Loguear improvedItems para depuración antes de crear la preferencia
+    console.log('🔧 [PREFERENCE] improvedItems a enviar a Mercado Pago:');
+    console.log(JSON.stringify(improvedItems, null, 2));
 
     console.log("🛒 Carrito completo recibido:", 
       JSON.stringify(body.metadata?.carrito_completo, null, 2)
