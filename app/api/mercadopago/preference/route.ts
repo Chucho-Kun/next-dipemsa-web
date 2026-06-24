@@ -19,12 +19,14 @@ export async function POST(request: NextRequest) {
     // Mejorar los items antes de enviarlos a Mercado Pago
     const improvedItems = body.items.map((item: any) => ({
       // Aseguramos un title no vacío y con fallback consistente
-      title: (item.title || item.titulo || (`Producto Dipemsa ${item.id || ''}`)).toString().trim(),
-      description: (item.description || item.descripcion || '').toString(),
-      quantity: Number(item.quantity ?? item.cantidad ?? 1),
-      unit_price: Number(item.unit_price ?? item.precio ?? 0),
-      currency_id: 'MXN',
       id: item.id || undefined,
+      title: (item.title || item.titulo || (`Producto Dipemsa ${item.id || ''}`)).toString().trim(),
+      currency_id: 'MXN',
+      picture_url: `/fotos/${item.id}.jpg`,
+      description: (item.description || item.descripcion || '').toString(),
+      category_id: item.marca,
+      quantity: Number(item.quantity ?? item.cantidad ?? 1),
+      unit_price: Number(item.unit_price ?? item.precio ?? 0)
     }));
 
     // Loguear improvedItems para depuración antes de crear la preferencia

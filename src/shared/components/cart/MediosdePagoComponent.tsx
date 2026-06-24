@@ -43,15 +43,14 @@ export default function MediosdePagoComponent() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: items.map(item => ({
-            // Enviar el nombre del producto en `title` separado de la `description`.
-            // Evita concatenar título+descripción en `title` — Mercado Pago puede
-            // mostrar 'Producto sin nombre' si `title` queda vacío o mal formateado.
-            title: item.titulo || `Producto Dipemsa ${item.id || ''}`,
+            id: item.id,
+            title: ( item.titulo || (`Producto Dipemsa ${item.id || ''}`)).toString().trim(),
+            currency_id: 'MXN',
+            picture_url: `/fotos/${item.id}.jpg`,
             description: item.descripcion || '',
+            category_id: item.marca,
             quantity: item.cantidad,
             unit_price: parseFloat(String(item.precio).replace(/[$,]/g, '')) || 0,
-            currency_id: 'MXN',
-            id: item.id
           })),
           payer: {
             name: formData.nombre,
@@ -72,7 +71,7 @@ export default function MediosdePagoComponent() {
           additional_info: {
             items: items.map(item => ({
               id: item.id,
-              title: item.titulo,
+              title: ( item.titulo || (`Producto Dipemsa ${item.id || ''}`)).toString().trim(),
               description: item.descripcion,
               quantity: item.cantidad,
               unit_price: parseFloat(item.precio.replace(/[$,]/g, '')) || 0,

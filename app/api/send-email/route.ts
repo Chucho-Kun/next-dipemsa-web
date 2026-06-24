@@ -12,9 +12,9 @@ export async function POST(request: NextRequest) {
     console.log("📧 [RESEND] Orden:", orderData.paymentId);
 
     const { data, error } = await resend.emails.send({
-      from: 'DIPEMSA <aviso@dipemsa.com.mx>',
+      from: 'DIPEMSA <noreplay@dipemsa.com.mx>',
       to: [customerEmail],
-      bcc: ['aviso@dipemsa.com.mx'],
+      bcc: ['jesus_web_master@hotmail.com'],
       subject: `Confirmación de compra - Orden #${orderData.paymentId}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
