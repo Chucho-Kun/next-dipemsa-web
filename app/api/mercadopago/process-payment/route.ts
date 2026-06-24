@@ -1,6 +1,7 @@
 // app/api/mercadopago/process-payment/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { MercadoPagoConfig, Payment } from 'mercadopago';
+import { PaymentCreateRequest } from 'mercadopago/dist/clients/payment/create/types';
 
 const client = new MercadoPagoConfig({
   accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN!,
@@ -26,20 +27,41 @@ export async function POST(request: NextRequest) {
 
     const payment = new Payment(client);
 
-    const response = await payment.create({
-      body: {
-        token: formData.token,
-        issuer_id: formData.issuer_id,
-        payment_method_id: formData.payment_method_id,
-        transaction_amount: transactionAmount,
-        installments: Number(formData.installments) || 1,
-        description: body.description || "Compra en Dipemsa",
-        additional_info: body.items ? { items: body.items } : undefined,
-        payer: {
-          email: formData.payer?.email || "cliente@dipemsa.com.mx",
-        },
-      },
-    });
+    type PaymentItemIn = {
+      id?: string;
+      title?: string;
+      description?: string;
+      picture_url?: string;
+      category_id?: string;
+      quantity?: number;
+      unit_price?: number;
+      currency_id?: string;
+    };
+
+    const rawItems: PaymentItemIn[] = Array.isArray(body.items) ? body.items : [];
+
+    const additionalItems = rawItems.map(({ currency_id: _c, ...it }, idx) => ({
+      id: String(it.id ?? idx),                         // requerido
+      title: String(it.title ?? "Producto"),            // recomendado
+      description: it.description,
+      picture_url: it.picture_url,
+      category_id: it.category_id,
+      quantity: Number(it.quantity ?? 1),               // requerido
+      unit_price: Number(it.unit_price ?? 0),           // requerido
+    }));
+
+    const paymentBody: PaymentCreateRequest = {
+      token: formData.token,
+      issuer_id: formData.issuer_id,
+      payment_method_id: formData.payment_method_id,
+      transaction_amount: transactionAmount,
+      installments: Number(formData.installments) || 1,
+      description: body.description || "Compra en Dipemsa",
+      additional_info: additionalItems.length ? { items: additionalItems } : undefined,
+      payer: { email: formData.payer?.email || "cliente@dipemsa.com.mx" },
+    };
+
+    const response = await payment.create({ body: paymentBody });
 
     console.log("✅ Pago procesado:", response.status);
 
