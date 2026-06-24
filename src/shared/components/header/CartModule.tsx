@@ -33,7 +33,7 @@ export default function CartModule() {
             {displayCount > 0 && (
                 <span
                     suppressHydrationWarning 
-                    className="cursor-pointer cart-label bg-[#FF5E00] text-white w-5 h-5 rounded-full text-sm font-bold" >
+                    className="flex items-center justify-center cursor-pointer cart-label bg-[#FF5E00] text-white w-7 h-7 rounded-full text-sm font-bold" >
                     { displayCount }
                 </span>
             )}

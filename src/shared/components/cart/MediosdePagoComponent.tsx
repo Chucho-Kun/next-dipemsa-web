@@ -169,26 +169,18 @@ export default function MediosdePagoComponent() {
         )}
 
         <button
-          onClick={async () => {
-            try {
+            onClick={async () => {
               const testData = {
                 orderData: {
                   paymentId: "TEST-" + Date.now(),
-                  items: items.length > 0 ? items : [{
-                    titulo: "Producto de Prueba",
-                    descripcion: "Lija de agua",
-                    cantidad: 1,
-                    precio: "$450.00"
-                  }],
-                  subtotal: subTotal(),
-                  shipping: shippingCost(),
-                  total: totalPrice(),
+                  items: items.length > 0 ? items : [{ titulo: "Prueba", descripcion: "Producto de prueba", cantidad: 1, precio: "$450" }],
+                  subtotal: 450,
+                  shipping: 0,
+                  total: 450,
                 },
                 customerEmail: "gameroapp@gmail.com",
-                deliveryData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono }
+                deliveryData: { nombre: "Test", apellidos: "Usuario", direccion: "Dirección de prueba", entreCalles: "", ciudad: "CDMX", cp: "07700", telefono: "5555555555" }
               };
-
-              console.log("🧪 Enviando datos de prueba:", testData);
 
               const res = await fetch('/api/send-email', {
                 method: 'POST',
@@ -196,24 +188,17 @@ export default function MediosdePagoComponent() {
                 body: JSON.stringify(testData)
               });
 
-              const result = await res.json();
-
               if (res.ok) {
-                toast.success("✅ Correo de prueba enviado correctamente");
-                console.log("✅ Respuesta:", result);
+                toast.success("✅ Correo de prueba enviado con Resend!");
               } else {
-                toast.error("❌ Error al enviar correo de prueba");
-                console.error("❌ Error:", result);
+                toast.error("❌ Error al enviar correo");
               }
-            } catch (error) {
-              toast.error("Error de conexión");
-              console.error("❌ Error completo:", error);
-            }
-          }}
-          className="mt-4 bg-orange-600 text-white px-6 py-3 rounded-xl"
-        >
-          🔧 Probar Envío de Correo (Directo)
-        </button>
+            }}
+            className="mt-4 bg-green-600 text-white px-6 py-3 rounded-xl"
+          >
+            📧 Probar Envío con Resend
+          </button>
+        
       </div>
     </div>
   );
