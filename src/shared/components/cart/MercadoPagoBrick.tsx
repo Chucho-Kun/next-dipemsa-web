@@ -74,7 +74,18 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
             const res = await fetch('/api/mercadopago/process-payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData),
+            body: JSON.stringify({
+                ...formData, // lo que entrega el Brick
+                description: `Compra en Dipemsa (${items.length} producto(s))`,
+                items: items.map(item => ({
+                    id: item.id,
+                    title: String(item.titulo ?? `Producto Dipemsa ${item.id ?? ""}`).trim(),
+                    description: item.descripcion ?? "",
+                    quantity: Number(item.cantidad ?? 1),
+                    unit_price: Number(String(item.precio).replace(/[$,]/g, "")) || 0,
+                    currency_id: "MXN",
+                })),
+            }),
             });
 
             const result = await res.json();

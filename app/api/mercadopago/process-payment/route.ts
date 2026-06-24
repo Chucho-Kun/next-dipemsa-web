@@ -31,8 +31,10 @@ export async function POST(request: NextRequest) {
         token: formData.token,
         issuer_id: formData.issuer_id,
         payment_method_id: formData.payment_method_id,
-        transaction_amount: transactionAmount,     // ← Aquí va el monto corregido
+        transaction_amount: transactionAmount,
         installments: Number(formData.installments) || 1,
+        description: body.description || "Compra en Dipemsa",
+        additional_info: body.items ? { items: body.items } : undefined,
         payer: {
           email: formData.payer?.email || "cliente@dipemsa.com.mx",
         },
