@@ -85,7 +85,8 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
                     unit_price: Number(String(item.precio).replace(/[$,]/g, "")) || 0,
                     currency_id: "MXN",
                 })),
-            }),
+                    deliveryData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono },
+                }),
             });
 
             const result = await res.json();

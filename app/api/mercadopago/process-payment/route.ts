@@ -57,8 +57,19 @@ export async function POST(request: NextRequest) {
       transaction_amount: transactionAmount,
       installments: Number(formData.installments) || 1,
       description: body.description || "Compra en Dipemsa",
-      additional_info: additionalItems.length ? { items: additionalItems } : undefined,
+      //additional_info: additionalItems.length ? { items: additionalItems } : undefined,
       payer: { email: formData.payer?.email || "cliente@dipemsa.com.mx" },
+      additional_info: {
+        items: additionalItems,
+        payer: {
+          first_name: body.deliveryData?.nombre || "",
+          last_name: body.deliveryData?.apellidos || "",
+          phone: {
+            area_code: "52",
+            number: String(body.deliveryData?.telefono || "").replace(/\D/g, ""),
+          },
+        },
+      },
     };
 
     const response = await payment.create({ body: paymentBody });
