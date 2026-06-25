@@ -195,9 +195,9 @@ export async function POST(request: NextRequest) {
           </table>
       </div>
 
-              <div style="background-color: black;color: white !important;padding: 10px;text-decoration: none;text-align: center;">
-                  <a href="https://www.dipemsa.com.mx" style="color: white !important;font-size: 14px;display: inline-block;">www.dipemsa.com.mx</a>
-              </div>
+        <div style="background-color: black;color: white !important;padding: 10px;text-decoration: none;text-align: center;">
+            <a href="https://www.dipemsa.com.mx" style="color: white !important;font-size: 14px;display: inline-block;">www.dipemsa.com.mx</a>
+        </div>
 
 
       </body>

@@ -17,13 +17,11 @@ export default function MediosdePagoComponent() {
   const { formData:{ nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono } } = useDeliveryStore()
 
   const crearPreferencia = async () => {
-    // 1. Validar que haya productos
     if (items.length === 0) {
       alert('El carrito está vacío');
       return;
     }
 
-    // 2. Validar datos de entrega
     const isDeliveryValid = validateForm();
     if (!isDeliveryValid) {
       return; // El toast de errores ya se muestra en validateForm
