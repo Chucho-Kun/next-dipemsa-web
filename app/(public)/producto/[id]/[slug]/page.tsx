@@ -195,11 +195,7 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
                       "returnMethod": ["https://schema.org/ReturnByMail"],
                       
                       // ← Campo principal que Google está pidiendo
-                      "returnFees": {
-                        "@type": "MonetaryAmount",
-                        "value": 0,
-                        "currency": "MXN"
-                      },
+                      "returnFees": "https://schema.org/FreeReturn",
 
                       // Mantén este también por compatibilidad
                       "returnShippingFeesAmount": {
