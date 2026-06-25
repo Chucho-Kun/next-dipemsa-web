@@ -145,7 +145,7 @@ export default function MediosdePagoComponent() {
   };
 
   return (
-    <div className="min-h-125 py-12">
+    <div className="min-h-12 py-1">
       <div className="max-w-2xl mx-auto px-4">
         {!preferenceId ? (
           <button
@@ -165,7 +165,7 @@ export default function MediosdePagoComponent() {
           />
         )}
 
-        <button
+        {/* <button
           onClick={async () => {
             if (items.length === 0) {
               toast.error("El carrito está vacío");
@@ -222,7 +222,7 @@ export default function MediosdePagoComponent() {
           className="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-medium transition"
         >
           📧 Probar Envío con Datos Reales
-        </button>
+        </button> */}
         
       </div>
     </div>

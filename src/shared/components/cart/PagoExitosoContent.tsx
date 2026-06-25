@@ -14,66 +14,66 @@ export default function PagoExitoso() {
   const { clearCart } = useCartStore();
   const [isResending, setIsResending] = useState(false);
 
-//   useEffect(() => {
-//     if (paymentId) {
-//       clearCart();
-//     }
-//   }, [paymentId, clearCart]);
+  useEffect(() => { // SI SE ACTIVA EL BOTON DE REENVIAR CORREO SE TENDRA QUE MANDAR LOS VALORES DEL CARRITO DE COMPRAS A OTRO LOCALSTORAGE
+    if (paymentId) {
+      clearCart();
+    }
+  }, [paymentId, clearCart]);
 
   const { items, subTotal, shippingCost, totalPrice } = useCartStore()
   const { formData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono, email } } = useDeliveryStore()
 
-  const resendEmail = async () => {
-    if (!paymentId) {
-      toast.error("No se encontró el ID del pago");
-      return;
-    }
+  // const resendEmail = async () => { // FUNCION NO CONECTA CON EL CAMPO EMAIL QUE SUPUESTAMENTE GUARDAMOS EN EL STORE
+  //   if (!paymentId) {
+  //     toast.error("No se encontró el ID del pago");
+  //     return;
+  //   }
 
-    setIsResending(true);
-    try {
-      const res = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          orderData: {
-            paymentId: paymentId,
-            items: items.map(item => ({
-              id: item.id,
-              titulo: item.titulo,
-              descripcion: item.descripcion,
-              cantidad: item.cantidad,
-              precio: item.precio,
-            })),               // ← Carrito completo
-            subtotal: subTotal(),            // ← Subtotal real
-            shipping: shippingCost(),        // ← Costo de envío
-            total: totalPrice(),             // ← Total final
-          },
-          customerEmail: email, // Idealmente guardar el email del usuario
-          deliveryData: { 
-            nombre, 
-            apellidos, 
-            direccion, 
-            entreCalles, 
-            ciudad, 
-            cp, 
-            telefono 
-        }
-        })
-      });
+  //   setIsResending(true);
+  //   try {
+  //     const res = await fetch('/api/send-email', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         orderData: {
+  //           paymentId: paymentId,
+  //           items: items.map(item => ({
+  //             id: item.id,
+  //             titulo: item.titulo,
+  //             descripcion: item.descripcion,
+  //             cantidad: item.cantidad,
+  //             precio: item.precio,
+  //           })),               // ← Carrito completo
+  //           subtotal: subTotal(),            // ← Subtotal real
+  //           shipping: shippingCost(),        // ← Costo de envío
+  //           total: totalPrice(),             // ← Total final
+  //         },
+  //         customerEmail: email, // Idealmente guardar el email del usuario
+  //         deliveryData: { 
+  //           nombre, 
+  //           apellidos, 
+  //           direccion, 
+  //           entreCalles, 
+  //           ciudad, 
+  //           cp, 
+  //           telefono 
+  //       }
+  //       })
+  //     });
 
-      const data = await res.json();
+  //     const data = await res.json();
 
-      if (res.ok) {
-        toast.success("✅ Correo reenviado correctamente");
-      } else {
-        toast.error("No se pudo reenviar el correo");
-      }
-    } catch (error) {
-      toast.error("Error al reenviar el correo");
-    } finally {
-      setIsResending(false);
-    }
-  };
+  //     if (res.ok) {
+  //       toast.success("✅ Correo reenviado correctamente");
+  //     } else {
+  //       toast.error("No se pudo reenviar el correo");
+  //     }
+  //   } catch (error) {
+  //     toast.error("Error al reenviar el correo");
+  //   } finally {
+  //     setIsResending(false);
+  //   }
+  // };
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -100,17 +100,17 @@ export default function PagoExitoso() {
           )}
 
           <p className="text-sm text-gray-600 mb-8">
-            Se envió el correo de confirmación de la compra a <span className="font-semibold">{ email }</span>, no olvides revisar en la carpeta de SPAM o reenvíalo desde el siguiente botón
+            Se envió el correo de confirmación de la compra a tu correo electrónico, no olvides revisar en la carpeta de SPAM
           </p>
 
           <div className="space-y-4">
-            <button
+            {/* <button
               onClick={resendEmail}
               disabled={isResending}
               className="w-full border border-gray-300 hover:bg-gray-50 py-4 rounded-2xl font-medium transition disabled:opacity-50"
             >
               {isResending ? "Enviando correo..." : "📧 Reenviar Correo de Confirmación"}
-            </button>
+            </button> */}
 
             <Link
               href="/"

@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       from: `DIPEMSA WEB <avisos@noreply.dipemsa.com.mx>`,
 
       to: [customerEmail],
-      bcc: ["jesus_web_master@hotmail.com"],
+      bcc: ["ventas.grupoceic@gmail.com"],
       subject: `Confirmación de compra - Orden #${orderData.paymentId}`,
       html:  `
     <html lang="es"><head>
