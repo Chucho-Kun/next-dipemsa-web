@@ -65,11 +65,18 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
           },
         }}
         onSubmit={async (formData, brick) => {
-
-            const { formData:{ payer} } = formData
-            useDeliveryStore.getState().setFormData({ email: payer.email })
-
         try {
+            const { formData:{ payer} } = formData
+            // Extraer correctamente el email
+            const mpEmail = payer.email || "";
+
+            console.log("📧 Email guardado de Mercado Pago:", mpEmail);
+
+            // Guardar en el store
+            if (mpEmail) {
+            useDeliveryStore.getState().setFormData({ email: mpEmail });
+            console.log("✅ Email guardado en el store");
+            }
             console.log("Enviando al backend:", formData);
 
             const res = await fetch('/api/mercadopago/process-payment', {
