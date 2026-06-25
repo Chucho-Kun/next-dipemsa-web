@@ -1,4 +1,6 @@
 import ResumenCompraPage from "@/src/shared/components/cart/ResumenCompra";
+import LoadingComponent from "@/src/shared/components/LoadingComponent";
+import { Suspense } from "react";
 
 export const metadata = {
   title: 'Dipemsa | Carrito de Compra',
@@ -22,6 +24,8 @@ export const metadata = {
 
 export default function CompraPage() {
   return (
-    <ResumenCompraPage />
+    <Suspense fallback={ <LoadingComponent /> }>
+      <ResumenCompraPage />
+    </Suspense>
   )
 }

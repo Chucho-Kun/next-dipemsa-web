@@ -12,7 +12,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="w-full">
+    <header className="w-full sticky top-0 z-50 bg-white shadow-md">
       {/* Top Bar - Envíos Gratis */}
       <div className="banner-promo text-white font-bold text-center text-sm py-2 px-4">
         ENVÍOS GRATIS EN COMPRAS MAYORES A $5,000 MXN (aplica CDMX y Área Metropolitana) 
@@ -22,7 +22,7 @@ export default function Header() {
       </div>
 
       {/* Main Header */}
-      <div className="bg-white border-b">
+      <div className="bg-white">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Logo */}
@@ -53,6 +53,7 @@ export default function Header() {
               {/* Cotiza Ahora Button */}
               <Link 
                   href={ 'https://api.whatsapp.com/send?phone=5532651039' }
+                  target='_blank'
                   className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-bold px-6 py-2 rounded-lg flex items-center gap-2 transition text-sm whitespace-nowrap">
                 COTIZA POR WHATSAPP
                 <span className="text-xl">

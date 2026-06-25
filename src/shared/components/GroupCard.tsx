@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { whatsAppNumber } from "../db/contact-info";
+import { slugify } from "@/src/utils/slugify";
 
 type Variant = {
   id: string
@@ -23,6 +24,8 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
   const [selectedVariant, setSelectedVariant] = useState(group.variants[0]);
 
   const mainName = group.baseName;
+
+  //console.log( `https://www.dipemsa.com.mx/producto/${ selectedVariant.id }/${ slugify( selectedVariant.descripcion ) }`)
 
   return (
     <div className="bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full">
@@ -95,24 +98,7 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
 
       {/* Botón */}
       <div className="p-5 pt-0 mt-auto">
-          <Link href={`/producto/${ selectedVariant.id }/${ selectedVariant.descripcion.replace(/\s+/g, ' ')
-                                                     .trim()
-                                                     .replaceAll('|','-')
-                                                     .replaceAll(' ','-')
-                                                     .replaceAll('.','')
-                                                    .split(',')[0]
-                                                    .split('|')[0]
-                                                    .trim()
-                                                    .normalize('NFD')                  // separa acentos
-                                                    .replace(/[\u0300-\u036f]/g, '')   // elimina acentos
-                                                    .toLowerCase()
-                                                    .replace(/["'`]/g, '')
-                                                    .replaceAll(' ','-')
-                                                    .replaceAll('/','-')
-                                                    .replaceAll('---','-')
-                                                    .replaceAll('--','-')
-                                                    .replaceAll('#','no')
-                                                }`
+          <Link href={`/producto/${ selectedVariant.id }/${ slugify( selectedVariant.descripcion ) }`
               }>
             <button className="w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3.5 transition text-sm">
               VER PRODUCTO

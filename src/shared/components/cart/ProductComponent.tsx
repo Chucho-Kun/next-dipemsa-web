@@ -2,6 +2,8 @@ import { CartItem, useCartStore } from "@/src/store/cartStore";
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { useDeleteFromCart } from "@/src/hooks/useDeleteToast";
+import { totalxcantidad } from "@/src/utils/formatPrice";
+import { useState } from "react";
 
 type Props = {
     item: CartItem
@@ -10,20 +12,28 @@ type Props = {
 export default function ProductComponent({ item }: Props) {
 
     const { updateQuantity , removeFromCart } = useCartStore()
-
-    const totalxcantidad = ( precio: string, cantidad: number ) => {
-        // (parseFloat( item.precio.replace(/\$/g, "")) * item.cantidad).toFixed(2)
-        if (!precio) return "0.00";
-        // Limpiar el precio: eliminar $ , y espacios
-        const precioLimpio = precio
-            .replace(/[\$,]/g, '')   // Elimina dólares y comas
-            .trim();
-        const precioNumerico = parseFloat(precioLimpio);
-        if (isNaN(precioNumerico)) return "0.00";
-        return (precioNumerico * cantidad).toFixed(2);
-    }
-
     const { deleteItem } = useDeleteFromCart()
+    const [quantity, setQuantity] = useState(1);
+
+    const increase = () => setQuantity(prev => Math.min(prev + 1, 999));
+    const decrease = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+
+      // Nueva función para manejar input manual
+    const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        
+        // Solo permitir números
+        if (!/^\d*$/.test(value)) return;
+
+        let newQuantity = parseInt(value) || 1;
+
+        // Limitar entre 1 y 999
+        if (newQuantity > 999) newQuantity = 999;
+        if (newQuantity < 1) newQuantity = 1;
+
+        updateQuantity( item.id, newQuantity) 
+        //setQuantity(newQuantity);
+    };
 
   return (
     <>
@@ -57,10 +67,20 @@ export default function ProductComponent({ item }: Props) {
                         >
                             <Minus className="block" size={16} />
                         </button>
-                        <span className="px-3 py-1 text-sm font-semibold border-x border-gray-300">{ item.cantidad }</span>
+
+                        {/* <span className="px-3 py-1 text-sm font-semibold border-x border-gray-300">{ item.cantidad }</span> */}
+                         {/* Input editable */}
+                            <input
+                            type="text"
+                            value={item.cantidad}
+                            onChange={handleQuantityChange}
+                            className="w-20 min-w-13 text-center text-sm px-3 py-1 font-semibold border-x border-gray-300 focus:outline-none focus:border-orange-500"
+                            maxLength={3}
+                            />
+
                         <button 
                             onClick={ () => {
-                                if(item.cantidad < 10) {
+                                if(item.cantidad < 1000) {
                                     updateQuantity( item.id, item.cantidad + 1) }
                                 }
                             } 

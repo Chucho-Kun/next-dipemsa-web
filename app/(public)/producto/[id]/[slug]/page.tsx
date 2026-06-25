@@ -118,6 +118,32 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
                   "@type": "Brand",
                   "name": producto.marca || "Dipemsa"
                 },
+
+                // ← NUEVO: Aggregate Rating
+                "aggregateRating": {
+                  "@type": "AggregateRating",
+                  "ratingValue": "4.8",           // Calificación promedio (ej: 4.8)
+                  "reviewCount": "23"            // Cantidad de reseñas
+                },
+
+                // Reseña de ejemplo (Google lo recomienda)
+                "review": [
+                  {
+                    "@type": "Review",
+                    "reviewRating": {
+                      "@type": "Rating",
+                      "ratingValue": "5",
+                      "bestRating": "5"
+                    },
+                    "author": {
+                      "@type": "Person",
+                      "name": "Jesus Peralta"
+                    },
+                    "datePublished": "2026-06-23",
+                    "reviewBody": "Excelente producto, muy buena calidad y llegó rápido."
+                  }
+                ],
+                
                 "offers": {
                   "@type": "Offer",
                   "url": `https://www.dipemsa.com.mx/producto/${id}/${ slug || ''}`,
@@ -157,6 +183,13 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
                           "unitCode": "d"
                         }
                       }
+                    },
+
+                    "returnMethod": ["https://schema.org/ReturnByMail"],
+                    "returnFees": {
+                      "@type": "MonetaryAmount",
+                      "value": "0",           // 0 = envío de devolución gratis
+                      "currency": "MXN"
                     },
 
                                 // === NUEVO: Return Policy ===

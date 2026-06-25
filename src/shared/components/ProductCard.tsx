@@ -22,8 +22,24 @@ export default function ProductCard({producto}: Props) {
                                                 .map(parte => parte.replace(/"/g, '').trim()) ?? []
 
 
-  const increase = () => setQuantity(prev => prev + 1);
+  const increase = () => setQuantity(prev => Math.min(prev + 1, 999));
   const decrease = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+
+  // Nueva función para manejar input manual
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    
+    // Solo permitir números
+    if (!/^\d*$/.test(value)) return;
+
+    let newQuantity = parseInt(value) || 1;
+
+    // Limitar entre 1 y 999
+    if (newQuantity > 999) newQuantity = 999;
+    if (newQuantity < 1) newQuantity = 1;
+
+    setQuantity(newQuantity);
+  };
 
   const handleAddToCart = () => {
     addToCart({
@@ -117,7 +133,16 @@ export default function ProductCard({producto}: Props) {
               >
                 <Minus size={18} />
               </button>
-              <span className="px-6 py-3 font-semibold border-x border-gray-300">{quantity}</span>
+
+              {/* Input editable */}
+                <input
+                  type="text"
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                  className="w-16 text-center py-3 font-semibold border-x border-gray-300 focus:outline-none focus:border-orange-500"
+                  maxLength={3}
+                />
+              
               <button 
                 onClick={increase}
                 className="px-4 py-3 hover:bg-gray-100 transition"
@@ -125,6 +150,7 @@ export default function ProductCard({producto}: Props) {
                 <Plus size={18} />
               </button>
             </div>
+            <span className="text-sm text-gray-500">máx. 999</span>
           </div>
 
           {/* Botón Agregar al carrito */}
