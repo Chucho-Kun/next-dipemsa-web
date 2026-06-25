@@ -11,7 +11,6 @@ export async function POST(request: NextRequest) {
 
     const subTotalReal = Math.round(Number(orderData.subtotal) * 100) / 100;
     const totalReal = Math.round(Number(orderData.total) * 100) / 100;
-    console.log("📧 [RESEND] Enviando a:", customerEmail);
 
     const { data, error } = await resend.emails.send({
       // ← AQUÍ ES EL CAMBIO IMPORTANTE
