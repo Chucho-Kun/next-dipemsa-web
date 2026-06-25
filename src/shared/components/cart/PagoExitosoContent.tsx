@@ -21,7 +21,7 @@ export default function PagoExitoso() {
 //   }, [paymentId, clearCart]);
 
   const { items, subTotal, shippingCost, totalPrice } = useCartStore()
-  const { formData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono } } = useDeliveryStore()
+  const { formData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono, email } } = useDeliveryStore()
 
   const resendEmail = async () => {
     if (!paymentId) return;
@@ -45,7 +45,7 @@ export default function PagoExitoso() {
             shipping: shippingCost(),        // ← Costo de envío
             total: totalPrice(),             // ← Total final
           },
-          customerEmail: "gameroapp@gmail.com", // Idealmente guardar el email del usuario
+          customerEmail: email, // Idealmente guardar el email del usuario
           deliveryData: { 
             nombre, 
             apellidos, 

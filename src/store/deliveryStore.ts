@@ -8,6 +8,7 @@ type DeliveryForm = {
   ciudad: string;
   cp: string;
   telefono: string;
+  email: string;
 };
 
 type DeliveryErrors = Partial<Record<keyof DeliveryForm, string>>;
@@ -29,6 +30,7 @@ const formularioVacio = {
     ciudad: '',
     cp: '',
     telefono: '',
+    email: '',
   }
 
 export const useDeliveryStore = create<DeliveryStore>((set, get) => ({
@@ -38,7 +40,6 @@ export const useDeliveryStore = create<DeliveryStore>((set, get) => ({
   setFormData: (data) =>
     set((state) => ({
       formData: { ...state.formData, ...data },
-      // Limpiar error del campo cuando el usuario escriba
       errors: { ...state.errors, [Object.keys(data)[0] as keyof DeliveryForm]: undefined }
     })),
 

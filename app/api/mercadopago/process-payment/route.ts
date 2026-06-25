@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
       installments: Number(formData.installments) || 1,
       description: body.description || "Compra en Dipemsa",
       //additional_info: additionalItems.length ? { items: additionalItems } : undefined,
-      payer: { email: formData.payer?.email || "cliente@dipemsa.com.mx" },
+      payer: { email: formData.payer?.email || "contacto@dipemsa.com.mx" },
       additional_info: {
         items: additionalItems,
         payer: {

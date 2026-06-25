@@ -168,35 +168,63 @@ export default function MediosdePagoComponent() {
         )}
 
         <button
-            onClick={async () => {
-              const testData = {
-                orderData: {
-                  paymentId: "TEST-" + Date.now(),
-                  items: items.length > 0 ? items : [{ titulo: "Prueba", descripcion: "Producto de prueba", cantidad: 1, precio: "$450" }],
-                  subtotal: 450,
-                  shipping: 0,
-                  total: 450,
-                },
-                customerEmail: "gameroapp@gmail.com",
-                deliveryData: { nombre: "Test", apellidos: "Usuario", direccion: "Dirección de prueba", entreCalles: "", ciudad: "CDMX", cp: "07700", telefono: "5555555555" }
-              };
+          onClick={async () => {
+            if (items.length === 0) {
+              toast.error("El carrito está vacío");
+              return;
+            }
 
+            const testData = {
+              orderData: {
+                paymentId: "TEST-" + Date.now(),
+                items: items.map(item => ({
+                  id: item.id,
+                  titulo: item.titulo,
+                  descripcion: item.descripcion,
+                  cantidad: item.cantidad,
+                  precio: item.precio,
+                })),
+                subtotal: subTotal(),
+                shipping: shippingCost(),
+                total: totalPrice(),
+              },
+              customerEmail: "gameroapp@gmail.com", // Puedes cambiarlo o usar uno del formulario
+              deliveryData: {
+                nombre: formData.nombre,
+                apellidos: formData.apellidos,
+                direccion: formData.direccion,
+                entreCalles: formData.entreCalles,
+                ciudad: formData.ciudad,
+                cp: formData.cp,
+                telefono: formData.telefono
+              }
+            };
+
+            try {
               const res = await fetch('/api/send-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(testData)
               });
 
+              const result = await res.json();
+
               if (res.ok) {
-                toast.success("✅ Correo de prueba enviado con Resend!");
+                toast.success("✅ Correo de prueba enviado correctamente con datos reales!");
+                console.log("✅ Correo enviado:", result);
               } else {
-                toast.error("❌ Error al enviar correo");
+                toast.error("❌ Error al enviar correo de prueba");
+                console.error("❌ Error:", result);
               }
-            }}
-            className="mt-4 bg-green-600 text-white px-6 py-3 rounded-xl"
-          >
-            📧 Probar Envío con Resend
-          </button>
+            } catch (error) {
+              console.error(error);
+              toast.error("Error de conexión al enviar correo");
+            }
+          }}
+          className="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-medium transition"
+        >
+          📧 Probar Envío con Datos Reales
+        </button>
         
       </div>
     </div>

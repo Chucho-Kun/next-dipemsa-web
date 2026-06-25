@@ -67,6 +67,7 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
         onSubmit={async (formData, brick) => {
 
             const { formData:{ payer} } = formData
+            useDeliveryStore.getState().setFormData({ email: payer.email })
 
         try {
             console.log("Enviando al backend:", formData);

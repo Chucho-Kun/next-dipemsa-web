@@ -44,9 +44,9 @@ export async function POST(request: NextRequest) {
         items: improvedItems,
         payer: body.payer,
         back_urls: {
-          success: `${process.env.NEXT_PUBLIC_URL}/pago-exitoso`,
-          failure: `${process.env.NEXT_PUBLIC_URL}/pago-fallido`,
-          pending: `${process.env.NEXT_PUBLIC_URL}/pago-pendiente`,
+          success: `${process.env.NEXT_PUBLIC_URL}/compra/pago-exitoso`,
+          failure: `${process.env.NEXT_PUBLIC_URL}/compra/pago-fallido`,
+          pending: `${process.env.NEXT_PUBLIC_URL}/compra/pago-pendiente`,
         },
         statement_descriptor: "DIPEMSA",           // ← Aparece en el estado de cuenta
         external_reference: `ORD-${Date.now()}`,   // Referencia externa
