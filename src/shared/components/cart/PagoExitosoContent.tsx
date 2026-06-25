@@ -24,7 +24,10 @@ export default function PagoExitoso() {
   const { formData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono, email } } = useDeliveryStore()
 
   const resendEmail = async () => {
-    if (!paymentId) return;
+    if (!paymentId) {
+      toast.error("No se encontró el ID del pago");
+      return;
+    }
 
     setIsResending(true);
     try {
@@ -95,6 +98,10 @@ export default function PagoExitoso() {
               <p className="font-mono text-2xl font-semibold text-gray-800">#{paymentId}</p>
             </div>
           )}
+
+          <p className="text-sm text-gray-600 mb-8">
+            Se envió el correo de confirmación de la compra a <span className="font-semibold">{ email }</span>, no olvides revisar en la carpeta de SPAM o reenvíalo desde el siguiente botón
+          </p>
 
           <div className="space-y-4">
             <button

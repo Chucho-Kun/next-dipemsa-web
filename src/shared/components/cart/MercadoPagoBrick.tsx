@@ -118,7 +118,9 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
             });
 
             toast.success("¡Pago exitoso! Te hemos enviado un correo de confirmación.");
-            // ========================================================
+            setTimeout(() => {
+                onSuccess?.(result)
+            },1000)
             
             } else {
 

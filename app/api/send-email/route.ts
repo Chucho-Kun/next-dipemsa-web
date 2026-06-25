@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
                         <tbody><tr>
                         <td width="50%">
                         <div style="font-size: 14px;color: gray;">Nombre del Comprador:</div>
-                        <div style="font-weight:bold;text-transform: uppercase;">${ deliveryData.nombre }</div>
+                        <div style="font-weight:bold;text-transform: uppercase;">${ deliveryData.nombre } ${ deliveryData.apellidos }</div>
                         </td>
                         <td width="50%">
                         <div style="font-size: 14px;color: gray;">Telefono:</div>
