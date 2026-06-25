@@ -10,8 +10,9 @@ export default function Footer() {
           
           {/* Columna 1 - Logo y Contacto */}
           <div className="lg:col-span-4">
-            <div className="mb-6">
-              <Image
+            <div className="mb-2">
+              <img width={200} height={70} src="/logoBlanco.svg" alt="Logo Footer Dipemsa" />
+              {/* <Image
                 src={'/logoBlanco.webp'}
                 alt='Logo Transparente DIPEMSA'
                 width={136}
@@ -19,7 +20,7 @@ export default function Footer() {
                 loading='lazy'
                 className="ml-6 h-auto w-50"
                 sizes="(max-width: 768px) 100vw, 200px"
-              />
+              /> */}
             </div>
             
             <div className="space-y-3 text-sm">

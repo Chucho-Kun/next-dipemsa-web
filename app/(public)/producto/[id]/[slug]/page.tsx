@@ -185,20 +185,23 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
                       }
                     },
 
-                    "returnMethod": ["https://schema.org/ReturnByMail"],
-                    "returnFees": {
-                      "@type": "MonetaryAmount",
-                      "value": "0",           // 0 = envío de devolución gratis
-                      "currency": "MXN"
-                    },
-
                                 // === NUEVO: Return Policy ===
                     "hasMerchantReturnPolicy": {
                       "@type": "MerchantReturnPolicy",
                       "applicableCountry": ["MX"],
                       "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-                      "merchantReturnDays": 30,                    // Días para devolver
-                      "returnMethods": ["https://schema.org/ReturnByMail"],
+                      "merchantReturnDays": 30,
+                      
+                      "returnMethod": ["https://schema.org/ReturnByMail"],
+                      
+                      // ← Campo principal que Google está pidiendo
+                      "returnFees": {
+                        "@type": "MonetaryAmount",
+                        "value": "0",
+                        "currency": "MXN"
+                      },
+
+                      // Mantén este también por compatibilidad
                       "returnShippingFeesAmount": {
                         "@type": "MonetaryAmount",
                         "value": "0",

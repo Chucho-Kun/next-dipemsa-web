@@ -7,12 +7,15 @@ import Image from 'next/image';
 import { marcas } from '../../db/marcas';
 import SearchBar from './SearchBar';
 import CartModule from './CartModule';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname()
+  const isCartPage = pathname === '/carrito-de-compra'
 
   return (
-    <header className="w-full sticky top-0 z-50 bg-white shadow-md">
+    <header className={`w-full ${ isCartPage ? '' : 'sticky' } top-0 z-50 bg-white shadow-md`}>
       {/* Top Bar - Envíos Gratis */}
       <div className="banner-promo text-white font-bold text-center text-sm py-2 px-4">
         ENVÍOS GRATIS EN COMPRAS MAYORES A $5,000 MXN (aplica CDMX y Área Metropolitana) 
@@ -29,14 +32,15 @@ export default function Header() {
             <div className="shrink-0">
 
               <Link href={'/'} className="cursor-pointer">
-                  <Image 
+                  <img width={200} height={70} src="/logo.svg" alt="Logo Dipemsa SVG" />
+                  {/* <Image 
                     src={'/logo.webp'}
                     width={200}
                     height={70}
                     alt='Logo Dipemsa'
                     className="w-auto h-14 md:h-16 object-contain"
                     priority
-                  />
+                  /> */}
               </Link>
 
             </div>
