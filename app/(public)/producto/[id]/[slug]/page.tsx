@@ -197,7 +197,7 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
                       // ← Campo principal que Google está pidiendo
                       "returnFees": {
                         "@type": "MonetaryAmount",
-                        "value": "0",
+                        "value": 0,
                         "currency": "MXN"
                       },
 

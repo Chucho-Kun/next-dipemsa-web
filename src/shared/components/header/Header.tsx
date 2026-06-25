@@ -11,11 +11,9 @@ import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname()
-  const isCartPage = pathname === '/carrito-de-compra'
 
   return (
-    <header className={`w-full ${ isCartPage ? '' : 'sticky' } top-0 z-50 bg-white shadow-md`}>
+    <header className="w-full md:sticky md:top-0 md:z-50 bg-white shadow-md">
       {/* Top Bar - Envíos Gratis */}
       <div className="banner-promo text-white font-bold text-center text-sm py-2 px-4">
         ENVÍOS GRATIS EN COMPRAS MAYORES A $5,000 MXN (aplica CDMX y Área Metropolitana) 
