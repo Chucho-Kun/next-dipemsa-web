@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+Disallow: /dashboard/
+
+# Opcional: Bloquear todo el grupo admin
+Disallow: /productos/relacionados

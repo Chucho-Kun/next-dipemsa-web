@@ -14,7 +14,7 @@ export default function CenterPanel({
   eliminarRelacionado,
 }: CenterPanelProps) {
   return (
-    <div className="flex-1 p-8 overflow-auto">
+    <div className="flex-1 p-8 overflow-auto bg-white">
       {productoSeleccionado ? (
         <div>
           {/* Imagen del producto */}
