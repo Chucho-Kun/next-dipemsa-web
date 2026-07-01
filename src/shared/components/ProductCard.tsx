@@ -3,17 +3,19 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { Minus, Plus, ShoppingCart } from 'lucide-react';
-import { ResultadosType } from '../db/resultados';
+import { RelatedProductType, ResultadosType } from '../db/resultados';
 import Link from 'next/link';
 import { whatsAppNumber } from '../db/contact-info';
 import { useCartStore } from '@/src/store/cartStore';
 import toast from 'react-hot-toast';
+import RelatedProducts from './RelatedProducts';
 
 type Props = {
-  producto: ResultadosType
+  producto: ResultadosType 
+  productosVariantes: RelatedProductType[]
 }
 
-export default function ProductCard({producto}: Props) {
+export default function ProductCard({producto, productosVariantes}: Props) {
   const { addToCart, totalItems } = useCartStore()
   const [quantity, setQuantity] = useState(1);
 
@@ -64,42 +66,41 @@ export default function ProductCard({producto}: Props) {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
-      {/* Breadcrumb */}
-      <nav className="text-sm text-gray-500 mb-8 font-bold">
-        <Link
-          className='hover:underline'
-          href="/" >HOME</Link> &gt;{' '}
-        <Link
-          className='hover:underline' 
-          href={`/marca/${ producto.marca?.toLowerCase().replaceAll(' ','-') }` } >{ producto.marca?.toUpperCase() }</Link>
-
-        { producto.categoria && (
-          <>
-            <span> &gt; </span> 
-            <Link href={
-                `/categoria/${ producto.categoria
-                                                ?.normalize("NFD")
-                                                .replace(/[\u0300-\u036f]/g, "")
-                                                .toLowerCase()
-                                                .replaceAll(' ','-') }
-              `}>
-              <span className="text-orange-600 font-bold hover:underline">{ producto.categoria?.toUpperCase() }</span>
-            </Link> 
-          </>
-        ) }
-         
-      </nav>
 
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
-        
+
         {/* Imagen del producto */}
-        <div className="flex items-center justify-center relative bg-white overflow-hidden">
+        <div className="flex flex-col items-center relative bg-white overflow-hidden">
+          {/* Breadcrumb */}
+          <nav className="text-sm text-gray-500 mb-8 font-bold">
+            <Link
+              className='hover:underline'
+              href="/" >HOME</Link> &gt;{' '}
+            <Link
+              className='hover:underline' 
+              href={`/marca/${ producto.marca?.toLowerCase().replaceAll(' ','-') }` } >{ producto.marca?.toUpperCase() }</Link>
+
+            { producto.categoria && (
+              <>
+                <span> &gt; </span> 
+                <Link href={
+                    `/categoria/${ producto.categoria
+                                                    ?.normalize("NFD")
+                                                    .replace(/[\u0300-\u036f]/g, "")
+                                                    .toLowerCase()
+                                                    .replaceAll(' ','-') }
+                  `}>
+                  <span className="text-orange-600 font-bold hover:underline">{ producto.categoria?.toUpperCase() }</span>
+                </Link> 
+              </>
+            ) }
+          </nav>
           <Image
             src={`/fotos/${ producto.id }.jpg`} 
             alt={ producto.descripcion! }
             width={366}
             height={214}
-            className="h-auto object-contain"
+            className="h-auto object-contain mt-8"
             priority
           />
         </div>
@@ -110,6 +111,12 @@ export default function ProductCard({producto}: Props) {
             { producto.descripcion?.split('|')[0]}
           </h1>
           <p className="text-gray-600 text-xl font-bold">{ producto.descripcion?.split('|')[1]}</p>
+           {/* Descripción */}
+          <div>
+            <p className="text-gray-700 leading-relaxed">
+              { producto.informacion }
+            </p>
+          </div>
 
           {/* Precios */}
           <div className="flex items-center gap-4">
@@ -185,14 +192,10 @@ export default function ProductCard({producto}: Props) {
             </Link>
           </div> */}
 
-          {/* Descripción */}
-          <div className="pt-6 border-t">
-            <p className="text-gray-700 leading-relaxed">
-              { producto.informacion }
-            </p>
-          </div>
+          
         </div>
       </div>
+          <RelatedProducts relacionados={ productosVariantes  } />
     </div>
   );
 }

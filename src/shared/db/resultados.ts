@@ -14,4 +14,18 @@ export type ResultadosType = {
     orden_prod: number | null
     orden_cat: number | null
     createdat: Date | string | null
+    related_products: string[] | null
 }
+
+export type RelatedProductType = Pick<ResultadosType, 
+  | "id"
+  | "clave"
+  | "descripcion"
+  | "informacion"
+  | "disponible"
+  | "marca"
+  | "categoria"
+  | "existencias"
+  | "precioant"
+  | "precio"
+  | "destacado">

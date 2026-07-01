@@ -1,7 +1,7 @@
 // db/queries.ts
 import { db } from '@/src/shared/db';
 import { productos } from '@/src/shared/db/schema/productList';
-import { eq, like, desc, asc, sql, ilike } from 'drizzle-orm';
+import { eq, like, desc, asc, sql, ilike, inArray } from 'drizzle-orm';
 
 export function slugToMarca(slug: string): string {
   const mapa: Record<string, string> = {
@@ -42,14 +42,6 @@ export async function getProductsByGroupsofTrademarks(marca: string) {
       ilike(productos.marca, `%${marcaReal}%`)
     )
     .orderBy(desc(productos.orden_cat));   // ← Cambiado a orden_prod
-
-  // console.log("Productos crudos por marca (orden_prod):", 
-  //   rawProducts.map(p => ({ 
-  //     descripcion: p.descripcion?.substring(0, 60) + '...', 
-  //     orden_prod: p.orden_prod,
-  //     orden_cat: p.orden_cat 
-  //   }))
-  //);
 
   // === Agrupación por nombre base ===
   const grouped = rawProducts.reduce((acc, producto) => {
@@ -153,6 +145,26 @@ export async function getAllProductosXML() {
                       .orderBy(desc(productos.createdat))
 }
  
+export async function getRelatedProducts(relatedIds: string[]) {
+  if (!relatedIds?.length) return [];
+
+  return await db.select({
+    id: productos.id,
+    clave: productos.clave,
+    descripcion: productos.descripcion,
+    informacion: productos.informacion,
+    disponible: productos.disponible,
+    marca: productos.marca,
+    categoria: productos.categoria,
+    existencias: productos.existencias,
+    precioant: productos.precioant,
+    precio: productos.precio,
+    destacado: productos.destacado,
+  })
+  .from(productos)
+  .where(inArray(productos.id, relatedIds))
+  .orderBy(desc(productos.createdat));
+}
 
 // export async function getProductsByCategory(categoria: string) {
 //   const categoriaReal = slugToCategory(categoria);   // "gram-bel" → "Gram Bel"

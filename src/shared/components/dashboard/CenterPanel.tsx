@@ -76,6 +76,7 @@ export default function CenterPanel({
               );
             })}
           </div>
+          
         </div>
       ) : (
         <div className="h-full flex items-center justify-center text-gray-400 text-xl">
