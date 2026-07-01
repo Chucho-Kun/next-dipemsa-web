@@ -17,5 +17,7 @@ export const productos = pgTable('productos_', {
   orden_prod: integer('orden_prod').default(0),
   orden_cat: integer('orden_cat').default(0),
   createdat: timestamp('createdat').defaultNow(),
-  related_products: jsonb('related_products').default([]),
+  related_products: jsonb('related_products')
+    .$type<string[]>()
+    .default([]),
 });
