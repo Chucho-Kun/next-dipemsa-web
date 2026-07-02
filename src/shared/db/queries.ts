@@ -163,7 +163,7 @@ export async function getRelatedProducts(relatedIds: string[]) {
   })
   .from(productos)
   .where(inArray(productos.id, relatedIds))
-  .orderBy(desc(productos.createdat));
+  .orderBy(desc(productos.related_products));
 }
 
 // export async function getProductsByCategory(categoria: string) {

@@ -13,42 +13,32 @@ export default function RelatedProductsDashboard() {
   const [productos, setProductos] = useState<Producto[]>([]);
   const [productoSeleccionado, setProductoSeleccionado] = useState<Producto | null>(null);
   const [relacionados, setRelacionados] = useState<Producto[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedToAdd, setSelectedToAdd] = useState<string | null>(null);
+  const [relacionadosIds, setRelacionadosIds] = useState<string[]>([]);
 
   // Soluciona problemas de hidratación
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Cargar productos
+  // Cargar todos los productos
   useEffect(() => {
     fetch('/api/admin/productos')
       .then(res => res.json())
       .then(data => setProductos(data));
   }, []);
 
+  // Cuando cambie el producto seleccionado, actualizar relacionados y sus IDs
   useEffect(() => {
-  if (!productoSeleccionado) {
-    setRelacionados([]);
-    return;
-  }
+    if (!productoSeleccionado) {
+      setRelacionados([]);
+      setRelacionadosIds([]);
+      return;
+    }
 
-  const relacionadosIds = productoSeleccionado.related_products || [];
-  const relacionadosFiltrados = productos.filter(p => 
-    relacionadosIds.includes(p.id)
-  );
-  setRelacionados(relacionadosFiltrados);
-}, [productoSeleccionado, productos]);
+    const ids = productoSeleccionado.related_products || [];
+    setRelacionadosIds(ids);
 
-  // Cuando cambie el producto seleccionado, cargar sus relacionados
-  useEffect(() => {
-    if (!productoSeleccionado) return;
-    
-    const relacionadosIds = productoSeleccionado.related_products || [];
-    const relacionadosFiltrados = productos.filter(p => 
-      relacionadosIds.includes(p.id)
-    );
+    const relacionadosFiltrados = productos.filter(p => ids.includes(p.id));
     setRelacionados(relacionadosFiltrados);
   }, [productoSeleccionado, productos]);
 
@@ -60,48 +50,41 @@ export default function RelatedProductsDashboard() {
     });
 
     if (res.ok) {
-      //toast.success("Productos relacionados actualizados");
+      toast.success("Productos relacionados actualizados");
     } else {
       toast.error("Error al actualizar");
     }
   };
 
   const agregarRelacionado = async (productoRelacionado: Producto) => {
-  if (!productoSeleccionado) return;
+    if (!productoSeleccionado) return;
 
-  const relacionadosIds = relacionados.map(rel => rel.id);
+    const relacionadosActuales = relacionados.map(rel => rel.id);
+    if (relacionadosActuales.includes(productoRelacionado.id)) {
+      toast.error("Este producto ya está relacionado");
+      return;
+    }
 
-  if (relacionadosIds.includes(productoRelacionado.id)) {
-    toast.error("Este producto ya está relacionado");
-    return;
-  }
+    const nuevosIds = [...relacionadosActuales, productoRelacionado.id];
 
-  const nuevosRelacionados = [...relacionadosIds, productoRelacionado.id];
+    await actualizarRelacionados(productoSeleccionado.id, nuevosIds);
 
-  // Actualizar en base de datos
-  await actualizarRelacionados(productoSeleccionado.id, nuevosRelacionados);
+    setRelacionados(prev => [...prev, productoRelacionado]);
+    setRelacionadosIds(nuevosIds);
+  };
 
-  // Actualizar estado local (importante para que CenterPanel se actualice)
-  setRelacionados(prev => [...prev, productoRelacionado]);
+  const eliminarRelacionado = async (idToRemove: string) => {
+    if (!productoSeleccionado) return;
 
-  toast.success("Producto agregado correctamente");
-};
+    const nuevosIds = relacionados
+      .filter(rel => rel.id !== idToRemove)
+      .map(rel => rel.id);
 
-const eliminarRelacionado = async (idToRemove: string) => {
-  if (!productoSeleccionado) return;
+    await actualizarRelacionados(productoSeleccionado.id, nuevosIds);
 
-  const nuevosRelacionados = relacionados
-    .filter(rel => rel.id !== idToRemove);
-
-  // Actualizar en base de datos
-  await actualizarRelacionados(productoSeleccionado.id, nuevosRelacionados.map(r => r.id));
-
-  // Actualizar estado local
-  setRelacionados(nuevosRelacionados);
-
-  toast.success("Producto eliminado de relacionados");
-};
-
+    setRelacionados(prev => prev.filter(rel => rel.id !== idToRemove));
+    setRelacionadosIds(nuevosIds);
+  };
 
   if (!isClient) {
     return (
@@ -113,21 +96,19 @@ const eliminarRelacionado = async (idToRemove: string) => {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Panel Izquierdo */}
       <LeftPanel
         productos={productos}
         productoSeleccionado={productoSeleccionado}
         setProductoSeleccionado={setProductoSeleccionado}
       />
 
-      {/* Panel Central */}
       <CenterPanel
         productoSeleccionado={productoSeleccionado}
         relacionados={relacionados}
         eliminarRelacionado={eliminarRelacionado}
+        relacionadosIds={relacionadosIds}
       />
 
-      {/* Panel Derecho */}
       <RightPanel
         productos={productos}
         productoSeleccionado={productoSeleccionado}

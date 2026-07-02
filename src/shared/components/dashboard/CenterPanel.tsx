@@ -6,13 +6,19 @@ type CenterPanelProps = {
   productoSeleccionado: Producto | null;
   relacionados: Producto[];
   eliminarRelacionado: (id: string) => void;
+  relacionadosIds: string[] | null;
 };
 
-export default function CenterPanel({
-  productoSeleccionado,
-  relacionados,
-  eliminarRelacionado,
-}: CenterPanelProps) {
+export default function CenterPanel({  productoSeleccionado, relacionados, eliminarRelacionado, relacionadosIds }: CenterPanelProps) {  
+
+    const orderMap = new Map( relacionadosIds?.map(( id, index ) => [id, index]) )
+    // Ordenar los productos según el orden del array
+    const relacionadosOrdenados = [...relacionados].sort((a, b) => {
+        const orderA = orderMap.get(a.id) ?? 999;
+        const orderB = orderMap.get(b.id) ?? 999;
+        return orderA - orderB;
+    });
+
   return (
     <div className="flex-1 p-8 overflow-auto bg-white">
       {productoSeleccionado ? (
@@ -46,7 +52,7 @@ export default function CenterPanel({
           <h3 className="text-xl font-semibold mb-4">Productos Relacionados</h3>
           
           <div className="grid grid-cols-3 gap-4">
-            {relacionados.map((rel) => {
+            {relacionadosOrdenados.map((rel) => {
               const [titulo, detalle] = rel.descripcion
                 ?.split('|')
                 .map((parte) => parte.replace(/"/g, '').trim()) ?? [];

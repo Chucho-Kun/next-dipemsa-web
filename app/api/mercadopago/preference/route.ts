@@ -8,13 +8,7 @@ const client = new MercadoPagoConfig({
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-
-    // ==================== DEBUG ====================
-    console.log("🔍 [PREFERENCE] Items recibidos del frontend:");
-    console.log(JSON.stringify(body.items, null, 2));
-    // ===============================================
-    
+    const body = await request.json();   
 
     // Mejorar los items antes de enviarlos a Mercado Pago
     const improvedItems = body.items.map((item: any) => ({

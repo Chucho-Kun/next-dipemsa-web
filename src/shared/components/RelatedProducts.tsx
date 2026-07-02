@@ -5,12 +5,22 @@ import { slugify } from "@/src/utils/slugify";
 
 type RelatedProductsProps = {
     relacionados: RelatedProductType[];
+    orden: string[] | null
 }
 
-export default function RelatedProducts({ relacionados }: RelatedProductsProps ) {
+export default function RelatedProducts({ relacionados, orden }: RelatedProductsProps ) {
+    
     if(!relacionados || relacionados.length === 0) {
         return null;
     }
+
+    const orderMap = new Map( orden?.map(( id, index ) => [id, index]) )
+    // Ordenar los productos según el orden del array
+    const relacionadosOrdenados = [...relacionados].sort((a, b) => {
+        const orderA = orderMap.get(a.id!) ?? 999;
+        const orderB = orderMap.get(b.id!) ?? 999;
+        return orderA - orderB;
+    });   
     
   return (
         <section className="mt-20">
@@ -20,7 +30,7 @@ export default function RelatedProducts({ relacionados }: RelatedProductsProps )
 
             <div className="overflow-x-auto">
                 <div className="flex gap-6 p-2">
-                {relacionados.map((producto) => {
+                {relacionadosOrdenados.map((producto) => {
 
                     const [ nombre, detalles ] = producto.descripcion!
                     .split("|")

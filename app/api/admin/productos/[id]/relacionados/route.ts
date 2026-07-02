@@ -27,8 +27,6 @@ export async function PUT(
       return NextResponse.json({ error: "Producto no encontrado" }, { status: 404 });
     }
 
-    console.log(`✅ Relacionados actualizados para producto ID: ${id}`);
-
     return NextResponse.json({ 
       success: true, 
       data: result[0] 

@@ -28,7 +28,7 @@ export default function ProductCard({producto, productosVariantes}: Props) {
   const decrease = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
 
   // Nueva función para manejar input manual
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     
     // Solo permitir números
@@ -195,7 +195,7 @@ export default function ProductCard({producto, productosVariantes}: Props) {
           
         </div>
       </div>
-          <RelatedProducts relacionados={ productosVariantes  } />
+          <RelatedProducts relacionados={ productosVariantes } orden={ producto.related_products } />
     </div>
   );
 }
