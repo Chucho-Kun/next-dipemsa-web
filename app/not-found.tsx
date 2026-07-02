@@ -15,7 +15,12 @@ export default function NotFound() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         <h1 className="text-7xl font-bold">404</h1>
-        <p>Redirigiendo al inicio...</p>
+        
+        <a href="/" className='p-4'>
+          <p 
+            className='bg-black cursor-pointer font-bold text-white p-2 rounded-2xl'
+          >IR AL INICIO</p>
+        </a>
       </div>
     </div>
   );

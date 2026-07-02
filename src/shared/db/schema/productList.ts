@@ -1,5 +1,5 @@
 // db/schema.ts
-import { pgTable, varchar, text, integer, numeric, boolean, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, varchar, text, integer, numeric, boolean, timestamp, jsonb } from 'drizzle-orm/pg-core';
 
 export const productos = pgTable('productos_', {
   id: varchar('id', { length: 10 }).primaryKey(),
@@ -17,4 +17,7 @@ export const productos = pgTable('productos_', {
   orden_prod: integer('orden_prod').default(0),
   orden_cat: integer('orden_cat').default(0),
   createdat: timestamp('createdat').defaultNow(),
+  related_products: jsonb('related_products')
+    .$type<string[]>()
+    .default([]),
 });

@@ -48,7 +48,7 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
                   .map( txt  => txt.replaceAll(/"/g, "").trim())
 
                   return(
-                      <div key={producto.id} className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.33%] xl:flex-[0_0_25%] min-w-0">
+                      <div key={producto.id} className="flex-[0_0_100%] sm:flex-[0_0_33.3%] lg:flex-[0_0_33.33%] xl:flex-[0_0_25%] min-w-0">
                         <div className="bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                           
                           {/* Badge */}
