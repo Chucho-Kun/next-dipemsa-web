@@ -1,6 +1,6 @@
 import { db } from '@/src/shared/db';
 import { productos } from '@/src/shared/db/schema/productList';
-import { ilike, desc } from 'drizzle-orm';
+import { ilike, desc, or } from 'drizzle-orm';
 import { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -18,7 +18,13 @@ export async function GET(request: NextRequest) {
     marca: productos.marca,
   })
   .from(productos)
-  .where(ilike(productos.descripcion, `%${search}%`))
+  .where(
+    or(
+      ilike(productos.marca, `%${search}%`),
+      ilike(productos.descripcion, `%${search}%`),
+      ilike(productos.clave, `%${search}%`)
+    )
+  )
   .orderBy(desc(productos.destacado))
   .limit(10);
 

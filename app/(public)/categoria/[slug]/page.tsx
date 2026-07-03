@@ -10,13 +10,13 @@ export async function generateMetadata(props: PageProps<'/categoria/[slug]'>): P
 
   return {
     title: `Dipemsa | ${categoriaNombre}`,
-    description: `Explora nuestra selección de ${categoriaNombre.toLowerCase()} de las mejores marcas.`,
+    description: `Explora nuestra selección de ${ categoriaNombre } de las mejores marcas.`,
     openGraph: {
       title: `${categoriaNombre}`,
-      description: `Explora nuestra selección de ${ slug } de las mejores marcas`,
+      description: `Explora nuestra selección de ${ categoriaNombre } de las mejores marcas`,
       images: [
         {
-          url: `https://www.dipemsa.com.mx/productos/${ categoriaNombre }.webp`,
+          url: `https://www.dipemsa.com.mx/productos/${ slug }.webp`,
           width: 363,
           height: 197,
         }

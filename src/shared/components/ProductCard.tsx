@@ -111,6 +111,7 @@ export default function ProductCard({producto, productosVariantes}: Props) {
             { producto.descripcion?.split('|')[0]}
           </h1>
           <p className="text-gray-600 text-xl font-bold">{ producto.descripcion?.split('|')[1]}</p>
+          <p className="text-gray-600 text-xl">Clave: { producto.clave}</p>
            {/* Descripción */}
           <div>
             <p className="text-gray-700 leading-relaxed">
