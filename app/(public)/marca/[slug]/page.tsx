@@ -4,7 +4,7 @@ import { slugToMarca } from "@/src/shared/db/queries";
 import { Metadata } from "next";
 
 // Metadata dinámica
-export async function generateMetadata(props: PageProps<'/categoria/[slug]'>): Promise<Metadata> {
+export async function generateMetadata(props: PageProps<'/marca/[slug]'>): Promise<Metadata> {
   const { slug } = await props.params;
   const marcaNombre = slugToMarca(slug);
 
