@@ -14,5 +14,6 @@ export function slugify(text: string): string {
     .replaceAll(' ', '-')
     .replaceAll('/', '-')
     .replaceAll('#', 'no')
+    .replaceAll('%', '')
     .replace(/-+/g, '-');
 }
