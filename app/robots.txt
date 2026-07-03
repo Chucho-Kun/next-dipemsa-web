@@ -5,6 +5,7 @@ Allow: /
 
 # Bloquear rutas sensibles
 Disallow: /api/
+Disallow: /_next/static/media/
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /private/

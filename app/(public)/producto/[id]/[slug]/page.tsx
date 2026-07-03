@@ -49,6 +49,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: `${tituloProducto} - ${producto.marca || 'Dipemsa'}`,
       images: [`/fotos/${id}.jpg`],
     },
+    alternates: {
+      canonical: `https://www.dipemsa.com.mx/producto/${id}/${producto.descripcion?.split('|')[0] || ''}`,
+    },
   };
 }
 
