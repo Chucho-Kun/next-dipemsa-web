@@ -54,7 +54,7 @@ export default function MercadoPagoButton( { preferenceId, crearPreferencia, loa
                     <div className="min-h-100 flex items-center justify-center bg-gray-50 rounded-2xl border">
                         <div className="text-center">
                         <Loader2 className="animate-spin mx-auto mb-4 text-[#00B1EA]" size={48} />
-                        <p className="text-gray-600 font-medium">Cargando formulario seguro de Mercado Pago...</p>
+                        <p className="text-gray-600 font-medium">Cargando formulario de Mercado Pago...</p>
                         <p className="text-xs text-gray-500 mt-1">Esto puede tardar unos segundos</p>
                         </div>
                     </div>
