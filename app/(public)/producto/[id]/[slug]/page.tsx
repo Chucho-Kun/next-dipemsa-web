@@ -152,6 +152,7 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
                   "url": `https://www.dipemsa.com.mx/producto/${id}/${ slug || ''}`,
                   "priceCurrency": "MXN",
                   "price": parseFloat(producto.precio?.replace(/[$,]/g, '') || "0"),
+                  "validFrom": "2026-01-01",
                   "priceValidUntil": "2026-12-31",
                   "availability": "https://schema.org/InStock", // o "OutOfStock" si no hay stock
                   "seller": {
