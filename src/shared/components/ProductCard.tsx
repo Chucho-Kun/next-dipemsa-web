@@ -96,12 +96,14 @@ export default function ProductCard({producto, productosVariantes}: Props) {
             ) }
           </nav>
           <Image
-            src={`/fotos/${ producto.id }.jpg`} 
-            alt={ producto.descripcion! }
+            src={`/fotos/${producto.id}.jpg`}
+            alt={producto.descripcion || ''}
             width={366}
             height={214}
             className="h-auto object-contain mt-8"
-            priority
+            priority={true}           // Solo pon true en la página principal
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 366px"
+            quality={85}
           />
         </div>
 
