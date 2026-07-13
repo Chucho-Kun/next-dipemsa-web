@@ -6,7 +6,7 @@ type Props = {
     id: string
 }
 
-export default async function ProductCardsServer({ id }: Props) {
+export default async function  ProductCardsServer({ id }: Props) {
 
     const producto = await getProductById( id )
 

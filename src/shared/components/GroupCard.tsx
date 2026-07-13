@@ -40,7 +40,7 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
       {/* Imagen */}
       <div className="relative h-52 bg-white flex items-center justify-center p-6">
         <Image
-          src={`/fotos/${group.variants[0].id}.jpg`}
+          src={`/fotos/webp/${group.variants[0].id}.webp`}
           alt={mainName}
           fill
           className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"

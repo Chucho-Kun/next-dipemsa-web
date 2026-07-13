@@ -26,7 +26,7 @@ export default function CenterPanel({  productoSeleccionado, relacionados, elimi
           {/* Imagen del producto */}
           {productoSeleccionado.id && (
             <Image 
-              src={`/fotos/${productoSeleccionado.id}.jpg`} 
+              src={`/fotos/webp/${productoSeleccionado.id}.webp`}
               width={366} 
               height={214} 
               alt={productoSeleccionado.descripcion || ''} 
@@ -67,7 +67,7 @@ export default function CenterPanel({  productoSeleccionado, relacionados, elimi
                   </button>
                   
                   <Image 
-                    src={`/fotos/${rel.id}.jpg`} 
+                    src={`/fotos/webp/${rel.id}.webp`}
                     alt={titulo} 
                     width={187}
                     height={109}

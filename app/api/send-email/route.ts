@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
                           <tbody>
                               <tr style="height: 18px;">
                                   <td style="width: 25%; height: 36px;" rowspan="2">
-                                      <img width="120" style="position: relative;left: 6px;border-radius: 7px;" src="https://www.dipemsa.com.mx/fotos/${ item.id }.jpg">   
+                                      <img width="120" style="position: relative;left: 6px;border-radius: 7px;" src="https://www.dipemsa.com.mx/fotos/webp/${ item.id }.webp">
                                       
                                   </td>
                                   <td style="width: 25%; height: 16px;" colspan="3">

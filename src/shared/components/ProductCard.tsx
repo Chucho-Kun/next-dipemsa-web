@@ -96,7 +96,7 @@ export default function ProductCard({producto, productosVariantes}: Props) {
             ) }
           </nav>
           <Image
-            src={`/fotos/${producto.id}.jpg`}
+            src={`/fotos/webp/${producto.id}.webp`}
             alt={producto.descripcion || ''}
             width={366}
             height={214}

@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `https://www.dipemsa.com.mx/producto/${id}/${producto.descripcion?.split('|')[0] || ''}`,
       images: [
         {
-          url: `/fotos/${id}.jpg`,
+          url: `/fotos/webp/${id}.webp`,
           width: 366,
           height: 214,
           alt: tituloProducto,
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: `${tituloProducto} | Dipemsa`,
       description: `${tituloProducto} - ${producto.marca || 'Dipemsa'}`,
-      images: [`/fotos/${id}.jpg`],
+      images: [`/fotos/webp/${id}.webp`],
     },
     alternates: {
       canonical: `https://www.dipemsa.com.mx/producto/${id}/${producto.descripcion?.split('|')[0] || ''}`,
@@ -116,7 +116,7 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
                 "name": tituloProducto,
                 "description": tituloDesc || "varios modelos",
                 "sku": producto.clave,
-                "image": `https://www.dipemsa.com.mx/fotos/${id}.jpg`,
+                "image": `https://www.dipemsa.com.mx/webp/${id}.webp`,
                 "brand": {
                   "@type": "Brand",
                   "name": producto.marca || "Dipemsa"

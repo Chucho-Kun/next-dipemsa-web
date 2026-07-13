@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
       id: item.id || undefined,
       title: (item.title || item.titulo || (`Producto Dipemsa ${item.id || ''}`)).toString().trim(),
       currency_id: 'MXN',
-      picture_url: `https://www.dipemsa.com.mx/fotos/${ item.id }.jpg`,
+      picture_url: `https://www.dipemsa.com.mx/fotos/webp/${ item.id }.webp`,
       description: (item.description || item.descripcion || '').toString(),
       category_id: item.marca,
       quantity: Number(item.quantity ?? item.cantidad ?? 1),

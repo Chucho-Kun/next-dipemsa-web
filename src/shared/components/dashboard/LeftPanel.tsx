@@ -74,7 +74,7 @@ export default function LeftPanel({
                 <div className="flex gap-3">
                   {p.id && (
                     <Image
-                      src={`/fotos/${p.id}.jpg`}
+                      src={`/fotos/webp/${p.id}.webp`}
                       alt={titulo}
                       width={100}
                       height={60}

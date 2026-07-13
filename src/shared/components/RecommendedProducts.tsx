@@ -59,7 +59,7 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
                           {/* Imagen */}
                           <div className="relative h-52 bg-white flex items-center justify-center p-6 overflow-hidden rounded-t-2xl">
                             <Image
-                              src= {`/fotos/${producto.id}.jpg`}
+                              src= {`/fotos/webp/${producto.id}.webp`}
                               alt={ nombre }
                               fill
                               className="object-contain hover:scale-105 transition-transform duration-300"

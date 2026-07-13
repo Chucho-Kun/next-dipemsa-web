@@ -75,7 +75,7 @@ export default function RightPanel({
               >
                 {p.id && (
                   <Image 
-                    src={`/fotos/${p.id}.jpg`} 
+                    src={`/fotos/webp/${p.id}.webp`}
                     alt={titulo} 
                     width={60} 
                     height={45} 
