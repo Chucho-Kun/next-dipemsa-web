@@ -1,6 +1,7 @@
 import ProductCardsServer from "@/src/shared/components/ProductCardsServer";
 import RecommendedProductsServer from "@/src/shared/components/RecommendedProductsServer";
 import { getProductById } from "@/src/shared/db/queries";
+import { slugify } from "@/src/utils/slugify";
 import { Metadata } from "next";
 
 type Props = {
@@ -50,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [`/fotos/webp/${id}.webp`],
     },
     alternates: {
-      canonical: `https://www.dipemsa.com.mx/producto/${id}/${ slug }`,
+      canonical: `https://www.dipemsa.com.mx/producto/${id}/${ slugify( slug ) }`,
     },
   };
 }
