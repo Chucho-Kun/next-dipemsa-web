@@ -11,7 +11,8 @@ type Props = {
 // Metadata Dinámica con datos reales del producto
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id, slug } = await params;
-  const producto = await getProductById(id);
+
+  const producto = await getProductById(id); 
 
   if (!producto) {
     return {
