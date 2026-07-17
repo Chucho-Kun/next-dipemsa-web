@@ -96,7 +96,7 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
                               </Link>
                               
 
-                            <div className="p-5 pt-0 mt-auto">
+                            {/*<div className="p-5 pt-0 mt-auto">
                               <Link 
                                   href={ `https://api.whatsapp.com/send?phone=${whatsAppNumber}&text=${
                                       encodeURIComponent(`Hola me interesa cotizar *${ 
@@ -116,7 +116,7 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
                                   />
                                 </span>
                               </Link>
-                            </div>
+                            </div> */}
 
                           </div>
                         </div>
