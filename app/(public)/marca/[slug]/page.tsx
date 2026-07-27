@@ -14,6 +14,7 @@ export async function generateMetadata(props: PageProps<'/marca/[slug]'>): Promi
     openGraph: {
       title: `${marcaNombre}`,
       description: `Explora productos de la marca ${ marcaNombre }`,
+      url: `https://www.dipemsa.com.mx/marca/${ slug } }`,
       images: [
       {
         url: `https://www.dipemsa.com.mx/marcas/${ slug }.webp`,
@@ -23,7 +24,7 @@ export async function generateMetadata(props: PageProps<'/marca/[slug]'>): Promi
     ],
     },
     alternates: {
-          canonical: `https://www.dipemsa.com.mx/marcas/${ slug } }`,
+          canonical: `https://www.dipemsa.com.mx/marca/${ slug } }`,
     },
   };
 }
