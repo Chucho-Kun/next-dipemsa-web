@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${tituloProducto} | ${ producto.marca }`,
       description: `${ producto.descripcion?.split('|')[1] } - [ ${ producto.id } ]`,
-      url: `https://www.dipemsa.com.mx/producto/${id}/${producto.descripcion?.split('|')[0] || ''}`,
+      url: `https://www.dipemsa.com.mx/producto/${id}/${ slugify( slug ) }`,
       images: [
         {
           url: `/fotos/webp/${id}.webp`,

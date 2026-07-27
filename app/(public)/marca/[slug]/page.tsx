@@ -22,6 +22,9 @@ export async function generateMetadata(props: PageProps<'/marca/[slug]'>): Promi
       },
     ],
     },
+    alternates: {
+          canonical: `https://www.dipemsa.com.mx/marcas/${ slug } }`,
+    },
   };
 }
 
