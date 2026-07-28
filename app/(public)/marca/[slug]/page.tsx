@@ -14,17 +14,17 @@ export async function generateMetadata(props: PageProps<'/marca/[slug]'>): Promi
     openGraph: {
       title: `${marcaNombre}`,
       description: `Explora productos de la marca ${ marcaNombre }`,
-      url: `https://www.dipemsa.com.mx/marca/${ slug } }`,
+      url: `https://www.dipemsa.com.mx/marca/${ slug }`,
       images: [
       {
-        url: `https://www.dipemsa.com.mx/marcas/${ slug }.webp`,
+        url: `/marcas/${ slug }.webp`, // `/marcas/${ slug }.webp`
         width: 683,
         height: 400,
       },
     ],
     },
     alternates: {
-          canonical: `https://www.dipemsa.com.mx/marca/${ slug } }`,
+          canonical: `https://www.dipemsa.com.mx/marca/${ slug }`,
     },
   };
 }
