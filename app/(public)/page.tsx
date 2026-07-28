@@ -39,12 +39,12 @@ export const metadata: Metadata = {
     locale: "es_MX",
   },
 
-  twitter: {
-    card: "summary_large_image",
-    title: "Dipemsa | Materiales de Construcción Ligera",
-    description: "Somos DIPEMSA una empresa distribuidora de materiales para construcción ligera, contamos con las mejores marcas y stock siempre en existencia. Surtimos desde una pieza hasta una obra completa.",
-    images: ["https://www.dipemsa.com.mx/logoDipemsa.jpg"],
-  },
+  // twitter: {
+  //   card: "summary_large_image",
+  //   title: "Dipemsa | Materiales de Construcción Ligera",
+  //   description: "Somos DIPEMSA una empresa distribuidora de materiales para construcción ligera, contamos con las mejores marcas y stock siempre en existencia. Surtimos desde una pieza hasta una obra completa.",
+  //   images: ["https://www.dipemsa.com.mx/logoDipemsa.jpg"],
+  // },
 };
 // =====================================================
 

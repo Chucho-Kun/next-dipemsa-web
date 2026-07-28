@@ -17,7 +17,7 @@ export async function generateMetadata(props: PageProps<'/marca/[slug]'>): Promi
       url: `https://www.dipemsa.com.mx/marca/${ slug }`,
       images: [
       {
-        url: `/marcas/${ slug }.webp`, // `/marcas/${ slug }.webp`
+        url: `https://www.dipemsa.com.mx/marcas/jpg/${ slug }.jpg`,  // https://www.dipemsa.com.mx/marcas/jpg/trim-tex.jpg
         width: 683,
         height: 400,
       },
