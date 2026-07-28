@@ -16,7 +16,7 @@ export async function generateMetadata(props: PageProps<'/categoria/[slug]'>): P
       description: `Explora nuestra selección de ${ categoriaNombre } de las mejores marcas`,
       images: [
         {
-          url: `https://www.dipemsa.com.mx/productos/${ slug }.webp`,
+          url: `https://www.dipemsa.com.mx/productos/jpg/${ slug }.jpg`,
           width: 683,
           height: 400,
         },
