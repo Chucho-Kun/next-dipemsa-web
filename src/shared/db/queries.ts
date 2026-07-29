@@ -146,6 +146,22 @@ export async function getAllProductosXML() {
                       .orderBy(desc(productos.createdat))
 }
  
+///// BUSCAR LAS VARIANTES HERMANAS DE UN PRODUCTO (mismo código en la columna `variante`)
+export async function getProductVariants(variante: string | null) {
+  if (!variante) return [];
+
+  return await db.select({
+    id: productos.id,
+    clave: productos.clave,
+    descripcion: productos.descripcion,
+    precio: productos.precio,
+  })
+  .from(productos)
+  .where(eq(productos.variante, variante))
+  .orderBy(asc(productos.descripcion));
+}
+/////
+
 export async function getRelatedProducts(relatedIds: string[]) {
   if (!relatedIds?.length) return [];
 

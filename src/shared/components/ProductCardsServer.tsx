@@ -1,5 +1,4 @@
-import { db } from "../db";
-import { getProductById, getRelatedProducts } from "../db/queries";
+import { getProductById, getProductVariants, getRelatedProducts } from "../db/queries";
 import ProductCard from "./ProductCard";
 
 type Props = {
@@ -15,9 +14,12 @@ export default async function  ProductCardsServer({ id }: Props) {
         related_products: producto.related_products as string[] | null
     }
 
-    let productosVariantes = await getRelatedProducts( producto.related_products as string[] )
-    
+    const [productosVariantes, variantes] = await Promise.all([
+        getRelatedProducts( producto.related_products as string[] ),
+        getProductVariants( producto.variante ),
+    ])
+
   return (
-    <ProductCard producto={productoConTipo} productosVariantes={ productosVariantes} />
+    <ProductCard producto={productoConTipo} productosVariantes={ productosVariantes} variantes={ variantes } />
   )
 }

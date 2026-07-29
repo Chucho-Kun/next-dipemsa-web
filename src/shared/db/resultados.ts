@@ -17,7 +17,7 @@ export type ResultadosType = {
     related_products: string[] | null
 }
 
-export type RelatedProductType = Pick<ResultadosType, 
+export type RelatedProductType = Pick<ResultadosType,
   | "id"
   | "clave"
   | "descripcion"
@@ -29,3 +29,9 @@ export type RelatedProductType = Pick<ResultadosType,
   | "precioant"
   | "precio"
   | "destacado">
+
+export type VariantOptionType = Pick<ResultadosType,
+  | "id"
+  | "clave"
+  | "descripcion"
+  | "precio">

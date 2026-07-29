@@ -1,27 +1,58 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
 import { Minus, Plus, ShoppingCart } from 'lucide-react';
-import { RelatedProductType, ResultadosType } from '../db/resultados';
+import { RelatedProductType, ResultadosType, VariantOptionType } from '../db/resultados';
 import Link from 'next/link';
 import { whatsAppNumber } from '../db/contact-info';
 import { useCartStore } from '@/src/store/cartStore';
 import toast from 'react-hot-toast';
 import RelatedProducts from './RelatedProducts';
+import { slugify } from '@/src/utils/slugify';
+
+const LOGO_SRC = '/logo.webp';
+const fotoDe = (id: string) => `/fotos/webp/${id}.webp`;
 
 type Props = {
-  producto: ResultadosType 
+  producto: ResultadosType
   productosVariantes: RelatedProductType[]
+  variantes: VariantOptionType[]
 }
 
-export default function ProductCard({producto, productosVariantes}: Props) {
+export default function ProductCard({producto, productosVariantes, variantes}: Props) {
   const { addToCart, totalItems } = useCartStore()
   const [quantity, setQuantity] = useState(1);
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
+  // La navegación entre variantes reutiliza esta misma instancia del componente
+  // (mismo segmento de ruta), así que el estado de la imagen se ajusta durante
+  // el render cuando cambia producto.id, en vez de depender de un remount.
+  const [renderedId, setRenderedId] = useState(producto.id);
+  const [imgSrc, setImgSrc] = useState(() => fotoDe(producto.id ?? ''));
+  if (producto.id !== renderedId) {
+    setRenderedId(producto.id);
+    setImgSrc(fotoDe(producto.id ?? ''));
+  }
+
+  const handleImageError = () => {
+    if (imgSrc !== LOGO_SRC) setImgSrc(LOGO_SRC);
+  };
 
   const [ titulo, detalle ] = producto.descripcion
                                                 ?.split('|')
                                                 .map(parte => parte.replace(/"/g, '').trim()) ?? []
+
+  const handleVariantChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const seleccionada = variantes.find(v => v.id === e.target.value);
+    if (!seleccionada || seleccionada.id === producto.id) return;
+
+    startTransition(() => {
+      router.push(`/producto/${seleccionada.id}/${slugify(seleccionada.descripcion ?? '')}`);
+    });
+  };
 
 
   const increase = () => setQuantity(prev => Math.min(prev + 1, 999));
@@ -96,7 +127,8 @@ export default function ProductCard({producto, productosVariantes}: Props) {
             ) }
           </nav>
           <Image
-            src={`/fotos/webp/${producto.id}.webp`}
+            key={imgSrc}
+            src={imgSrc}
             alt={producto.descripcion || ''}
             width={366}
             height={214}
@@ -104,6 +136,7 @@ export default function ProductCard({producto, productosVariantes}: Props) {
             priority={true}           // Solo pon true en la página principal
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 366px"
             quality={85}
+            onError={handleImageError}
           />
         </div>
 
@@ -112,7 +145,28 @@ export default function ProductCard({producto, productosVariantes}: Props) {
           <h1 className="text-3xl font-bold text-gray-800 leading-tight">
             { producto.descripcion?.split('|')[0]}
           </h1>
-          <p className="text-gray-600 text-xl font-bold">{ producto.descripcion?.split('|')[1]}</p>
+          { variantes.length > 1 ? (
+            <div>
+              <label htmlFor="variante-select" className="text-sm text-gray-500 block mb-1">
+                { variantes.length } variantes disponibles
+              </label>
+              <select
+                id="variante-select"
+                value={producto.id ?? ''}
+                onChange={handleVariantChange}
+                disabled={isPending}
+                className="w-full border border-gray-300 px-4 py-3 text-lg font-bold text-gray-600 focus:outline-none focus:border-[#FF5E00] cursor-pointer disabled:opacity-50"
+              >
+                {variantes.map((v) => (
+                  <option key={v.id} value={v.id ?? ''}>
+                    {v.descripcion?.split('|')[1]?.trim() || v.descripcion}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ) : (
+            <p className="text-gray-600 text-xl font-bold">{ detalle }</p>
+          )}
           <p className="text-gray-600 text-xl">Clave: { producto.clave}</p>
            {/* Descripción */}
           <div>
