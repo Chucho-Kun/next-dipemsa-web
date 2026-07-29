@@ -1,4 +1,5 @@
 import CategoryResults from '@/src/shared/components/CategoryResults';
+import RecentViewProducts from '@/src/shared/components/RecentViewProducts';
 import RecommendedProductsServer from '@/src/shared/components/RecommendedProductsServer';
 import { slugToCategory } from '@/src/shared/db/queries';
 import { Metadata } from 'next';
@@ -34,6 +35,8 @@ export default async function CategoriaResultPage(props: PageProps<'/categoria/[
       <CategoryResults slug={ slug } />
 
       <RecommendedProductsServer />
+
+      <RecentViewProducts />
     </>
   );
 }

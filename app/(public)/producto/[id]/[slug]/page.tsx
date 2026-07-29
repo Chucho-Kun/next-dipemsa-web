@@ -1,4 +1,6 @@
 import ProductCardsServer from "@/src/shared/components/ProductCardsServer";
+import RecentViewProducts from "@/src/shared/components/RecentViewProducts";
+import TrackRecentProduct from "@/src/shared/components/TrackRecentProduct";
 import RecommendedProductsServer from "@/src/shared/components/RecommendedProductsServer";
 import { getProductById } from "@/src/shared/db/queries";
 import { slugify } from "@/src/utils/slugify";
@@ -215,6 +217,17 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
             }}
           />
 
+        <TrackRecentProduct
+          producto={{
+            id,
+            descripcion: producto.descripcion ?? '',
+            precio: producto.precio ?? '',
+            precioant: producto.precioant ?? '',
+            clave: producto.clave ?? '',
+            marca: producto.marca ?? '',
+          }}
+        />
+
         <section>
           {/* <ProductCard slug={ slug } /> */}
           <ProductCardsServer id={id} />
@@ -222,6 +235,10 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
 
         <section>
           <RecommendedProductsServer />
+        </section>
+
+        <section>
+          <RecentViewProducts currentId={id} />
         </section>
     </>
   )

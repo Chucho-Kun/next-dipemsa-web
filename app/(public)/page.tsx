@@ -5,6 +5,7 @@ import SliderMain from "@/src/shared/components/SliderMain";
 import MarcasPage from "./marcas/page";
 import { Metadata } from "next";
 import { productos } from "@/src/shared/db/productos";
+import RecentViewProducts from "@/src/shared/components/RecentViewProducts";
 
 // ==================== METADATA SEO ====================
 export const metadata: Metadata = {
@@ -151,6 +152,8 @@ export default function page() {
       </main>
 
       <RecommendedProductsServer />
+
+      <RecentViewProducts />
 
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
