@@ -20,10 +20,23 @@ type GroupedProduct = {
   variants: Variant[]
 };
 
+const LOGO_SRC = '/logo.webp';
+const fotoDe = (id: string) => `/fotos/webp/${id}.webp`;
+
 export default function GroupCard({ group }: { group: GroupedProduct }) {
   const [selectedVariant, setSelectedVariant] = useState(group.variants[0]);
+  const originalSrc = fotoDe(group.variants[0].id);
+  const [imgSrc, setImgSrc] = useState(originalSrc);
 
   const mainName = group.baseName;
+
+  const handleImageError = () => {
+    if (imgSrc !== originalSrc && imgSrc !== LOGO_SRC) {
+      setImgSrc(originalSrc);
+    } else if (imgSrc !== LOGO_SRC) {
+      setImgSrc(LOGO_SRC);
+    }
+  };
 
   //console.log( `https://www.dipemsa.com.mx/producto/${ selectedVariant.id }/${ slugify( selectedVariant.descripcion ) }`)
 
@@ -40,9 +53,11 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
       {/* Imagen */}
       <div className="relative h-52 bg-white flex items-center justify-center p-6">
         <Image
-          src={`/fotos/webp/${group.variants[0].id}.webp`}
+          key={imgSrc}
+          src={imgSrc}
           alt={mainName}
           fill
+          onError={handleImageError}
           className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />
@@ -66,7 +81,10 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
                     value={selectedVariant.id}
                     onChange={(e) => {
                     const variant = group.variants.find(v => v.id === e.target.value);
-                    if (variant) setSelectedVariant(variant);
+                    if (variant) {
+                      setSelectedVariant(variant);
+                      setImgSrc(fotoDe(variant.id));
+                    }
                     }}
                     className="w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-[#FF5E00] cursor-pointer"
                 >
