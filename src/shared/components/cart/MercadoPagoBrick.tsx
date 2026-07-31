@@ -6,7 +6,7 @@ import { Payment } from '@mercadopago/sdk-react';
 import { initMercadoPago } from '@mercadopago/sdk-react';
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import { pushEcommerce, toGA4Item, round2, CURRENCY } from '@/src/utils/gtm';
+import { pushEcommerce, toGA4Item, round2, paymentTypeLabel, CURRENCY } from '@/src/utils/gtm';
 import { saveOrderSnapshot } from '@/src/utils/orderSnapshot';
 
 initMercadoPago(process.env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY!, {
@@ -25,6 +25,7 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
 
     const { shippingCost, subTotal, totalPrice, items } = useCartStore()
     const beginCheckoutSent = useRef(false)
+    const addPaymentInfoSent = useRef(false)
 
     const handleReset = () => {
         setResetKey( prev => prev + 1)
@@ -81,6 +82,18 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
             console.log("✅ Email guardado en el store");
             }
             console.log("Enviando al backend:", formData);
+
+            if (!addPaymentInfoSent.current) {
+                addPaymentInfoSent.current = true
+
+                const ga4Items = items.map((item) => toGA4Item(item, { quantity: item.cantidad }))
+                pushEcommerce('add_payment_info', {
+                    currency: CURRENCY,
+                    value: round2(subTotal()),
+                    payment_type: paymentTypeLabel(formData.paymentType),
+                    items: ga4Items,
+                })
+            }
 
             const res = await fetch('/api/mercadopago/process-payment', {
             method: 'POST',
