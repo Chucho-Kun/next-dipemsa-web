@@ -4,14 +4,14 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 export default function CartModule() {
-    const totalItems = useCartStore(state => state.totalItems());
-    
+    const uniqueItems = useCartStore(state => state.items.length);
+
     // Estado local para forzar re-render
     const [displayCount, setDisplayCount] = useState(0);
 
     useEffect(() => {
-        setDisplayCount(totalItems);
-    }, [totalItems]);
+        setDisplayCount(uniqueItems);
+    }, [uniqueItems]);
   
     return (
     <Link href={'/carrito-de-compra'} >

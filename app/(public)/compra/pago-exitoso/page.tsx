@@ -1,7 +1,10 @@
-'use client';
-
 import PagoExitosoContent from '@/src/shared/components/cart/PagoExitosoContent';
 import { Suspense } from 'react';
+
+export const metadata = {
+  title: 'Dipemsa | Gracias por tu compra',
+  description: 'Tu pago fue procesado exitosamente. Gracias por comprar en DIPEMSA',
+};
 
 // Esta es la página principal (Server Component)
 export default function PagoExitoso() {
