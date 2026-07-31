@@ -92,7 +92,7 @@ export default function ProductComponent({ item }: Props) {
                 </div>
             </div>
             <div className="text-right">
-                <div onClick={ () => deleteItem( item.id, item.titulo, item.descripcion ) } className="mb-2">
+                <div onClick={ () => deleteItem( item ) } className="mb-2">
                     <span className="p-2 rounded-full cursor-pointer hover:bg-gray-300">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" 
                             className="inline-block size-6"

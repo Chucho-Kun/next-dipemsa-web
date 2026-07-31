@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { whatsAppNumber } from "../db/contact-info";
 import { slugify } from "@/src/utils/slugify";
+import { pushEcommerce, toGA4Item, CURRENCY } from "@/src/utils/gtm";
 
 type Variant = {
   id: string
@@ -23,7 +24,13 @@ type GroupedProduct = {
 const LOGO_SRC = '/logo.webp';
 const fotoDe = (id: string) => `/fotos/webp/${id}.webp`;
 
-export default function GroupCard({ group }: { group: GroupedProduct }) {
+type Props = {
+  group: GroupedProduct
+  listId?: string
+  listName?: string
+};
+
+export default function GroupCard({ group, listId, listName }: Props) {
   const [selectedVariant, setSelectedVariant] = useState(group.variants[0]);
   const originalSrc = fotoDe(group.variants[0].id);
   const [imgSrc, setImgSrc] = useState(originalSrc);
@@ -40,9 +47,20 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
 
   //console.log( `https://www.dipemsa.com.mx/producto/${ selectedVariant.id }/${ slugify( selectedVariant.descripcion ) }`)
 
+  const handleSelectItem = () => {
+    const item = toGA4Item(selectedVariant, { item_list_id: listId, item_list_name: listName });
+    pushEcommerce('select_item', {
+      item_list_id: listId,
+      item_list_name: listName,
+      currency: CURRENCY,
+      value: item.price,
+      items: [item],
+    });
+  };
+
   return (
     <div className="bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-      
+
       {/* Badge */}
       { group.variants[0].destacado && (
         <div className="bg-[#FF5E00] text-white text-xs font-bold px-4 py-1.5 w-fit">
@@ -66,13 +84,13 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
       {/* Contenido */}
       <div className="flex-1 flex flex-col p-5">
         <p className="text-xs font-medium text-gray-500 uppercase">{ group.variants[0].marca }</p>
-        
+
         <h3 className="font-semibold text-lg leading-tight mt-1 mb-4 line-clamp-2">
           {mainName}
         </h3>
 
         <div className="mt-auto">
-          
+
              {/* Select de variantes */}
         { group.variants.length > 1 ? (
             <span>
@@ -116,29 +134,31 @@ export default function GroupCard({ group }: { group: GroupedProduct }) {
 
       {/* Botón */}
       <div className="p-5 pt-0 mt-auto">
-          <Link href={`/producto/${ selectedVariant.id }/${ slugify( selectedVariant.descripcion ) }`
-              }>
+          <Link
+              href={`/producto/${ selectedVariant.id }/${ slugify( selectedVariant.descripcion ) }`}
+              onClick={handleSelectItem}
+              >
             <button className="w-full bg-[#1E2937] hover:bg-black text-white font-semibold py-3.5 transition text-sm">
               VER PRODUCTO
             </button>
           </Link>
-          
-        
+
+
       </div>
 
       {/*<div className="p-5 pt-0 mt-auto">
-        <Link 
+        <Link
             href={ `https://api.whatsapp.com/send?phone=${whatsAppNumber}&text=${
-                encodeURIComponent(`Hola me interesa cotizar *${ 
+                encodeURIComponent(`Hola me interesa cotizar *${
                   selectedVariant.descripcion.split('|')[0].trim()
                   }* ${
-                  selectedVariant.descripcion.split('|')[1] 
-                  } - [${ selectedVariant.id }]`)}` 
+                  selectedVariant.descripcion.split('|')[1]
+                  } - [${ selectedVariant.id }]`)}`
               }
             className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-bold px-6 py-2 w-50 mx-auto rounded-lg flex items-center gap-2 transition text-sm whitespace-nowrap">
           COTIZA AHORA
           <span className="text-xl">
-            <Image 
+            <Image
               src={'/icons/whatsapp.svg'}
               alt="whatsapp icon"
               width={25}

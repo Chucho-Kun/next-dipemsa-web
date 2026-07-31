@@ -1,11 +1,13 @@
 // src/hooks/useDeleteFromCart.tsx
 import toast from 'react-hot-toast';
-import { useCartStore } from '@/src/store/cartStore';
+import { CartItem, useCartStore } from '@/src/store/cartStore';
+import { pushEcommerce, toGA4Item, itemsValue, CURRENCY } from '@/src/utils/gtm';
 
 export const useDeleteFromCart = () => {
   const removeFromCart = useCartStore(state => state.removeFromCart);
 
-  const deleteItem = (id: string, titulo: string, descripcion?: string) => {
+  const deleteItem = (item: CartItem) => {
+    const { id, titulo, descripcion } = item;
     const nombreProducto = `${titulo} ${descripcion ? `- ${descripcion}` : ''}`.trim();
 
     toast((t) => (
@@ -13,7 +15,7 @@ export const useDeleteFromCart = () => {
         <p className="font-medium">
           ¿Eliminar <span className="text-orange-600">{nombreProducto}</span> del carrito?
         </p>
-        
+
         <div className="flex gap-3 justify-end">
           <button
             onClick={() => toast.dismiss(t.id)}
@@ -21,16 +23,23 @@ export const useDeleteFromCart = () => {
           >
             Cancelar
           </button>
-          
+
           <button
             onClick={() => {
               removeFromCart(id);
-              
+
+              const ga4Item = toGA4Item(item, { quantity: item.cantidad });
+              pushEcommerce('remove_from_cart', {
+                currency: CURRENCY,
+                value: itemsValue([ga4Item]),
+                items: [ga4Item],
+              });
+
               toast.success('Producto eliminado del carrito', {
                 duration: 2500,
                 icon: '🗑️',
               });
-              
+
               toast.dismiss(t.id);
             }}
             className="px-5 py-2 text-sm font-medium bg-red-600 hover:bg-red-700 text-white rounded-lg transition"
