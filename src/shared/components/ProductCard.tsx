@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useTransition } from 'react';
+import { useEffect, useRef, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { Minus, Plus, ShoppingCart } from 'lucide-react';
 import { RelatedProductType, ResultadosType, VariantOptionType } from '../db/resultados';
@@ -11,6 +11,7 @@ import { useCartStore } from '@/src/store/cartStore';
 import toast from 'react-hot-toast';
 import RelatedProducts from './RelatedProducts';
 import { slugify } from '@/src/utils/slugify';
+import { pushEcommerce, toGA4Item, itemsValue, CURRENCY } from '@/src/utils/gtm';
 
 const LOGO_SRC = '/logo.webp';
 const fotoDe = (id: string) => `/fotos/webp/${id}.webp`;
@@ -44,6 +45,31 @@ export default function ProductCard({producto, productosVariantes, variantes}: P
   const [ titulo, detalle ] = producto.descripcion
                                                 ?.split('|')
                                                 .map(parte => parte.replace(/"/g, '').trim()) ?? []
+
+  // Dependencia [producto.id], no solo montaje: la navegación entre variantes
+  // reutiliza esta misma instancia sin remount (ver comentario arriba).
+  // lastViewedId evita el view_item duplicado del doble-invoke de efectos en
+  // React Strict Mode (solo en dev) sin bloquear el evento al cambiar de variante.
+  const lastViewedId = useRef<string | null>(null);
+  useEffect(() => {
+    if (!producto.id || lastViewedId.current === producto.id) return;
+    lastViewedId.current = producto.id;
+
+    const item = toGA4Item({
+      id: producto.id,
+      descripcion: producto.descripcion ?? '',
+      precio: producto.precio ?? '',
+      marca: producto.marca,
+      categoria: producto.categoria,
+    });
+
+    pushEcommerce('view_item', {
+      currency: CURRENCY,
+      value: item.price,
+      items: [item],
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [producto.id]);
 
   const handleVariantChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const seleccionada = variantes.find(v => v.id === e.target.value);
@@ -85,6 +111,20 @@ export default function ProductCard({producto, productosVariantes, variantes}: P
       cantidad: quantity,
       marca: producto.marca || ""
     })
+
+    const item = toGA4Item({
+      id: producto.id ?? '',
+      descripcion: producto.descripcion ?? '',
+      precio: producto.precio ?? '',
+      marca: producto.marca,
+      categoria: producto.categoria,
+    }, { quantity });
+
+    pushEcommerce('add_to_cart', {
+      currency: CURRENCY,
+      value: itemsValue([item]),
+      items: [item],
+    });
 
     toast.success(
       <div>{ quantity } pieza{ quantity > 1 && ('s')} de <span className='font-bold'>{ titulo }</span> se { quantity > 1 ? ('agregaron') : ('agregó') } al carrito</div>

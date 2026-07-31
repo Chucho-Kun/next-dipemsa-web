@@ -7,6 +7,8 @@ import { useCartStore } from '@/src/store/cartStore';
 import { CheckCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useDeliveryStore } from '@/src/store/deliveryStore';
+import { pushEcommerce, toGA4Item, taxFromSubtotal, CURRENCY } from '@/src/utils/gtm';
+import { readOrderSnapshot, clearOrderSnapshot, wasPurchaseSent, markPurchaseSent } from '@/src/utils/orderSnapshot';
 
 export default function PagoExitoso() {
   const searchParams = useSearchParams();
@@ -15,9 +17,27 @@ export default function PagoExitoso() {
   const [isResending, setIsResending] = useState(false);
 
   useEffect(() => { // SI SE ACTIVA EL BOTON DE REENVIAR CORREO SE TENDRA QUE MANDAR LOS VALORES DEL CARRITO DE COMPRAS A OTRO LOCALSTORAGE
-    if (paymentId) {
-      clearCart();
+    if (!paymentId) return;
+
+    const snapshot = readOrderSnapshot();
+
+    if (snapshot && snapshot.paymentId === paymentId && !wasPurchaseSent(paymentId)) {
+      const ga4Items = snapshot.items.map((item) => toGA4Item(item, { quantity: item.cantidad }));
+
+      pushEcommerce('purchase', {
+        transaction_id: paymentId,
+        currency: CURRENCY,
+        value: snapshot.total,
+        shipping: snapshot.shipping,
+        tax: taxFromSubtotal(snapshot.subtotal),
+        items: ga4Items,
+      });
+
+      markPurchaseSent(paymentId);
+      clearOrderSnapshot();
     }
+
+    clearCart();
   }, [paymentId, clearCart]);
 
   const { items, subTotal, shippingCost, totalPrice } = useCartStore()

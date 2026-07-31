@@ -1,3 +1,9 @@
+export const parsePrecio = (precio: string): number => {
+    if (!precio) return 0;
+    const precioNumerico = parseFloat(precio.replace(/[\$,]/g, '').trim());
+    return isNaN(precioNumerico) ? 0 : precioNumerico;
+}
+
 export const totalxcantidad = ( precio: string, cantidad: number ) => {
         if (!precio) return "0.00";
         // Limpiar el precio: eliminar $ , y espacios

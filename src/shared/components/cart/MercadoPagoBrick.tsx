@@ -4,8 +4,10 @@ import { useCartStore } from '@/src/store/cartStore';
 import { useDeliveryStore } from '@/src/store/deliveryStore';
 import { Payment } from '@mercadopago/sdk-react';
 import { initMercadoPago } from '@mercadopago/sdk-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
+import { pushEcommerce, toGA4Item, round2, CURRENCY } from '@/src/utils/gtm';
+import { saveOrderSnapshot } from '@/src/utils/orderSnapshot';
 
 initMercadoPago(process.env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY!, {
   locale: 'es-MX',
@@ -22,6 +24,7 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
     const { formData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono } } = useDeliveryStore()
 
     const { shippingCost, subTotal, totalPrice, items } = useCartStore()
+    const beginCheckoutSent = useRef(false)
 
     const handleReset = () => {
         setResetKey( prev => prev + 1)
@@ -124,6 +127,21 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
                 deliveryData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono }
             });
 
+            // El carrito no sobrevive a la recarga completa de /compra/pago-exitoso,
+            // así que guardamos un snapshot para que 'purchase' pueda leerlo ahí.
+            // result.payment_id llega como number (PaymentResponse.id de la SDK de
+            // Mercado Pago); se castea a string porque searchParams.get('payment_id')
+            // en /compra/pago-exitoso siempre devuelve string, y la comparación de
+            // paymentId es estricta (===).
+            saveOrderSnapshot({
+                paymentId: String(result.payment_id),
+                items,
+                subtotal: round2(subTotal()),
+                shipping: round2(shippingCost()),
+                total: round2(totalPrice()),
+                createdAt: Date.now(),
+            });
+
             toast.success("¡Pago exitoso! Te hemos enviado un correo de confirmación.");
             setTimeout(() => {
                 onSuccess?.(result)
@@ -201,7 +219,20 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
             alert('Error al procesar el pago');
         }
         }}
-        onReady={() => console.log('✅ Brick cargado correctamente')}
+        onReady={() => {
+          console.log('✅ Brick cargado correctamente')
+
+          if (!beginCheckoutSent.current) {
+            beginCheckoutSent.current = true
+
+            const ga4Items = items.map((item) => toGA4Item(item, { quantity: item.cantidad }))
+            pushEcommerce('begin_checkout', {
+              currency: CURRENCY,
+              value: round2(subTotal()),
+              items: ga4Items,
+            })
+          }
+        }}
         onError={(error) => {
           console.error('Error cargando el Brick:', error);
         }}

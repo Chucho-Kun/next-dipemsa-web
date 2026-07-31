@@ -1,10 +1,38 @@
 'use client'
 
+import { useEffect, useRef } from "react"
 import { useDeliveryStore } from "@/src/store/deliveryStore"
+import { useCartStore } from "@/src/store/cartStore"
+import { pushEcommerce, toGA4Item, round2, CURRENCY } from "@/src/utils/gtm"
+
+const REQUIRED_FIELDS = ['nombre', 'apellidos', 'direccion', 'ciudad', 'cp', 'telefono'] as const
 
 export default function EntregaComponent() {
 
   const {formData, setFormData, errors  } = useDeliveryStore();
+  const { items, subTotal, shippingCost } = useCartStore();
+  const shippingInfoSent = useRef(false);
+
+  useEffect(() => {
+    if (shippingInfoSent.current) return;
+
+    const isComplete = REQUIRED_FIELDS.every((field) => formData[field].trim() !== '');
+    if (!isComplete) return;
+
+    const timeoutId = setTimeout(() => {
+      shippingInfoSent.current = true;
+
+      const ga4Items = items.map((item) => toGA4Item(item, { quantity: item.cantidad }));
+      pushEcommerce('add_shipping_info', {
+        currency: CURRENCY,
+        value: round2(subTotal()),
+        shipping_tier: shippingCost() === 0 ? 'Envio gratis' : 'Envio estandar',
+        items: ga4Items,
+      });
+    }, 1000);
+
+    return () => clearTimeout(timeoutId);
+  }, [formData, items, subTotal, shippingCost]);
 
   return (
      <div className="bg-white border border-gray-200 rounded-2xl p-6">
