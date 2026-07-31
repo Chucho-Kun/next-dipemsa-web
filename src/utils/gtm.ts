@@ -78,3 +78,14 @@ export function itemsValue(items: GA4Item[]): number {
 export function taxFromSubtotal(subtotal: number): number {
   return round2(subtotal - subtotal / 1.16);
 }
+
+const PAYMENT_TYPE_LABELS: Record<string, string> = {
+  creditCard: 'Tarjeta de crédito',
+  debitCard: 'Tarjeta de débito',
+  ticket: 'Efectivo',
+  bank_transfer: 'Transferencia bancaria',
+};
+
+export function paymentTypeLabel(paymentType: string): string {
+  return PAYMENT_TYPE_LABELS[paymentType] ?? paymentType;
+}
