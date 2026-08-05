@@ -15,6 +15,7 @@ export type ResultadosType = {
     orden_cat: number | null
     createdat: Date | string | null
     related_products: string[] | null
+    ficha: string | null
 }
 
 export type RelatedProductType = Pick<ResultadosType,

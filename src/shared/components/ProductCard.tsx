@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { Minus, Plus, ShoppingCart } from 'lucide-react';
+import { FileText, Minus, Plus, ShoppingCart } from 'lucide-react';
 import { RelatedProductType, ResultadosType, VariantOptionType } from '../db/resultados';
 import Link from 'next/link';
 import { whatsAppNumber } from '../db/contact-info';
@@ -215,6 +215,20 @@ export default function ProductCard({producto, productosVariantes, variantes}: P
               { producto.informacion }
             </p>
           </div>
+
+          {/* VER FICHA TECNICA */}
+          { producto.ficha && (
+            <div>
+              <a
+                href={producto.ficha}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-[#0033A0] hover:text-[#002280] font-semibold underline"
+                >
+                VER FICHA TÉCNICA
+              </a>
+              </div>
+          )}
 
           {/* Precios */}
           <div className="flex items-center gap-4">
