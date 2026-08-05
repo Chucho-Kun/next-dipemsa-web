@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { Minus, Plus, ShoppingCart } from 'lucide-react';
+import { Eye, Minus, Plus, ShoppingCart } from 'lucide-react';
 import { RelatedProductType, ResultadosType, VariantOptionType } from '../db/resultados';
 import Link from 'next/link';
 import { whatsAppNumber } from '../db/contact-info';
@@ -223,9 +223,10 @@ export default function ProductCard({producto, productosVariantes, variantes}: P
                 href={producto.ficha}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-[#0033A0] hover:text-[#002280] font-semibold underline"
+                className="inline-flex items-center gap-2 bg-[#0033A0] hover:bg-[#002280] text-white font-semibold px-5 py-2.5 rounded-lg transition"
                 >
-                VER FICHA TÉCNICA
+                <Eye size={18} />
+                Ver ficha técnica
               </a>
               </div>
           )}
@@ -238,7 +239,7 @@ export default function ProductCard({producto, productosVariantes, variantes}: P
             ) }
           </div>
 
-          <div className="inline-block bg-red-600 text-white text-sm font-bold px-5 py-2 rounded">
+          <div className="inline-block bg-gray-200 text-gray-600 text-sm font-bold px-5 py-2 rounded">
             IVA INCLUIDO
           </div>
 
