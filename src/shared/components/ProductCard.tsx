@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { FileText, Minus, Plus, ShoppingCart } from 'lucide-react';
+import { Minus, Plus, ShoppingCart } from 'lucide-react';
 import { RelatedProductType, ResultadosType, VariantOptionType } from '../db/resultados';
 import Link from 'next/link';
 import { whatsAppNumber } from '../db/contact-info';
