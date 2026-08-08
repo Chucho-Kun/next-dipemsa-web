@@ -28,7 +28,7 @@ export default function MercadoPagoButton( { preferenceId, crearPreferencia, loa
 
                         setTimeout(() => {
                             setShowLoader(false)
-                        },5000)
+                        },1000)
                     }
                 }
                 disabled={loading || items.length === 0}
