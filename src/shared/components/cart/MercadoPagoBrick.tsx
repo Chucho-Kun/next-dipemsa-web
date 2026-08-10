@@ -2,9 +2,9 @@
 
 import { useCartStore } from '@/src/store/cartStore';
 import { useDeliveryStore } from '@/src/store/deliveryStore';
-import { Payment } from '@mercadopago/sdk-react';
+import { Payment, getIdentificationTypes } from '@mercadopago/sdk-react';
 import { initMercadoPago } from '@mercadopago/sdk-react';
-import { useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { pushEcommerce, toGA4Item, round2, paymentTypeLabel, CURRENCY } from '@/src/utils/gtm';
 import { saveOrderSnapshot } from '@/src/utils/orderSnapshot';
@@ -13,10 +13,66 @@ initMercadoPago(process.env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY!, {
   locale: 'es-MX',
 });
 
+// Precarga el script externo del SDK de Mercado Pago (sdk.mercadopago.com)
+// apenas se carga este módulo, es decir, cuando el usuario llega a la
+// página de checkout, en vez de esperar a que se monte <Payment> tras dar
+// clic en "Pagar". initMercadoPago() de arriba solo guarda la public key;
+// la descarga real del script ocurre recién dentro de
+// MercadoPagoInstance.getInstance(), que el brick <Payment> del SDK llama
+// desde su propio useEffect. En una carga fría (script sin cachear en el
+// navegador) esa descarga puede tardar varios segundos, y si el efecto del
+// brick se dispara más de una vez en esa ventana (doble invocación de
+// React Strict Mode en dev, u otro re-render), cada llamada dispara su
+// propia creación del Brick sin cancelar a la anterior (el SDK usa un
+// singleton global y no espera a que la creación previa resuelva antes de
+// desmontarla) — el resultado son formularios de pago duplicados. Llamando
+// a getIdentificationTypes() aquí (no nos interesa el resultado) forzamos
+// esa carga con anticipación, para que cuando el usuario finalmente llegue
+// al brick real, el SDK ya esté listo y la ventana de carrera desaparezca.
+getIdentificationTypes().catch(() => {});
+
 interface Props {
   preferenceId: string;
   amount: number;
   onSuccess?: (data: any) => void;
+}
+
+// Objeto estático: debe mantener la misma referencia entre renders para no
+// disparar el useEffect interno del brick de Mercado Pago (ver customization
+// más abajo). Si esta referencia cambia en cada render, el SDK desmonta y
+// vuelve a crear el formulario de pago, y si la creación anterior aún estaba
+// en curso (conexión lenta), puede terminar dejando dos formularios en pantalla.
+const PAYMENT_CUSTOMIZATION = {
+  paymentMethods: {
+    ticket: 'all',
+    creditCard: 'all',
+    debitCard: 'all',
+    bankTransfer: 'all',
+  },
+} as const;
+
+// Función para enviar correo sin bloquear (fire and forget).
+// Vive fuera del componente porque no depende de props/estado: si estuviera
+// adentro, sería una referencia nueva en cada render y forzaría a handleSubmit
+// a recrearse también.
+async function sendEmailInBackground(data: any) {
+  try {
+    const res = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+      // No esperamos respuesta para no bloquear
+    });
+
+    if (res.ok) {
+      console.log("✅ Correo enviado en segundo plano");
+    } else {
+      console.error("❌ Error enviando correo en background");
+    }
+  } catch (err) {
+    console.error("Error en envío de correo background:", err);
+    // No mostramos toast aquí porque el usuario ya vio "Pago exitoso"
+  }
 }
 
 export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Props) {
@@ -27,48 +83,21 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
     const beginCheckoutSent = useRef(false)
     const addPaymentInfoSent = useRef(false)
 
-    const handleReset = () => {
+    const handleReset = useCallback(() => {
         setResetKey( prev => prev + 1)
-    }
+    }, [])
 
-        // Función para enviar correo sin bloquear
-    const sendEmailInBackground = async (data: any) => {
-    try {
-        const res = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-        // No esperamos respuesta para no bloquear
-        });
+    // El brick de Mercado Pago (@mercadopago/sdk-react) vuelve a montar el
+    // formulario cada vez que initialization/customization/onSubmit/onReady/
+    // onError cambian de referencia. Antes eran objetos/funciones literales
+    // recreados en cada render, lo que causaba remontajes espurios del Brick
+    // (por ejemplo cuando MercadoPagoButton oculta el loader 1s después de
+    // crear la preferencia) y, en conexiones lentas, dos formularios visibles
+    // a la vez porque la creación anterior seguía en curso cuando se disparaba
+    // la siguiente.
+    const initialization = useMemo(() => ({ preferenceId, amount }), [preferenceId, amount])
 
-        if (res.ok) {
-        console.log("✅ Correo enviado en segundo plano");
-        } else {
-        console.error("❌ Error enviando correo en background");
-        }
-    } catch (err) {
-        console.error("Error en envío de correo background:", err);
-        // No mostramos toast aquí porque el usuario ya vio "Pago exitoso"
-    }
-    };
-
-  return (
-    <div className="max-w-lg mx-auto">
-      <Payment
-        key={resetKey}
-        initialization={{ 
-          preferenceId,
-          amount 
-        }}
-        customization={{
-          paymentMethods: {
-            ticket: 'all',
-            creditCard: 'all',
-            debitCard: 'all',
-            bankTransfer: 'all',
-          },
-        }}
-        onSubmit={async (formData, brick) => {
+    const handleSubmit = useCallback(async (formData: any, _brick: unknown) => {
         try {
             const { formData:{ payer} } = formData
             // Extraer correctamente el email
@@ -231,24 +260,36 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
             console.error(error);
             alert('Error al procesar el pago');
         }
-        }}
-        onReady={() => {
-          console.log('✅ Brick cargado correctamente')
+    }, [items, subTotal, shippingCost, totalPrice, nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono, onSuccess, handleReset])
 
-          if (!beginCheckoutSent.current) {
+    const handleReady = useCallback(() => {
+        console.log('✅ Brick cargado correctamente')
+
+        if (!beginCheckoutSent.current) {
             beginCheckoutSent.current = true
 
             const ga4Items = items.map((item) => toGA4Item(item, { quantity: item.cantidad }))
             pushEcommerce('begin_checkout', {
-              currency: CURRENCY,
-              value: round2(subTotal()),
-              items: ga4Items,
+                currency: CURRENCY,
+                value: round2(subTotal()),
+                items: ga4Items,
             })
-          }
-        }}
-        onError={(error) => {
-          console.error('Error cargando el Brick:', error);
-        }}
+        }
+    }, [items, subTotal])
+
+    const handleError = useCallback((error: unknown) => {
+        console.error('Error cargando el Brick:', error);
+    }, [])
+
+  return (
+    <div className="max-w-lg mx-auto">
+      <Payment
+        key={resetKey}
+        initialization={initialization}
+        customization={PAYMENT_CUSTOMIZATION}
+        onSubmit={handleSubmit}
+        onReady={handleReady}
+        onError={handleError}
       />
     </div>
   );
