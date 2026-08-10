@@ -3,6 +3,8 @@ import { getAllProductosXML } from '@/src/shared/db/queries';
 import { slugify } from '@/src/utils/slugify';
 import { NextResponse } from 'next/server';
 
+export const revalidate = 3600;
+
 export async function GET() {
   try {
     const products = await getAllProductosXML();

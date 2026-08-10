@@ -2,6 +2,7 @@ import RecentViewProducts from "@/src/shared/components/RecentViewProducts";
 import RecommendedProductsServer from "@/src/shared/components/RecommendedProductsServer";
 import TrademarckResults from "@/src/shared/components/TrademarckResults";
 import { slugToMarca } from "@/src/shared/db/queries";
+import { slugify } from "@/src/utils/slugify";
 import { Metadata } from "next";
 
 // Metadata dinámica
@@ -25,7 +26,7 @@ export async function generateMetadata(props: PageProps<'/marca/[slug]'>): Promi
     ],
     },
     alternates: {
-          canonical: `https://www.dipemsa.com.mx/marca/${ slug }`,
+          canonical: `https://www.dipemsa.com.mx/marca/${ slugify(slug) }`,
     },
   };
 }

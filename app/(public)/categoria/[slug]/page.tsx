@@ -2,6 +2,7 @@ import CategoryResults from '@/src/shared/components/CategoryResults';
 import RecentViewProducts from '@/src/shared/components/RecentViewProducts';
 import RecommendedProductsServer from '@/src/shared/components/RecommendedProductsServer';
 import { slugToCategory } from '@/src/shared/db/queries';
+import { slugify } from '@/src/utils/slugify';
 import { Metadata } from 'next';
 
 // Metadata dinámica
@@ -22,6 +23,9 @@ export async function generateMetadata(props: PageProps<'/categoria/[slug]'>): P
           height: 400,
         },
       ],
+    },
+    alternates: {
+      canonical: `https://www.dipemsa.com.mx/categoria/${ slugify(slug) }`,
     },
   };
 }

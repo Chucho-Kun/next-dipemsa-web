@@ -91,19 +91,19 @@ export default async function ProductoPage(props: PageProps<'/producto/[id]/[slu
                     "@type": "ListItem",
                     "position": 2,
                     "name": "Marca",
-                    "item": `https://www.dipemsa.com.mx/marca/${ producto.marca }`
+                    "item": `https://www.dipemsa.com.mx/marca/${ slugify(producto.marca || '') }`
                   },
                   {
                     "@type": "ListItem",
                     "position": 3,
                     "name": "Producto",
-                    "item": `https://www.dipemsa.com.mx/categoria/${ producto.categoria }`
+                    "item": `https://www.dipemsa.com.mx/categoria/${ slugify(producto.categoria || '') }`
                   },
                   {
                     "@type": "ListItem",
                     "position": 4,
                     "name": tituloProducto,
-                    "item": `https://www.dipemsa.com.mx/producto/${id}/${ slug } || ''}`
+                    "item": `https://www.dipemsa.com.mx/producto/${id}/${ slug }`
                   }
                 ]
               })
