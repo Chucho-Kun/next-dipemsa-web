@@ -12,8 +12,8 @@ export default function PagoExitoso() {
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-orange-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Procesando tu confirmación...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-[#16a34a] mx-auto"></div>
+          <p className="mt-4 text-gray-600">Confirmando tu compra...</p>
         </div>
       </div>
     }>
