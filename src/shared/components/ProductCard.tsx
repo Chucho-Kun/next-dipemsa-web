@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 import RelatedProducts from './RelatedProducts';
 import { slugify } from '@/src/utils/slugify';
 import { pushEcommerce, toGA4Item, itemsValue, CURRENCY } from '@/src/utils/gtm';
-import { totalxcantidad } from '@/src/utils/formatPrice';
+import { totalxcantidad, formatPrecio } from '@/src/utils/formatPrice';
 
 const LOGO_SRC = '/logo.webp';
 const fotoDe = (id: string) => `/fotos/webp/${id}.webp`;
@@ -235,7 +235,7 @@ export default function ProductCard({producto, productosVariantes, variantes}: P
           <div className="flex items-center gap-4">
             <span className="text-4xl font-bold text-[#E30613]">${ totalxcantidad(producto.precio ?? '', quantity) }</span>
             { producto.precioant && (
-              <span className="text-2xl line-through text-gray-400">{ producto.precioant }</span>
+              <span className="text-2xl line-through text-gray-400">${ formatPrecio(producto.precioant) }</span>
             ) }
           </div>
 

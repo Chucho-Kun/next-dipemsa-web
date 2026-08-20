@@ -57,3 +57,16 @@ Requeridas en `.env` (ver `.env` para la lista completa, no está commiteado): `
 **Imágenes**: `next.config.ts` permite todos los hosts remotos (`hostname: '**'`) y genera avif/webp; las fotos de producto también se sirven localmente desde `public/fotos/`. Precios/slugs usan `src/utils/slugify.ts` (quita acentos, pipes, comas — separa por `|`/`,` antes de generar el slug, así que solo convierte en slug el nombre base del producto) y `src/utils/formatPrice.ts`.
 
 **Datos de respaldo/scratch**: `src/respaldo/` contiene exports históricos CSV/SQL (catálogos de productos antiguos) — solo de referencia, no son rutas de código activas.
+
+## Formateo de precios
+
+Los precios se guardan en BD como `varchar` (ej. `"$1234.56"`, sin coma de miles — ver nota en `schema/productList.ts` arriba) y así viajan sin tocar entre `cartStore`, componentes y payloads de API. `src/utils/formatPrice.ts` centraliza el parseo/formateo para mostrarlos en pantalla:
+
+- `parsePrecio(precio: string): number` — limpia `$`/`,` y convierte a número (0 si no es válido).
+- `formatMoney(valor: number): string` — formatea un número con `toLocaleString('es-MX', ...)`, agregando coma de miles solo cuando el valor es ≥ 1000 (comportamiento nativo de `toLocaleString`) y siempre 2 decimales.
+- `formatPrecio(precio: string): string` — atajo `formatMoney(parsePrecio(precio))` para precios guardados como string (el `$` no se incluye, hay que anteponerlo en el JSX/HTML).
+- `totalxcantidad(precio: string, cantidad: number): string` — `formatMoney(parsePrecio(precio) * cantidad)`, usado para el precio total de una línea (precio unitario × cantidad).
+
+**Regla**: nunca formatear con `.toFixed(2)` a mano ni concatenar el string de precio crudo en JSX/HTML para mostrarlo al usuario — siempre pasar por `formatMoney`/`formatPrecio`/`totalxcantidad`. Esto solo afecta el string mostrado; el valor numérico/string que se transporta entre componentes, el store y las APIs no se toca.
+
+Puntos donde ya se aplica: precio y precio anterior en `ProductCard.tsx`, precio unitario y total de línea en `cart/ProductComponent.tsx`, subtotal/envío/total en `cart/ResumenCompra.tsx`, y subtotal/envío/precio unitario/monto a pagar en el HTML del correo de confirmación (`app/api/send-email/route.ts`). Si se agregan nuevos lugares que muestren un precio, aplicar el mismo criterio.

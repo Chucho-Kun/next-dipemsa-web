@@ -1,7 +1,7 @@
 // app/api/send-email/route.ts
 import { Resend } from 'resend';
 import { NextRequest, NextResponse } from 'next/server';
-import { totalxcantidad } from '@/src/utils/formatPrice';
+import { totalxcantidad, formatMoney, formatPrecio } from '@/src/utils/formatPrice';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
                               </tr>
                               <tr style="height: 18px;">
                                   <td style="width: 30%; height: 18px;">
-                                      <div style="font-size: 14px;text-align: center;">${ item.precio } x Unidad</div>
+                                      <div style="font-size: 14px;text-align: center;">$${ formatPrecio(item.precio) } x Unidad</div>
                                   </td>
                                   <td style="width: 25%; height: 18px;">
                                       <div style="font-weight: bold;font-size: 16px;position: relative;top: 5px;">
@@ -108,19 +108,19 @@ export async function POST(request: NextRequest) {
                       <tr>
                           <td> SubTotal: </td>
                           <td width="20%">
-                              <div class="subTotal preciosNormales"> $${ subTotalReal }</div>
+                              <div class="subTotal preciosNormales"> $${ formatMoney(subTotalReal) }</div>
                           </td>
                       </tr>
                       <tr>
                           <td> Costos de Envío: </td>
                           <td>
-                              <div class="precioEnvio preciosNormales">$${orderData.shipping}</div>
+                              <div class="precioEnvio preciosNormales">$${ formatMoney(orderData.shipping) }</div>
                           </td>
                       </tr>
                       <tr>
                           <td> Monto a Pagar: </td>
                           <td>
-                              <div class="sumaTotal" style="height: 36px;font-weight: bold;font-size: 19px;color: red;position: relative;top: 3px;">$${ totalReal }</div>
+                              <div class="sumaTotal" style="height: 36px;font-weight: bold;font-size: 19px;color: red;position: relative;top: 3px;">$${ formatMoney(totalReal) }</div>
                           </td>
                       </tr>
                       <tr>
