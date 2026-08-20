@@ -45,7 +45,7 @@ interface Props {
 // en curso (conexión lenta), puede terminar dejando dos formularios en pantalla.
 const PAYMENT_CUSTOMIZATION = {
   paymentMethods: {
-    ticket: 'all',
+    ticket: 'excluded',
     creditCard: 'all',
     debitCard: 'all',
     bankTransfer: 'all',
