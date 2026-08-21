@@ -21,7 +21,7 @@ export default function AvisoDePrivacidad() {
           </p>
 
           <p className="mt-6">
-          Tu privacidad es muy importante para DIPEMSA ,ponemos a tu disposición este Aviso de Privacidad de Datos Personales, mismo que describe, solicita y trata tus Datos Personales
+          Tu privacidad es muy importante para DIPEMSA, ponemos a tu disposición este Aviso de Privacidad de Datos Personales, mismo que describe, solicita y trata tus Datos Personales
           </p>
 
           <h3 className="text-xl font-semibold mt-10 mb-4">Datos Personales que Recabamos</h3>
