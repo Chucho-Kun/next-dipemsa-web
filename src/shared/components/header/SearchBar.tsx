@@ -10,6 +10,7 @@ import { slugify } from '@/src/utils/slugify';
 
 type ProductSearch = {
   id: string;
+  clave: string;
   descripcion: string;
   precioant: string;
   precio: string;
@@ -55,6 +56,7 @@ export default function SearchBar() {
         open={open}
         onOpenChange={setOpen}
         label="Buscador"
+        shouldFilter={false}
         className="fixed top-20 left-1/2 -translate-x-1/2 w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden z-50"
       >
         {/* Título requerido por Radix */}
@@ -124,6 +126,10 @@ export default function SearchBar() {
 
                 <p className="text-xs text-gray-500 uppercase">
                   {product.marca}
+                </p>
+
+                <p className="text-xs text-gray-400">
+                  Clave: {product.clave}
                 </p>
               </div>
 
