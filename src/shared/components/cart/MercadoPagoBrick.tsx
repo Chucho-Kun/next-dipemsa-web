@@ -144,6 +144,9 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
                     currency_id: "MXN",
                 })),
                     deliveryData: { nombre, apellidos, direccion, entreCalles, ciudad, cp, telefono },
+                    subtotal: subTotal(),
+                    shipping: shippingCost(),
+                    total: totalPrice(),
                 }),
             });
 
