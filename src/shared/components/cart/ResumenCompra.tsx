@@ -94,6 +94,9 @@ const cotizaWhatsApp = () => {
               <span className="text-gray-600">SUBTOTAL</span>
               <span className="font-semibold">${ formatMoney(subTotal()) }</span>
             </div>
+          <div>
+              <span className="text-gray-600 text-sm text-center">APLICA SOLO PARA CDMX Y ÁREA METROPOLITANA</span>
+            </div>
             <div className="flex justify-between text-lg">
               <span className="text-gray-600">COSTO DE ENVÍO</span>
               <span className="font-semibold">${ formatMoney(shippingCost()) }</span>

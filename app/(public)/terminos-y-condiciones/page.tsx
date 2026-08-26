@@ -10,18 +10,22 @@ export default function TerminosYCondicionesPage() {
           <h1 className="text-4xl font-bold text-gray-800 mb-3">
             Términos y Condiciones
           </h1>
-          <p className="text-gray-600">Última actualización: Mayo 2026</p>
+          <p className="text-gray-600">Última actualización: Agosto 2026</p>
         </div>
 
         <div className="bg-white rounded-3xl shadow-sm p-8 md:p-12 prose prose-lg max-w-none">
           
           <h2 className="text-2xl font-bold text-gray-800 mt-10 mb-4">Envíos</h2>
           <p>
-            Envíos gratis sólo aplican en compras mayores a <strong>$5,000 MXN</strong> (Solo aplica para CDMX y Área Metropolitana, únicamente a compras hechas en www.dipemsa.com.mx).
+            Envíos gratis sólo aplican en compras mayores a <strong>$5,000 MXN</strong> realizándolas en www.dipemsa.com.mx con cobertura en CDMX y Zona Metropolitana.
           </p>
           <p className="mt-4">
-            En caso de requerir envío a otro estado de la república o las zonas no mencionadas, favor de cotizar con el equipo de ventas.
+            Para envíos a otros estados de la República o Zonas fuera de la cobertura, el cobro automático de $300 MXN generado por la página será reembolsado y el envío se gestionará mediante flete por cobrar, por lo que deberás liquidar el costo total del transporte al momento de recibir el material, ya sea en las oficinas de la paquetería o en tu domicilio.
           </p>
+          <p className="mt-4">
+            Te invitamos a cotizar previamente tu flete con nuestro equipo de ventas
+          </p>
+          <br />
           <p>Teléfonos fijos:</p>
               <p><span className="font-semibold">(55) 8751 2193</span></p>
               <p><span className="font-semibold">(55) 8751 2194</span></p>
