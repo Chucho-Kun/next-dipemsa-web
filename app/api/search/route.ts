@@ -2,6 +2,7 @@ import { db } from '@/src/shared/db';
 import { productos } from '@/src/shared/db/schema/productList';
 import { ilike, desc, or, sql } from 'drizzle-orm';
 import { NextRequest } from 'next/server';
+import { aplicarDescuentoLista } from '@/src/utils/aplicarDescuento';
 
 export async function GET(request: NextRequest) {
   const search = request.nextUrl.searchParams.get('q') || '';
@@ -17,6 +18,7 @@ export async function GET(request: NextRequest) {
     precioant: productos.precioant,
     precio: productos.precio,
     marca: productos.marca,
+    categoria: productos.categoria,
   })
   .from(productos)
   .where(
@@ -37,5 +39,5 @@ export async function GET(request: NextRequest) {
   )
   .limit(15);
 
-  return Response.json(results);
+  return Response.json(aplicarDescuentoLista(results));
 }

@@ -103,6 +103,12 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'dipemsa-cart',
+      // Subir este número invalida los carritos ya guardados en localStorage.
+      // Necesario cada vez que cambie una regla de descuento (SPEC 07): el
+      // carrito congela el precio al agregar el producto y no lo recalcula,
+      // así que un carrito viejo pagaría el precio anterior.
+      version: 1,
+      migrate: () => ({ items: [] }),
       // Opcional: No guardar `isLoaded` en localStorage
       partialize: (state) => ({
         items: state.items,

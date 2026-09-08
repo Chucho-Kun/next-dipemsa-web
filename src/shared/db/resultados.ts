@@ -35,4 +35,7 @@ export type VariantOptionType = Pick<ResultadosType,
   | "id"
   | "clave"
   | "descripcion"
+  | "marca"
+  | "categoria"
+  | "precioant"
   | "precio">

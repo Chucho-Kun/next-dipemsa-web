@@ -2,6 +2,7 @@
 import { db } from '@/src/shared/db';
 import { productos } from '@/src/shared/db/schema/productList';
 import { eq, like, desc, asc, sql, ilike, inArray } from 'drizzle-orm';
+import { aplicarDescuento, aplicarDescuentoLista } from '@/src/utils/aplicarDescuento';
 
 export function slugToMarca(slug: string): string {
   const mapa: Record<string, string> = {
@@ -37,12 +38,14 @@ export function slugToCategory(slug: string): string {
 export async function getProductsByGroupsofTrademarks(marca: string) {
   const marcaReal = slugToMarca(marca);
 
-  const rawProducts = await db.select()
-    .from(productos)
-    .where(
-      ilike(productos.marca, `%${marcaReal}%`)
-    )
-    .orderBy(desc(productos.orden_cat));   // ← Cambiado a orden_prod
+  const rawProducts = aplicarDescuentoLista(
+    await db.select()
+      .from(productos)
+      .where(
+        ilike(productos.marca, `%${marcaReal}%`)
+      )
+      .orderBy(desc(productos.orden_cat))   // ← Cambiado a orden_prod
+  );
 
   // === Agrupación por nombre base ===
   const grouped = rawProducts.reduce((acc, producto) => {
@@ -79,12 +82,14 @@ export async function getProductsByGroupsofTrademarks(marca: string) {
 export async function getProductsByGroupsofCategories(categoria: string) {
   const categoriaReal = slugToCategory(categoria);
 
-  const rawProducts = await db.select()
-    .from(productos)
-    .where(
-      ilike(productos.categoria, `%${categoriaReal}%`)
-    )
-    .orderBy(desc(productos.orden_prod));     // ← Cambiado a orden_cat
+  const rawProducts = aplicarDescuentoLista(
+    await db.select()
+      .from(productos)
+      .where(
+        ilike(productos.categoria, `%${categoriaReal}%`)
+      )
+      .orderBy(desc(productos.orden_prod))     // ← Cambiado a orden_cat
+  );
 
   // console.log("Productos crudos ordenados por orden_cat:", 
   //   rawProducts.map(p => ({ 
@@ -130,42 +135,52 @@ export async function getProductById(id: string) {
     .where(eq(productos.id, id))
     .limit(1);
 
-  return result[0];
+  return result[0] ? aplicarDescuento(result[0]) : result[0];
 }
 /////
 
 export async function getRecomendedProducts() {
-        return await db.select()
-            .from(productos)
-            .where(eq(productos.destacado, true))
+        return aplicarDescuentoLista(
+            await db.select()
+                .from(productos)
+                .where(eq(productos.destacado, true))
+        )
 }
 
 export async function getAllProductosXML() {
-  return await db.select()
-                      .from(productos)
-                      .orderBy(desc(productos.createdat))
+  return aplicarDescuentoLista(
+    await db.select()
+      .from(productos)
+      .orderBy(desc(productos.createdat))
+  )
 }
  
 ///// BUSCAR LAS VARIANTES HERMANAS DE UN PRODUCTO (mismo código en la columna `variante`)
 export async function getProductVariants(variante: string | null) {
   if (!variante) return [];
 
-  return await db.select({
-    id: productos.id,
-    clave: productos.clave,
-    descripcion: productos.descripcion,
-    precio: productos.precio,
-  })
-  .from(productos)
-  .where(eq(productos.variante, variante))
-  .orderBy(asc(productos.descripcion));
+  return aplicarDescuentoLista(
+    await db.select({
+      id: productos.id,
+      clave: productos.clave,
+      descripcion: productos.descripcion,
+      marca: productos.marca,
+      categoria: productos.categoria,
+      precioant: productos.precioant,
+      precio: productos.precio,
+    })
+    .from(productos)
+    .where(eq(productos.variante, variante))
+    .orderBy(asc(productos.descripcion))
+  );
 }
 /////
 
 export async function getRelatedProducts(relatedIds: string[]) {
   if (!relatedIds?.length) return [];
 
-  return await db.select({
+  return aplicarDescuentoLista(
+    await db.select({
     id: productos.id,
     clave: productos.clave,
     descripcion: productos.descripcion,
@@ -180,7 +195,8 @@ export async function getRelatedProducts(relatedIds: string[]) {
   })
   .from(productos)
   .where(inArray(productos.id, relatedIds))
-  .orderBy(desc(productos.related_products));
+  .orderBy(desc(productos.related_products))
+  );
 }
 
 // export async function getProductsByCategory(categoria: string) {
