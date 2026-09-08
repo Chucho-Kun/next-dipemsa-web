@@ -6,11 +6,13 @@ import { useState } from "react";
 import { whatsAppNumber } from "../db/contact-info";
 import { slugify } from "@/src/utils/slugify";
 import { pushEcommerce, toGA4Item, CURRENCY } from "@/src/utils/gtm";
+import { formatPrecio } from "@/src/utils/formatPrice";
 
 type Variant = {
   id: string
   descripcion: string
   precio: string
+  precioant: string | null
   clave: string
   destacado: boolean
   marca: string
@@ -61,12 +63,19 @@ export default function GroupCard({ group, listId, listName }: Props) {
   return (
     <div className="bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full">
 
-      {/* Badge */}
-      { group.variants[0].destacado && (
-        <div className="bg-[#FF5E00] text-white text-xs font-bold px-4 py-1.5 w-fit">
-            PRODUCTO RECOMENDADO
-        </div>
-      )}
+      {/* Badges */}
+      <div className="flex flex-wrap gap-1">
+        { group.variants[0].destacado && (
+          <div className="bg-[#FF5E00] text-white text-xs font-bold px-4 py-1.5 w-fit">
+              PRODUCTO RECOMENDADO
+          </div>
+        )}
+        { selectedVariant.precioant && (
+          <div className="bg-[#FF5E00] text-white text-xs font-bold px-4 py-1.5 w-fit">
+              PROMOCIÓN
+          </div>
+        )}
+      </div>
 
       {/* Imagen */}
       <div className="relative h-52 bg-white flex items-center justify-center p-6">
@@ -121,10 +130,15 @@ export default function GroupCard({ group, listId, listName }: Props) {
         </div>
 
         {/* Precio */}
-        <div className="mt-4">
+        <div className="mt-4 flex items-baseline gap-2">
           <span className="text-3xl font-bold text-[#E30613]">
-            {selectedVariant.precio}
+            ${ formatPrecio(selectedVariant.precio) }
           </span>
+          { selectedVariant.precioant && (
+            <span className="text-lg line-through text-gray-400">
+              ${ formatPrecio(selectedVariant.precioant) }
+            </span>
+          ) }
         </div>
 
         <p className="text-xs text-gray-500 mt-1">
