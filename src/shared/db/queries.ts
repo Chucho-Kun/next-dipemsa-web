@@ -3,6 +3,7 @@ import { db } from '@/src/shared/db';
 import { productos } from '@/src/shared/db/schema/productList';
 import { eq, like, desc, asc, sql, ilike, inArray } from 'drizzle-orm';
 import { aplicarDescuento, aplicarDescuentoLista } from '@/src/utils/aplicarDescuento';
+import { ordenarVariantesPorCantidad } from '@/src/utils/ordenarVariantes';
 
 export function slugToMarca(slug: string): string {
   const mapa: Record<string, string> = {
@@ -159,19 +160,21 @@ export async function getAllProductosXML() {
 export async function getProductVariants(variante: string | null) {
   if (!variante) return [];
 
-  return aplicarDescuentoLista(
-    await db.select({
-      id: productos.id,
-      clave: productos.clave,
-      descripcion: productos.descripcion,
-      marca: productos.marca,
-      categoria: productos.categoria,
-      precioant: productos.precioant,
-      precio: productos.precio,
-    })
-    .from(productos)
-    .where(eq(productos.variante, variante))
-    .orderBy(asc(productos.descripcion))
+  return ordenarVariantesPorCantidad(
+    aplicarDescuentoLista(
+      await db.select({
+        id: productos.id,
+        clave: productos.clave,
+        descripcion: productos.descripcion,
+        marca: productos.marca,
+        categoria: productos.categoria,
+        precioant: productos.precioant,
+        precio: productos.precio,
+      })
+      .from(productos)
+      .where(eq(productos.variante, variante))
+      .orderBy(asc(productos.descripcion))
+    )
   );
 }
 /////
