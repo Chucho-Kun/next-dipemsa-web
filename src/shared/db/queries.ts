@@ -65,10 +65,7 @@ export async function getProductsByGroupsofTrademarks(marca: string) {
   return Object.entries(grouped)
     .map(([baseName, variants]) => ({
       baseName,
-      variants: variants.sort((a, b) => {
-        // Ordenar variantes dentro del grupo por precio
-        return parseFloat(a.precio || '0') - parseFloat(b.precio || '0');
-      })
+      variants: ordenarVariantesPorCantidad(variants)
     }))
     // ← Orden final de los GRUPOS por orden_prod (mayor a menor)
     .sort((a, b) => {
@@ -116,9 +113,7 @@ export async function getProductsByGroupsofCategories(categoria: string) {
   return Object.entries(grouped)
     .map(([baseName, variants]) => ({
       baseName,
-      variants: variants.sort((a, b) => {
-        return parseFloat(a.precio || '0') - parseFloat(b.precio || '0');
-      })
+      variants: ordenarVariantesPorCantidad(variants)
     }))
     // Orden final de los GRUPOS por orden_cat (mayor a menor)
     .sort((a, b) => {
