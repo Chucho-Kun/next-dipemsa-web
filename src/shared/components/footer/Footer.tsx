@@ -97,6 +97,9 @@ export default function Footer() {
                 <a target='_blank' href="https://maps.app.goo.gl/Kp5r6WprytYoe1Sy9">Dipemsa Tienda Texcoco</a> 
               </li>
               <li>
+                <a target='_blank' href="https://share.google/NPm9egGqmFneaeXXk">Dipemsa CEDIS Pachuca</a> 
+              </li>
+              <li>
                 <a target='_blank' href="https://g.co/kgs/eUHZMV">Dipemsa CEDIS</a> 
               </li>
             </ul>
