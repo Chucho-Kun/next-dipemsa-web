@@ -12,6 +12,7 @@ export function slugToMarca(slug: string): string {
     'panel-rey': 'Panel Rey',
     'trim-tex': 'Trim-Tex',
     'cempanel': 'Cempanel',
+    'corev': 'Corev'
   };
 
   return mapa[slug] || slug

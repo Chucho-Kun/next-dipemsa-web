@@ -15,6 +15,7 @@ export const marcas: marcasType[] = [
   { name: "glasliner", src: "/marcas/glasliner.webp" },
   { name: "armstrong", src: "/marcas/armstrong.webp" },
   { name: "owens-corning", src: "/marcas/owens-corning.webp" },
+  { name: "corev", src: "/marcas/corev.webp" },
   { name: "mapei", src: "/marcas/mapei.webp" },
   { name: "trim-tex", src: "/marcas/trim-tex.webp" },
   { name: "truper", src: "/marcas/truper.webp" }
