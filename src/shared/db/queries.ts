@@ -22,7 +22,7 @@ export function slugToMarca(slug: string): string {
 
 export function slugToCategory(slug: string): string {
   const mapa: Record<string, string> = {
-    'anclajes-quimicos-y-epoxicos': 'Anclajes y químicos epoxicos',
+    'anclajes-quimicos-y-epoxicos': 'Anclajes químicos y epoxicos',
     'anclajes-y-quimicos-epoxicos': 'Anclajes y químicos epoxicos', // slug anterior, se conserva por compatibilidad (redirect en next.config.ts)
     'sistemas-de-fijacion-directa': 'Sistemas de fijacion directa',
     'perfiles-galvanizados': 'Perfiles galvanizados',
