@@ -87,7 +87,7 @@ export function contenidoDeMarca(slug: string): ContenidoSeo | undefined {
 }
 ```
 
-Los 14 slugs de categoría son los ya usados en `app/sitemap.ts` (`tablaroca-y-durock`, `perfiles-galvanizados`, `compuestos-y-cintas`, `glasliner`, `plafones-y-suspension`, `cempanel`, `sellado`, `sistemas-de-fijacion-directa`, `anclajes-y-quimicos-epoxicos`, `tornilleria`, `aislantes`, `perfiles-plasticos`, `adhesivos-y-nivelantes`, `herramientas`). Los 14 de marca son los de `src/shared/db/marcas.ts` (`armstrong`, `cempanel`, `dipemsa`, `fischer`, `glasliner`, `gram-bel`, `gyproc`, `mapei`, `owens-corning`, `panel-rey`, `pennsylvania`, `trim-tex`, `truper`, `usg`).
+Los 14 slugs de categoría son los ya usados en `app/sitemap.ts` (`tablaroca-y-durock`, `perfiles-galvanizados`, `compuestos-y-cintas`, `glasliner`, `plafones-y-suspension`, `cempanel`, `sellado`, `sistemas-de-fijacion-directa`, `anclajes-quimicos-y-epoxicos`, `tornilleria`, `aislantes`, `perfiles-plasticos`, `adhesivos-y-nivelantes`, `herramientas`). Los 14 de marca son los de `src/shared/db/marcas.ts` (`armstrong`, `cempanel`, `dipemsa`, `fischer`, `glasliner`, `gram-bel`, `gyproc`, `mapei`, `owens-corning`, `panel-rey`, `pennsylvania`, `trim-tex`, `truper`, `usg`).
 
 **Tolerancia a datos faltantes:** si un slug nuevo no tiene entrada en el config (por ejemplo, una categoría agregada después de este spec), `contenidoDeCategoria`/`contenidoDeMarca` devuelven `undefined` y el componente que las consume omite la sección de intro/FAQ sin romper la página — la parrilla de productos sigue funcionando igual que hoy. No se agrega validación de build que obligue a tener las 14+14 entradas completas.
 

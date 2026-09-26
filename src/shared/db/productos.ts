@@ -12,7 +12,7 @@ export const productos: ProductosType[] = [
   { name: "cempanel", src: "/productos/cempanel.webp" },
   { name: "sellado", src: "/productos/sellado.webp" },
   { name: "sistemas-de-fijacion-directa", src: "/productos/sistemas-de-fijacion-directa.webp" },
-  { name: "anclajes-y-quimicos-epoxicos", src: "/productos/anclajes-y-quimicos-epoxicos.webp" },
+  { name: "anclajes-quimicos-y-epoxicos", src: "/productos/anclajes-quimicos-y-epoxicos.webp" },
   { name: "tornilleria", src: "/productos/tornilleria.webp" },
   { name: "aislantes", src: "/productos/aislantes.webp" },
   { name: "perfiles-plasticos", src: "/productos/perfiles-plasticos.webp" },

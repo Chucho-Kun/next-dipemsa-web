@@ -13,6 +13,15 @@ const nextConfig = {
   // Solución temporal para el LRUCache
   cacheHandler: undefined,
   cacheMaxMemorySize: 0,        // Desactiva caché en memoria temporalmente
+  async redirects() {
+    return [
+      {
+        source: '/categoria/anclajes-y-quimicos-epoxicos',
+        destination: '/categoria/anclajes-quimicos-y-epoxicos',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

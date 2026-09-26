@@ -178,7 +178,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: 'https://www.dipemsa.com.mx/categoria/anclajes-y-quimicos-epoxicos',
+      url: 'https://www.dipemsa.com.mx/categoria/anclajes-quimicos-y-epoxicos',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
