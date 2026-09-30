@@ -15,7 +15,7 @@ export default function Header() {
     <header className="w-full md:sticky md:top-0 md:z-50 bg-white shadow-md">
       {/* Top Bar - Envíos Gratis */}
       <div className="banner-promo text-white font-bold text-center text-sm py-2 px-4">
-        ENVÍOS GRATIS EN COMPRAS MAYORES A $5,000 MXN (aplica CDMX y Área Metropolitana) 
+        ENVÍOS GRATIS EN COMPRAS MAYORES A $5,000 MXN (Aplica CDMX, Edomex y Pachuca, Hidalgo) 
         <Link href="/terminos-y-condiciones/" className="underline hover:text-orange-400 ml-1">
           Términos y Condiciones
         </Link>

@@ -37,7 +37,7 @@ export default function TerminosYCondicionesPage() {
                 {/* <p><strong>Correo:</strong>contacto@dipemsa.com.mx</p> */}
               </div>
               <br />
-              <h3 className="font-bold text-xl mb-6">DIPEMSA - PACHUCA DE SOTO</h3>
+              <h3 className="font-bold text-xl mb-6">DIPEMSA - PACHUCA, HIDALGO</h3>
               <div className="space-y-4 text-gray-700">
                 <p><strong>Teléfono:</strong> (55) 9306 7557</p>
                 <p><strong>WhatsApp:</strong> 72 9936 7395</p>
