@@ -17,20 +17,32 @@ export default function TerminosYCondicionesPage() {
           
           <h2 className="text-2xl font-bold text-gray-800 mt-10 mb-4">Envíos</h2>
           <p>
-            Envíos gratis sólo aplican en compras mayores a <strong>$5,000 MXN</strong> realizándolas en www.dipemsa.com.mx con cobertura en CDMX y Zona Metropolitana.
+            Los envíos son gratuitos en compras mayores a <strong>$5,000 MXN</strong> realizadas en www.dipemsa.com.mx con cobertura en CDMX, Edomex y Pachuca, Hidalgo. En compras menores a este monto, el costo de envío dentro de CDMX, Edomex y Pachuca, Hidalgo es de $300 MXN.
           </p>
           <p className="mt-4">
-            Para envíos a otros estados de la República o Zonas fuera de la cobertura, el cobro automático de $300 MXN generado por la página será reembolsado y el envío se gestionará mediante flete por cobrar, por lo que deberás liquidar el costo total del transporte al momento de recibir el material, ya sea en las oficinas de la paquetería o en tu domicilio.
+            Para envíos a otros estados de la República o zonas fuera de la cobertura, el cobro automático de $300 MXN generado por la página será reembolsado y el envío se gestionará mediante flete por cobrar de acuerdo a la distancia, ya sea a ocurre en paquetería o en tu domicilio.
           </p>
           <p className="mt-4">
             Te invitamos a cotizar previamente tu flete con nuestro equipo de ventas
           </p>
           <br />
-          <p>Teléfonos fijos:</p>
-              <p><span className="font-semibold">(55) 8751 2193</span></p>
-              <p><span className="font-semibold">(55) 8751 2194</span></p>
-              <p><span className="font-semibold">(55) 5770 8512</span></p>
-              <p>WhatsApp: <span className="font-semibold">55 3265 1039</span></p>
+          
+          <div>
+              <h3 className="font-bold text-xl mb-6">DIPEMSA - CDMX / EDO MEX</h3>
+              <div className="space-y-4 text-gray-700">
+                <p><strong>Teléfono:</strong> (55) 8751 2193</p>
+                <p><strong>Teléfono:</strong> (55) 8751 2194</p>
+                <p><strong>Teléfono:</strong> (55) 5770 8512</p>
+                <p><strong>WhatsApp:</strong> 55 3265 1039</p>
+                {/* <p><strong>Correo:</strong>contacto@dipemsa.com.mx</p> */}
+              </div>
+              <br />
+              <h3 className="font-bold text-xl mb-6">DIPEMSA - PACHUCA DE SOTO</h3>
+              <div className="space-y-4 text-gray-700">
+                <p><strong>Teléfono:</strong> (55) 9306 7557</p>
+                <p><strong>WhatsApp:</strong> 72 9936 7395</p>
+              </div>
+            </div>
 
           <h2 className="text-2xl font-bold text-gray-800 mt-12 mb-4">Política de Aceptación de Órdenes</h2>
           <p>

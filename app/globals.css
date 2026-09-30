@@ -32,3 +32,13 @@ button {
     color: white;
 }
 
+.neon-bt {
+    color: #ff5e00;
+    background-color: white;
+    border: 2px solid #ff5e00;
+    box-shadow: 0 0 10px #ff5e00;
+}
+
+.neon-bt:hover {
+    box-shadow: 0 0 20px #ff5e00;
+}

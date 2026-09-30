@@ -23,7 +23,7 @@ export default function Header() {
 
       {/* Main Header */}
       <div className="bg-white">
-        <div className="max-w-5xl mx-auto px-4 py-3">
+        <div className="max-w-6xl mx-auto px-4 py-3">
           <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-6">
             {/* Logo */}
             <div className="shrink-0">
@@ -55,11 +55,11 @@ export default function Header() {
                   <Link 
                       href={ 'https://api.whatsapp.com/send?phone=5532651039' }
                       target='_blank'
-                      className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-extrabold px-3 py-2 rounded-lg flex items-center gap-1.5 transition text-[13px] leading-none whitespace-nowrap shadow-sm">
-                    CDMX / EDO MÉX
+                      className="neon-bt font-extrabold px-4 py-3 rounded-lg flex items-center gap-1.5 transition text-[13px] leading-none whitespace-nowrap shadow-sm">
+                    CDMX / EDOMEX
                     <span className="flex items-center">
                       <Image 
-                        src={'/icons/whatsapp.svg'}
+                        src={'/icons/whatsapp-orange.svg'}
                         alt="whatsapp icon"
                         width={20}
                         height={20}
@@ -70,11 +70,11 @@ export default function Header() {
                   <Link 
                       href={ 'https://api.whatsapp.com/send?phone=7299367395' }
                       target='_blank'
-                      className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-extrabold px-3 py-2 rounded-lg flex items-center gap-1.5 transition text-[13px] leading-none whitespace-nowrap shadow-sm">
-                    PACHUCA DE SOTO
+                      className="neon-bt font-extrabold px-4 py-3 rounded-lg flex items-center gap-1.5 transition text-[13px] leading-none whitespace-nowrap shadow-sm">
+                    PACHUCA HIDALGO
                     <span className="flex items-center">
                       <Image 
-                        src={'/icons/whatsapp.svg'}
+                        src={'/icons/whatsapp-orange.svg'}
                         alt="whatsapp icon"
                         width={20}
                         height={20}
