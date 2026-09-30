@@ -1,13 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { marcas } from '../../db/marcas';
 import SearchBar from './SearchBar';
 import CartModule from './CartModule';
-import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,49 +23,66 @@ export default function Header() {
 
       {/* Main Header */}
       <div className="bg-white">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="max-w-5xl mx-auto px-4 py-3">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-6">
             {/* Logo */}
             <div className="shrink-0">
 
               <Link href={'/'} className="cursor-pointer">
-                  <img width={200} height={70} src="/logo.svg" alt="Logo Dipemsa SVG" />
-                  {/* <Image 
-                    src={'/logo.webp'}
-                    width={200}
-                    height={70}
-                    alt='Logo Dipemsa'
-                    className="w-auto h-14 md:h-16 object-contain"
-                    priority
-                  /> */}
+                  <img width={250} height={89} src="/logo.svg" alt="Logo Dipemsa SVG" className="" />
               </Link>
 
             </div>
 
-              <SearchBar />
+              <div className="w-full md:flex-1 md:max-w-85 lg:max-w-95">
+                <SearchBar />
+              </div>
 
                {/* Cart and Quote Button */}
-               <div className="flex items-center gap-4 cursor-pointer">
+               <div className="flex items-center gap-2.5 shrink-0 cursor-pointer">
                {/* Cart */}
 
               {/**Icono carrito en movil */}
               <CartModule />
 
-              {/* Cotiza Ahora Button */}
-              <Link 
-                  href={ 'https://api.whatsapp.com/send?phone=5532651039' }
-                  target='_blank'
-                  className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-bold px-6 py-2 rounded-lg flex items-center gap-2 transition text-sm whitespace-nowrap">
-                COTIZA POR WHATSAPP
-                <span className="text-xl">
-                  <Image 
-                    src={'/icons/whatsapp.svg'}
-                    alt="whatsapp icon"
-                    width={25}
-                    height={25}
-                  />
+              <div className="flex flex-col items-end gap-1 mb-5">
+                <span className="text-[#C2410C] font-extrabold text-[17px] leading-none tracking-tight pr-26">
+                  Cotiza por whatsapp
                 </span>
-              </Link>
+
+                <div className="flex items-center gap-2">
+                  {/* Cotiza Ahora Button */}
+                  <Link 
+                      href={ 'https://api.whatsapp.com/send?phone=5532651039' }
+                      target='_blank'
+                      className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-extrabold px-3 py-2 rounded-lg flex items-center gap-1.5 transition text-[13px] leading-none whitespace-nowrap shadow-sm">
+                    CDMX / EDO MÉX
+                    <span className="flex items-center">
+                      <Image 
+                        src={'/icons/whatsapp.svg'}
+                        alt="whatsapp icon"
+                        width={20}
+                        height={20}
+                      />
+                    </span>
+                  </Link>
+                  
+                  <Link 
+                      href={ 'https://api.whatsapp.com/send?phone=7299367395' }
+                      target='_blank'
+                      className="bg-[#FF5E00] hover:bg-[#E30613] text-white font-extrabold px-3 py-2 rounded-lg flex items-center gap-1.5 transition text-[13px] leading-none whitespace-nowrap shadow-sm">
+                    PACHUCA DE SOTO
+                    <span className="flex items-center">
+                      <Image 
+                        src={'/icons/whatsapp.svg'}
+                        alt="whatsapp icon"
+                        width={20}
+                        height={20}
+                      />
+                    </span>
+                  </Link>
+                </div>
+              </div>
 
               {/* Mobile Menu Button */}
               <button 

@@ -40,12 +40,19 @@ ${mensaje}`)}`;
           <div className="space-y-8">
             <div>
               <h3 className="text-orange-600 font-bold text-xl mb-6">CONTACTO</h3>
+              <h3 className="font-bold text-xl mb-6">DIPEMSA - CDMX / EDO MEX</h3>
               <div className="space-y-4 text-gray-700">
                 <p><strong>Teléfono:</strong> (55) 8751 2193</p>
                 <p><strong>Teléfono:</strong> (55) 8751 2194</p>
                 <p><strong>Teléfono:</strong> (55) 5770 8512</p>
                 <p><strong>WhatsApp:</strong> 55 3265 1039</p>
-                <p><strong>Correo:</strong>contacto@dipemsa.com.mx</p>
+                {/* <p><strong>Correo:</strong>contacto@dipemsa.com.mx</p> */}
+              </div>
+              <br />
+              <h3 className="font-bold text-xl mb-6">DIPEMSA - PACHUCA DE SOTO</h3>
+              <div className="space-y-4 text-gray-700">
+                <p><strong>Teléfono:</strong> (55) 9306 7557</p>
+                <p><strong>WhatsApp:</strong> 72 9936 7395</p>
               </div>
             </div>
             <div>
@@ -56,12 +63,12 @@ ${mensaje}`)}`;
             </div>
 
             <div className="flex gap-4">
-              <Link href={'tel:5587512193'} target='_blank' className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition">
+              {/* <Link href={'tel:5587512193'} target='_blank' className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition">
                 <img width={25} height={25} src={'/icons/phone.svg'} alt="teléfono" />
               </Link>
               <Link href={'https://wa.me/5532651039'} target='_blank' className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition">
                 <img width={25} height={25} src={'/icons/whatsapp.svg'} alt="whatsapp" />
-              </Link>
+              </Link> */}
               <Link href={'https://www.facebook.com/Dipemsa/'} target='_blank' className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition">
                 <img width={25} height={25} src={'/icons/facebook.svg'} alt="facebook" />
               </Link>

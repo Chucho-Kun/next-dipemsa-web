@@ -146,11 +146,11 @@ export default function SearchBar() {
         </Command.List>
       </Command.Dialog>
 
-      <div className="relative">
+      <div className="relative w-full">
         <input
           type="text"
           placeholder="Click para abrir el Buscador"
-          className="w-full h-12 border-2 border-[#FF5E00] rounded-xl py-3 px-5 pr-16 focus:outline-none focus:border-[#E30613] text-sm bg-white cursor-pointer"
+          className="w-full h-11.5 border-[1.5px] border-[#FF5E00] rounded-xl py-3 pl-4 pr-16 focus:outline-none focus:border-[#E30613] text-[13px] text-gray-700 placeholder:text-gray-500 placeholder:text-[13px] bg-white cursor-pointer"
           onFocus={() => setOpen(true)}
           readOnly
         />
@@ -158,7 +158,7 @@ export default function SearchBar() {
         <button
           aria-label='Boton Buscar'
           onClick={() => setOpen(true)}
-          className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#FF5E00] hover:bg-[#E30613] text-white px-6 py-3 rounded-r-xl transition-all"
+          className="absolute right-0 top-0 h-11.5 bg-[#FF5E00] hover:bg-[#E30613] text-white px-5 rounded-r-[10px] rounded-l-none transition-all flex items-center justify-center"
         >
           <Search
             size={22}
