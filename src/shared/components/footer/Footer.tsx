@@ -116,7 +116,7 @@ export default function Footer() {
       <div className="bg-white py-5">
         <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center items-center gap-8 md:gap-12">
           <Image
-            src={'/formas-de-pago.jpeg'}
+            src={'/formas-de-pago.webp'}
             width={696}
             height={82}
             alt='Formas de Pago'

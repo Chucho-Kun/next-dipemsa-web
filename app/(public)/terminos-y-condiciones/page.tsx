@@ -10,36 +10,39 @@ export default function TerminosYCondicionesPage() {
           <h1 className="text-4xl font-bold text-gray-800 mb-3">
             Términos y Condiciones
           </h1>
-          <p className="text-gray-600">Última actualización: Agosto 2026</p>
+          <p className="text-gray-600">Última actualización: Octubre 2026</p>
         </div>
 
         <div className="bg-white rounded-3xl shadow-sm p-8 md:p-12 prose prose-lg max-w-none">
           
-          <h2 className="text-2xl font-bold text-gray-800 mt-10 mb-4">Envíos</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mt-10 mb-4">ENVÍOS GRATIS</h2>
           <p>
-            Los envíos son gratuitos en compras mayores a <strong>$5,000 MXN</strong> realizadas en www.dipemsa.com.mx con cobertura en CDMX, Edomex y Pachuca, Hidalgo. En compras menores a este monto, el costo de envío dentro de CDMX, Edomex y Pachuca, Hidalgo es de $300 MXN.
+            Los envíos son gratuitos en compras mayores a <strong>$5,000 MXN</strong> realizadas en www.dipemsa.com.mx dentro de un radio de 50km desde los códigos postales con cobertura en CDMX, Edomex (CP: 55882) y Pachuca, Hidalgo (CP: 42186).
           </p>
           <p className="mt-4">
-            Para envíos a otros estados de la República o zonas fuera de la cobertura, el cobro automático de $300 MXN generado por la página será reembolsado y el envío se gestionará mediante flete por cobrar de acuerdo a la distancia, ya sea a ocurre en paquetería o en tu domicilio.
+            <strong>Zona de cobertura:</strong> Para compras menores a $5,000 MXN el costo de envío es de $300 MXN, dentro de un radio de 50km desde los códigos postales con cobertura CP: 55882 (CDMX, Edomex) y CP: 42186 (Pachuca, Hgo).
           </p>
           <p className="mt-4">
-            Te invitamos a cotizar previamente tu flete con nuestro equipo de ventas
+            <strong>Foráneos:</strong> Para envíos fuera del radio de 50km o a otros estados de la República el cargo automático de $300 MXN será reembolsado. En estos casos, el envío se gestionará en modalidad de flete por cobrar (con entrega a domicilio o ocurre de la paquetería correspondiente)
+          </p>
+          <p className="mt-4">
+            Te sugerimos cotizar previamente tu costo de flete foráneo con nuestro equipo de ventas para conocer la tarifa exacta antes de finalizar tu compra.
           </p>
           <br />
           
           <div>
               <h3 className="font-bold text-xl mb-6">DIPEMSA - CDMX / EDO MEX</h3>
               <div className="space-y-4 text-gray-700">
-                <p><strong>Teléfono:</strong> (55) 8751 2193</p>
-                <p><strong>Teléfono:</strong> (55) 8751 2194</p>
-                <p><strong>Teléfono:</strong> (55) 5770 8512</p>
+                <p><strong>Teléfono:</strong> 55 8751 2193</p>
+                <p><strong>Teléfono:</strong> 55 8751 2194</p>
+                <p><strong>Teléfono:</strong> 55 5770 8512</p>
                 <p><strong>WhatsApp:</strong> 55 3265 1039</p>
                 {/* <p><strong>Correo:</strong>contacto@dipemsa.com.mx</p> */}
               </div>
               <br />
               <h3 className="font-bold text-xl mb-6">DIPEMSA - PACHUCA, HIDALGO</h3>
               <div className="space-y-4 text-gray-700">
-                <p><strong>Teléfono:</strong> (55) 9306 7557</p>
+                <p><strong>Teléfono:</strong> 55 9306 7557</p>
                 <p><strong>WhatsApp:</strong> 72 9936 7395</p>
               </div>
             </div>
