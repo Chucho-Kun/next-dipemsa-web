@@ -19,34 +19,34 @@ export async function GET() {
 
             ${products
             .map((product) => {
-                const precioLimpio = product.precio
-                ?.replace(/[$,]/g, '')
-                .trim() || '0';
+                const precioNum = parseFloat(
+                  (product.precio ?? '').replace(/[$,]/g, '').trim()
+                );
+                if (!precioNum || isNaN(precioNum)) return '';
+                const precioLimpio = precioNum.toFixed(2);
 
-                const slug = `${product.descripcion
-                ?.toLowerCase()
-                .replace(/[^a-z0-9]+/g, '-')}`;
+                const descripcion = product.descripcion ?? '';
+                const slug = slugify(descripcion);
 
                 return `
                     <item>
                     <g:id>${product.id}</g:id>
-                    <g:title>${escapeXml( product.descripcion || '')}</g:title>
-                    <g:description>${escapeXml(product.informacion || product.descripcion || '')}</g:description>
-                    <g:link>https://www.dipemsa.com.mx/producto/${product.id}/${ slugify( product.descripcion! ) }</g:link>
+                    <g:title>${escapeXml(descripcion)}</g:title>
+                    <g:description>${escapeXml(product.informacion || descripcion)}</g:description>
+                    <g:link>https://www.dipemsa.com.mx/producto/${product.id}/${slug}</g:link>
                     <g:image_link>https://www.dipemsa.com.mx/fotos/webp/${product.id}.webp</g:image_link>
-                    
+
                     <g:condition>new</g:condition>
                     <g:availability>in stock</g:availability>
                     <g:price>${precioLimpio} MXN</g:price>
-                    
-                    <g:brand>${escapeXml(product.marca || 'Dipemsa')}</g:brand>
-                    <g:gtin></g:gtin>
-                    <g:mpn>${product.clave || ''}</g:mpn>
-                    
+
+                    <g:brand>${escapeXml(product.marca || 'Dipemsa')}</g:brand>${product.clave ? `
+                    <g:mpn>${escapeXml(product.clave)}</g:mpn>` : ''}
+
                     <g:shipping>
                         <g:country>MX</g:country>
                         <g:service>Estándar</g:service>
-                        <g:price>0 MXN</g:price>
+                        <g:price>300.00 MXN</g:price>
                     </g:shipping>
                     </item>`;
             })
@@ -66,12 +66,11 @@ export async function GET() {
 }
 
 // Función para escapar caracteres especiales en XML
-function escapeXml(unsafe: string): string {
-  return unsafe
+function escapeXml(unsafe: string | null | undefined): string {
+  return (unsafe ?? '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/%/g, 'porciento')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
 }
