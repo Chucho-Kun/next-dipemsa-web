@@ -52,6 +52,18 @@
     },
     {
       "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Puerta de 1 item: colapsa los N items de CodeNormalizar a un solo item.\n// Sin esto, PostgresSelect (executeQuery) se ejecuta 1 vez POR ITEM (~477-2433 SELECTs identicos) y agota el pool / causa timeout.\n// CodeDiff sigue leyendo el Sheet via $items('CodeNormalizar'), asi que no se pierde nada.\nreturn [{ json: { go: 1 } }];"
+      },
+      "id": "3a3a3a3a-3a3a-43a3-83a3-3a3a3a3a3a3a",
+      "name": "OnceGate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300],
+      "notes": "Colapsa N items a 1 para que PostgresSelect ejecute el SELECT una sola vez. No borrar."
+    },
+    {
+      "parameters": {
         "operation": "executeQuery",
         "query": "SELECT id, clave, variante, descripcion, informacion, disponible, marca, categoria, existencias, precioant, precio, destacado FROM productos_;",
         "options": {}
@@ -60,7 +72,7 @@
       "name": "PostgresSelect",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.4,
-      "position": [900, 300],
+      "position": [1020, 300],
       "notes": "Credencial Postgres Railway con SSL (solo SELECT+INSERT+UPDATE sobre productos_). Lee las 12 columnas para el diff; no toca orden_prod, orden_cat, createdat, related_products ni ficha."
     },
     {
@@ -72,19 +84,19 @@
       "name": "CodeDiff",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1120, 300]
+      "position": [1240, 300]
     },
     {
       "parameters": {
-        "batchSize": 50,
+        "batchSize": 20,
         "options": {}
       },
       "id": "66666666-6666-4666-8666-666666666666",
       "name": "LoopUpsert",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
-      "position": [1340, 300],
-      "notes": "Lote 50. Salida 0=done -> CodeResumen, salida 1=loop -> PostgresUpsert -> de vuelta a LoopUpsert."
+      "position": [1460, 300],
+      "notes": "Lote 20 (antes 50: Railway pooler se saturaba). Salida 0=done -> CodeResumen, salida 1=loop -> PostgresUpsert -> de vuelta a LoopUpsert."
     },
     {
       "parameters": {
@@ -98,7 +110,7 @@
       "name": "PostgresUpsert",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.4,
-      "position": [1340, 520],
+      "position": [1460, 520],
       "onError": "continueRegularOutput",
       "notes": "UPSERT por id (11 columnas no-PK). Preserva orden_prod, orden_cat, createdat, related_products, ficha. onError=continue: una fila mala no detiene el lote; el error lo recoge CodeResumen. Para dry-run cambia productos_ por productos__test."
     },
@@ -111,7 +123,7 @@
       "name": "CodeResumen",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1560, 300]
+      "position": [1680, 300]
     }
   ],
   "connections": {
@@ -138,6 +150,17 @@
       ]
     },
     "CodeNormalizar": {
+      "main": [
+        [
+          {
+            "node": "OnceGate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OnceGate": {
       "main": [
         [
           {
