@@ -25,16 +25,16 @@ export async function GET() {
                 if (!precioNum || isNaN(precioNum)) return '';
                 const precioLimpio = precioNum.toFixed(2);
 
-                const descripcion = product.descripcion ?? '';
+                const descripcion = stripInvalidXmlChars(product.descripcion ?? '');
                 const slug = slugify(descripcion);
 
                 return `
                     <item>
-                    <g:id>${product.id}</g:id>
+                    <g:id>${escapeXml(String(product.id))}</g:id>
                     <g:title>${escapeXml(descripcion)}</g:title>
                     <g:description>${escapeXml(product.informacion || descripcion)}</g:description>
-                    <g:link>https://www.dipemsa.com.mx/producto/${product.id}/${slug}</g:link>
-                    <g:image_link>https://www.dipemsa.com.mx/fotos/webp/${product.id}.webp</g:image_link>
+                    <g:link>${escapeXml(`https://www.dipemsa.com.mx/producto/${product.id}/${slug}`)}</g:link>
+                    <g:image_link>${escapeXml(`https://www.dipemsa.com.mx/fotos/webp/${product.id}.webp`)}</g:image_link>
 
                     <g:condition>new</g:condition>
                     <g:availability>in stock</g:availability>
@@ -65,9 +65,18 @@ export async function GET() {
   }
 }
 
+// Función para eliminar caracteres inválidos en XML 1.0 (ej. Char value 31 / U+001F
+// que llega por copy-paste desde Word/PDF/Excel y rompe el feed aunque se escape &<>"').
+function stripInvalidXmlChars(value: string | null | undefined): string {
+  return (value ?? '').replace(
+    /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x84\x86-\x9F\uFDD0-\uFDEF\uFFFE\uFFFF]/g,
+    ''
+  );
+}
+
 // Función para escapar caracteres especiales en XML
 function escapeXml(unsafe: string | null | undefined): string {
-  return (unsafe ?? '')
+  return stripInvalidXmlChars(unsafe)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
