@@ -6,5 +6,5 @@ export type ReglaDescuento = {
 };
 
 export const reglasDescuento: ReglaDescuento[] = [
-  { tipo: 'marca', valor: 'Cempanel', porcentaje: 5, activo: true },
+  { tipo: 'marca', valor: 'Cempanel', porcentaje: 5, activo: false },
 ];

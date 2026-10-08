@@ -107,7 +107,7 @@ export const useCartStore = create<CartStore>()(
       // Necesario cada vez que cambie una regla de descuento (SPEC 07): el
       // carrito congela el precio al agregar el producto y no lo recalcula,
       // así que un carrito viejo pagaría el precio anterior.
-      version: 1,
+      version: 2,
       migrate: () => ({ items: [] }),
       // Opcional: No guardar `isLoaded` en localStorage
       partialize: (state) => ({
