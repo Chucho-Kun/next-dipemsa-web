@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   
   keywords: [
     "materiales de construcción ligera","distribuidora de materiales","construcción ligera",
-    "armstrong","cempanel","dipemsa","fischer","gram bel","gyproc","mapei","pennsylvania","panel rey","truper","owens corning","riho","stabilit","trim tex","usg",
+    "armstrong","cempanel","dipemsa","fischer","gram bel","gyproc","mapei","pennsylvania","panel rey","owens corning","riho","stabilit","trim tex","usg",
     "aislantes térmicos","perfiles galvanizados","sistemas de fijación","compuestos y cintas","cempanel","tornilleria","herramientas","tablaroca","plafones","liner panel","suspensiones",
     "anclajes y quimicos epoxicos","perfiles plasticos","sellado","adhesivos y nivelantes",
     "perfiles metálicos",

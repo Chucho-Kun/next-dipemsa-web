@@ -4,7 +4,7 @@ import Marcas from "@/src/shared/components/Marcas";
 export const metadata = {
   title: 'Dipemsa | Marcas',
   description: 'Listado de todas las marcas con las que contamos en nuestro catálogo',
-  keywords: ['armstrong','cempanel','dipemsa','fischer','gram bel','gyproc','mapei','owens corning','panel rey','pennsylvania','riho','stabilit','trim tex','truper','usg'],
+  keywords: ['armstrong','cempanel','dipemsa','fischer','gram bel','gyproc','mapei','owens corning','panel rey','pennsylvania','riho','stabilit','trim tex','usg'],
   openGraph: {
     title: 'Marcas - DIPEMSA',
     description: 'Listado de todas las marcas con las que contamos en nuestro catálogo',
