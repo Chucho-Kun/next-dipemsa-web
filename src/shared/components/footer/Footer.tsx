@@ -81,7 +81,7 @@ export default function Footer() {
             <h3 className="font-bold text-lg mb-4">SERVICIOS</h3>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link className="text-bold hover:text-orange-400 transition" target='_blank' href={'/catalogos/CATALOGO2026ABRIL.pdf'} >Descargar Catálogo</Link>
+                <Link className="text-bold hover:text-orange-400 transition" target='_blank' href={'/catalogos/CATALOGO2026OCTUBRE.pdf'} >Descargar Catálogo</Link>
               </li>
             </ul>
           </div>
