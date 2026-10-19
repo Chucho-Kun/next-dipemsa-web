@@ -14,9 +14,10 @@ Al final deja un reporte en la pestaña **Executions** de n8n con 6 campos:
 
 Flujo: `ManualTrigger → SheetsRead → CodeNormalizar → PostgresSelect → CodeDiff → LoopUpsert (lote 50) → PostgresUpsert → CodeResumen`.
 
-El UPSERT toca **solo** las 12 columnas del Sheet (`id` + 11 no-PK). Jamás toca
-`orden_prod, orden_cat, createdat, related_products` ni `ficha`. Los ids que están en la DB pero no en el Sheet
-quedan intactos (no hay DELETEs).
+El UPSERT toca **solo** las 13 columnas del Sheet (`id` + 12 no-PK, `ficha` incluida con una regla especial:
+si la celda `ficha` va **vacía** en el Sheet, se **preserva** la ficha que ya tiene la DB; si trae la URL del
+PDF, se actualiza). Jamás toca `orden_prod, orden_cat, createdat` ni `related_products`. Los ids que están en
+la DB pero no en el Sheet quedan intactos (no hay DELETEs).
 
 ## 2. Requisitos
 
@@ -28,14 +29,16 @@ quedan intactos (no hay DELETEs).
 ## 3. Preparar el Google Sheet
 
 1. La **fila 1** debe tener exactamente estos headers en minúsculas, en este orden:
-   `id, clave, variante, descripcion, informacion, disponible, marca, categoria, existencias, precioant, precio, destacado`
-   (son las mismas 12 columnas de `productos.csv`).
+   `id, clave, variante, descripcion, informacion, disponible, marca, categoria, existencias, precioant, precio, destacado, ficha`
+   (las 12 columnas de `productos.csv` + la 13ª, `ficha`).
 2. Reglas de formato por columna:
    - `id`: texto, **obligatorio y único**. Filas con `id` vacío o duplicado se reportan como error y no se sincronizan.
    - `existencias`: número entero (si va vacío se guarda `0`).
    - `destacado`: `1` o `TRUE` para verdadero; cualquier otra cosa (incluido vacío) es falso.
    - `precio` y `precioant`: **siempre con `$`** (ej. `$88.24`, no `88.24`). El sync guarda los precios tal cual vienen,
      sin normalizar; si les falta el `$`, la tienda los muestra distinto.
+   - `ficha`: URL del PDF en Google Drive (la que muestra el botón "VER FICHA TÉCNICA" en la tienda). Si la celda
+     va **vacía**, NO se borra la ficha del producto: se conserva el valor actual de la DB.
    - El resto: texto libre; las celdas vacías se guardan como `NULL`.
 3. No dejes filas totalmente vacías entre datos y no reordenes ni renombres las columnas.
 4. Comparte el Sheet con la cuenta de Google que usa n8n (permiso **Lector** basta) o con la cuenta de servicio que te indique el equipo.

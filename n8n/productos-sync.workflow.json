@@ -7,7 +7,10 @@
       "name": "ManualTrigger",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
-      "position": [240, 300]
+      "position": [
+        240,
+        300
+      ]
     },
     {
       "parameters": {
@@ -36,19 +39,25 @@
       "name": "SheetsRead",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
-      "position": [460, 300],
-      "notes": "PASO 2: OAuth Google (Sheets+Drive APIs). documentId = ID del Sheet de catalogo, sheet = pestana principal. Fila 1 = headers en minusculas, 12 columnas exactas: id,clave,variante,descripcion,informacion,disponible,marca,categoria,existencias,precioant,precio,destacado. headerRow=1, firstDataRow=2. Esperado ~2433 items, un item por fila."
+      "position": [
+        460,
+        300
+      ],
+      "notes": "PASO 2: OAuth Google (Sheets+Drive APIs). documentId = ID del Sheet de catalogo, sheet = pestana principal. Fila 1 = headers en minusculas, 13 columnas exactas: id,clave,variante,descripcion,informacion,disponible,marca,categoria,existencias,precioant,precio,destacado,ficha. headerRow=1, firstDataRow=2. Esperado ~2433 items, un item por fila."
     },
     {
       "parameters": {
         "mode": "runOnceForAllItems",
-        "jsCode": "// SPEC 10 Paso 3: normalizar filas del Sheet (12 columnas exactas).\n// Entrada: un item por fila del Sheet, headers en minusculas.\n// Salida: un item por fila -> {12 campos normalizados} o {_error, id} si falla.\n// - id: texto con trim(); vacio => {_error:'id vacío'}.\n// - duplicado en Sheet (mismo id con trim exacto) => {_error:'duplicado en Sheet: <id>'}.\n// - texto (clave,variante,descripcion,informacion,disponible,marca,categoria,precioant,precio): trim() o NULL si vacio. Precios TAL CUAL, sin normalizar $.\n// - existencias: parseInt(...) || 0. destacado: '1'/'TRUE' (trim+upper) => true, resto => false.\n// Los errores no detienen el flujo; CodeDiff/CodeResumen los recogen via $items('CodeNormalizar').\nconst COLUMNAS_TEXTO = ['clave', 'variante', 'descripcion', 'informacion', 'disponible', 'marca', 'categoria', 'precioant', 'precio'];\nfunction textoONulo(v) {\n  if (v === null || v === undefined) return null;\n  const t = String(v).trim();\n  return t === '' ? null : t;\n}\nfunction aEntero(v) {\n  const n = parseInt(String(v ?? '').trim(), 10);\n  return Number.isNaN(n) ? 0 : n;\n}\nfunction aBool(v) {\n  const t = String(v ?? '').trim().toUpperCase();\n  return t === '1' || t === 'TRUE' || t === 'T' || t === 'YES' || t === 'Y';\n}\nconst items = $input.all();\nconst vistos = new Set();\nconst salida = [];\nfor (let i = 0; i < items.length; i++) {\n  const row = (items[i] && items[i].json) || {};\n  const idCrudo = row.id;\n  const id = (idCrudo === null || idCrudo === undefined) ? '' : String(idCrudo).trim();\n  const idx = i + 2;\n  if (id === '') {\n    salida.push({ json: { _error: 'id vacío', id: '', _sheet_index: idx } });\n    continue;\n  }\n  if (vistos.has(id)) {\n    salida.push({ json: { _error: 'duplicado en Sheet: ' + id, id: id, _sheet_index: idx } });\n    continue;\n  }\n  vistos.add(id);\n  const norm = { id: id, _sheet_index: idx };\n  for (const c of COLUMNAS_TEXTO) norm[c] = textoONulo(row[c]);\n  norm.existencias = aEntero(row.existencias);\n  norm.destacado = aBool(row.destacado);\n  salida.push({ json: norm });\n}\nreturn salida;"
+        "jsCode": "// SPEC 10 Paso 3: normalizar filas del Sheet (13 columnas: las 12 del catalogo + ficha).\n// Entrada: un item por fila del Sheet, headers en minusculas.\n// Salida: un item por fila -> {13 campos normalizados} o {_error, id} si falla.\n// - id: texto con trim(); vacio => {_error:'id vacío'}.\n// - duplicado en Sheet (mismo id con trim exacto) => {_error:'duplicado en Sheet: <id>'}.\n// - texto (clave,variante,descripcion,informacion,disponible,marca,categoria,precioant,precio): trim() o NULL si vacio. Precios TAL CUAL, sin normalizar $.\n// - ficha (URL del PDF en Google Drive): trim() o NULL si vacio; si la fila viene vacia, CodeDiff preserva la ficha existente en la DB.\n// - existencias: parseInt(...) || 0. destacado: '1'/'TRUE' (trim+upper) => true, resto => false.\n// Los errores no detienen el flujo; CodeDiff/CodeResumen los recogen via $items('CodeNormalizar').\nconst COLUMNAS_TEXTO = ['clave', 'variante', 'descripcion', 'informacion', 'disponible', 'marca', 'categoria', 'precioant', 'precio'];\nfunction textoONulo(v) {\n  if (v === null || v === undefined) return null;\n  const t = String(v).trim();\n  return t === '' ? null : t;\n}\nfunction aEntero(v) {\n  const n = parseInt(String(v ?? '').trim(), 10);\n  return Number.isNaN(n) ? 0 : n;\n}\nfunction aBool(v) {\n  const t = String(v ?? '').trim().toUpperCase();\n  return t === '1' || t === 'TRUE' || t === 'T' || t === 'YES' || t === 'Y';\n}\nconst items = $input.all();\nconst vistos = new Set();\nconst salida = [];\nfor (let i = 0; i < items.length; i++) {\n  const row = (items[i] && items[i].json) || {};\n  const idCrudo = row.id;\n  const id = (idCrudo === null || idCrudo === undefined) ? '' : String(idCrudo).trim();\n  const idx = i + 2;\n  if (id === '') {\n    salida.push({ json: { _error: 'id vacío', id: '', _sheet_index: idx } });\n    continue;\n  }\n  if (vistos.has(id)) {\n    salida.push({ json: { _error: 'duplicado en Sheet: ' + id, id: id, _sheet_index: idx } });\n    continue;\n  }\n  vistos.add(id);\n  const norm = { id: id, _sheet_index: idx };\n  for (const c of COLUMNAS_TEXTO) norm[c] = textoONulo(row[c]);\n  norm.existencias = aEntero(row.existencias);\n  norm.destacado = aBool(row.destacado);\n  norm.ficha = textoONulo(row.ficha);\n  salida.push({ json: norm });\n}\nreturn salida;"
       },
       "id": "33333333-3333-4333-8333-333333333333",
       "name": "CodeNormalizar",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [680, 300]
+      "position": [
+        680,
+        300
+      ]
     },
     {
       "parameters": {
@@ -59,32 +68,41 @@
       "name": "OnceGate",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [900, 300],
+      "position": [
+        900,
+        300
+      ],
       "notes": "Colapsa N items a 1 para que PostgresSelect ejecute el SELECT una sola vez. No borrar."
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT id, clave, variante, descripcion, informacion, disponible, marca, categoria, existencias, precioant, precio, destacado FROM productos_;",
+        "query": "SELECT id, clave, variante, descripcion, informacion, disponible, marca, categoria, existencias, precioant, precio, destacado, ficha FROM productos_;",
         "options": {}
       },
       "id": "44444444-4444-4444-8444-444444444444",
       "name": "PostgresSelect",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.4,
-      "position": [1020, 300],
-      "notes": "Credencial Postgres Railway con SSL (solo SELECT+INSERT+UPDATE sobre productos_). Lee las 12 columnas para el diff; no toca orden_prod, orden_cat, createdat, related_products ni ficha."
+      "position": [
+        1020,
+        300
+      ],
+      "notes": "Credencial Postgres Railway con SSL (solo SELECT+INSERT+UPDATE sobre productos_). Lee las 13 columnas para el diff (incluida ficha); no toca orden_prod, orden_cat, createdat ni related_products."
     },
     {
       "parameters": {
         "mode": "runOnceForAllItems",
-        "jsCode": "// SPEC 10 Paso 4: diff campo por campo (Sheet normalizado vs Postgres).\n// Entrada directa ($input): filas de Postgres (PostgresSelect, 12 columnas).\n// Sheet normalizado via $items('CodeNormalizar') (incluye {_error} que aqui se ignoran; los cuenta CodeResumen).\n// Salida: solo filas nuevas o con al menos un campo distinto -> {accion:'insert'|'update', fila:{12 campos}, _sheet_index}.\n// Sin cambios => no se emite (segunda ejecucion sin tocar el Sheet => salida vacia).\n// Ids en DB ausentes en el Sheet se ignoran (sin UPDATE ni DELETE).\nconst COLUMNAS_TEXTO = ['clave', 'variante', 'descripcion', 'informacion', 'disponible', 'marca', 'categoria', 'precioant', 'precio'];\nfunction normTexto(v) {\n  if (v === null || v === undefined) return null;\n  const t = String(v).trim();\n  return t === '' ? null : t;\n}\nfunction normInt(v) {\n  const n = parseInt(String(v ?? '').trim(), 10);\n  return Number.isNaN(n) ? 0 : n;\n}\nfunction normBool(v) {\n  if (typeof v === 'boolean') return v;\n  const t = String(v ?? '').trim().toUpperCase();\n  return t === '1' || t === 'TRUE' || t === 'T' || t === 'YES' || t === 'Y';\n}\nfunction distinta(sheet, db) {\n  for (const c of COLUMNAS_TEXTO) {\n    if (normTexto(sheet[c]) !== normTexto(db[c])) return true;\n  }\n  if (normInt(sheet.existencias) !== normInt(db.existencias)) return true;\n  if (normBool(sheet.destacado) !== normBool(db.destacado)) return true;\n  return false;\n}\nconst dbItems = $input.all();\nlet sheetItems = [];\ntry { sheetItems = $items('CodeNormalizar'); } catch (e) { sheetItems = []; }\nconst dbPorId = new Map();\nfor (const it of dbItems) {\n  const r = (it && it.json) || {};\n  const id = (r.id === null || r.id === undefined) ? '' : String(r.id).trim();\n  if (id !== '' && !dbPorId.has(id)) dbPorId.set(id, r);\n}\nconst salida = [];\nfor (const it of sheetItems) {\n  const s = (it && it.json) || {};\n  if (s._error) continue;\n  const id = s.id;\n  const fila = { id: id };\n  for (const c of COLUMNAS_TEXTO) fila[c] = (s[c] === undefined ? null : s[c]);\n  fila.existencias = s.existencias;\n  fila.destacado = s.destacado;\n  const db = dbPorId.get(id);\n  if (!db) {\n    salida.push({ json: { accion: 'insert', fila: fila, _sheet_index: s._sheet_index } });\n  } else if (distinta(s, db)) {\n    salida.push({ json: { accion: 'update', fila: fila, _sheet_index: s._sheet_index } });\n  }\n}\nreturn salida;"
+        "jsCode": "// SPEC 10 Paso 4: diff campo por campo (Sheet normalizado vs Postgres).\n// Entrada directa ($input): filas de Postgres (PostgresSelect, 13 columnas).\n// Sheet normalizado via $items('CodeNormalizar') (incluye {_error} que aqui se ignoran; los cuenta CodeResumen).\n// Salida: solo filas nuevas o con al menos un campo distinto -> {accion:'insert'|'update', fila:{13 campos}, _sheet_index}.\n// Excepcion ficha: celda vacia en el Sheet => NO cuenta como cambio y se conserva la ficha actual de la DB (preservar valor), celda con URL => se actualiza.\n// Sin cambios => no se emite (segunda ejecucion sin tocar el Sheet => salida vacia).\n// Ids en DB ausentes en el Sheet se ignoran (sin UPDATE ni DELETE).\nconst COLUMNAS_TEXTO = ['clave', 'variante', 'descripcion', 'informacion', 'disponible', 'marca', 'categoria', 'precioant', 'precio'];\nfunction normTexto(v) {\n  if (v === null || v === undefined) return null;\n  const t = String(v).trim();\n  return t === '' ? null : t;\n}\nfunction normInt(v) {\n  const n = parseInt(String(v ?? '').trim(), 10);\n  return Number.isNaN(n) ? 0 : n;\n}\nfunction normBool(v) {\n  if (typeof v === 'boolean') return v;\n  const t = String(v ?? '').trim().toUpperCase();\n  return t === '1' || t === 'TRUE' || t === 'T' || t === 'YES' || t === 'Y';\n}\nfunction distinta(sheet, db) {\n  for (const c of COLUMNAS_TEXTO) {\n    if (normTexto(sheet[c]) !== normTexto(db[c])) return true;\n  }\n  if (normInt(sheet.existencias) !== normInt(db.existencias)) return true;\n  if (normBool(sheet.destacado) !== normBool(db.destacado)) return true;\n  if (sheet.ficha !== null && sheet.ficha !== undefined && sheet.ficha !== normTexto(db.ficha)) return true;\n  return false;\n}\nconst dbItems = $input.all();\nlet sheetItems = [];\ntry { sheetItems = $items('CodeNormalizar'); } catch (e) { sheetItems = []; }\nconst dbPorId = new Map();\nfor (const it of dbItems) {\n  const r = (it && it.json) || {};\n  const id = (r.id === null || r.id === undefined) ? '' : String(r.id).trim();\n  if (id !== '' && !dbPorId.has(id)) dbPorId.set(id, r);\n}\nconst salida = [];\nfor (const it of sheetItems) {\n  const s = (it && it.json) || {};\n  if (s._error) continue;\n  const id = s.id;\n  const fila = { id: id };\n  for (const c of COLUMNAS_TEXTO) fila[c] = (s[c] === undefined ? null : s[c]);\n  fila.existencias = s.existencias;\n  fila.destacado = s.destacado;\n  const db = dbPorId.get(id);\n  // ficha: celda vacia => valor existente de la DB (null si es insert nuevo).\n  fila.ficha = (s.ficha === null || s.ficha === undefined) ? ((db && db.ficha != null) ? db.ficha : null) : s.ficha;\n  if (!db) {\n    salida.push({ json: { accion: 'insert', fila: fila, _sheet_index: s._sheet_index } });\n  } else if (distinta(s, db)) {\n    salida.push({ json: { accion: 'update', fila: fila, _sheet_index: s._sheet_index } });\n  }\n}\nreturn salida;"
       },
       "id": "55555555-5555-4555-8555-555555555555",
       "name": "CodeDiff",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1240, 300]
+      "position": [
+        1240,
+        300
+      ]
     },
     {
       "parameters": {
@@ -95,24 +113,30 @@
       "name": "LoopUpsert",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
-      "position": [1460, 300],
+      "position": [
+        1460,
+        300
+      ],
       "notes": "Lote 20 (antes 50: Railway pooler se saturaba). Salida 0=done -> CodeResumen, salida 1=loop -> PostgresUpsert -> de vuelta a LoopUpsert."
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO productos_ (id, clave, variante, descripcion, informacion, disponible, marca, categoria, existencias, precioant, precio, destacado) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) ON CONFLICT (id) DO UPDATE SET clave = EXCLUDED.clave, variante = EXCLUDED.variante, descripcion = EXCLUDED.descripcion, informacion = EXCLUDED.informacion, disponible = EXCLUDED.disponible, marca = EXCLUDED.marca, categoria = EXCLUDED.categoria, existencias = EXCLUDED.existencias, precioant = EXCLUDED.precioant, precio = EXCLUDED.precio, destacado = EXCLUDED.destacado;",
+        "query": "INSERT INTO productos_ (id, clave, variante, descripcion, informacion, disponible, marca, categoria, existencias, precioant, precio, destacado, ficha) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) ON CONFLICT (id) DO UPDATE SET clave = EXCLUDED.clave, variante = EXCLUDED.variante, descripcion = EXCLUDED.descripcion, informacion = EXCLUDED.informacion, disponible = EXCLUDED.disponible, marca = EXCLUDED.marca, categoria = EXCLUDED.categoria, existencias = EXCLUDED.existencias, precioant = EXCLUDED.precioant, precio = EXCLUDED.precio, destacado = EXCLUDED.destacado, ficha = EXCLUDED.ficha;",
         "options": {
-          "queryReplacement": "={{ [$json.fila.id, $json.fila.clave, $json.fila.variante, $json.fila.descripcion, $json.fila.informacion, $json.fila.disponible, $json.fila.marca, $json.fila.categoria, $json.fila.existencias, $json.fila.precioant, $json.fila.precio, $json.fila.destacado] }}"
+          "queryReplacement": "={{ [$json.fila.id, $json.fila.clave, $json.fila.variante, $json.fila.descripcion, $json.fila.informacion, $json.fila.disponible, $json.fila.marca, $json.fila.categoria, $json.fila.existencias, $json.fila.precioant, $json.fila.precio, $json.fila.destacado, $json.fila.ficha] }}"
         }
       },
       "id": "88888888-8888-4888-8888-888888888888",
       "name": "PostgresUpsert",
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.4,
-      "position": [1460, 520],
+      "position": [
+        1460,
+        520
+      ],
       "onError": "continueRegularOutput",
-      "notes": "UPSERT por id (11 columnas no-PK). Preserva orden_prod, orden_cat, createdat, related_products, ficha. onError=continue: una fila mala no detiene el lote; el error lo recoge CodeResumen. Para dry-run cambia productos_ por productos__test."
+      "notes": "UPSERT por id (12 columnas no-PK, incluida ficha; celda de ficha vacia en el Sheet preserva el valor de la DB, resuelto en CodeDiff). Preserva orden_prod, orden_cat, createdat, related_products. onError=continue: una fila mala no detiene el lote; el error lo recoge CodeResumen. Para dry-run cambia productos_ por productos__test."
     },
     {
       "parameters": {
@@ -123,7 +147,10 @@
       "name": "CodeResumen",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1680, 300]
+      "position": [
+        1680,
+        300
+      ]
     }
   ],
   "connections": {
