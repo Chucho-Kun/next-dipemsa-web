@@ -2,6 +2,7 @@
 import { Resend } from 'resend';
 import { NextRequest, NextResponse } from 'next/server';
 import { totalxcantidad, formatMoney, formatPrecio } from '@/src/utils/formatPrice';
+import { formatearFechaHoraCDMX } from '@/src/utils/formatDate';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -11,6 +12,15 @@ export async function POST(request: NextRequest) {
 
     const subTotalReal = Math.round(Number(orderData.subtotal) * 100) / 100;
     const totalReal = Math.round(Number(orderData.total) * 100) / 100;
+
+    // Fecha real del pago: Mercado Pago la manda como ISO 8601 con offset.
+    // Si llega ausente o vacía (p. ej. un cliente con bundle viejo o el envío
+    // de prueba), se usa el instante de envío. En ambos casos se formatea en
+    // hora de Ciudad de México, nunca en la zona del servidor.
+    const fechaPago =
+      typeof orderData.createdAt === 'string' && orderData.createdAt.trim()
+        ? orderData.createdAt
+        : Date.now();
 
     const { data, error } = await resend.emails.send({
       // ← AQUÍ ES EL CAMBIO IMPORTANTE
@@ -58,7 +68,7 @@ export async function POST(request: NextRequest) {
                       <div style="background-color: white;border-radius: 15px;"><div>
       <div style="text-align:center;margin-bottom: -20px;">
 
-          <div style="padding-top:30px;">Fecha: ${new Date().toLocaleString('es-MX')}</div>
+          <div style="padding-top:30px;">Fecha: ${formatearFechaHoraCDMX(fechaPago)}</div>
           <div style="padding-top:30px;">Orden: ${orderData.paymentId}</div>
           <p style="font-weight:bold;font-size:18px;font-family:Cabin,sans-serif;font-style: italic;text-transform:uppercase">${ deliveryData.nombre }</p>
           <p style="font-weight:bold;font-size:16px;font-family:Cabin,sans-serif;font-style: italic;text-transform:uppercase">¡Gracias por tu compra en DIPEMSA!</p>

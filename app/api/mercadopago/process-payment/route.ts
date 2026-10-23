@@ -124,6 +124,10 @@ export async function POST(request: NextRequest) {
       status: response.status,
       status_detail: response.status_detail,
       payment_id: response.id,
+      // Instante real del pago (ISO 8601 con offset). El correo de confirmación
+      // lo usa para mostrar la fecha en hora de Ciudad de México en vez de la
+      // hora del servidor donde se arma el correo.
+      date_created: response.date_created ?? response.date_approved ?? null,
     });
 
   } catch (error: any) {

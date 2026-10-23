@@ -164,6 +164,10 @@ export default function MercadoPagoBrick({ preferenceId, amount, onSuccess }: Pr
             sendEmailInBackground({
                 orderData: {
                     paymentId: result.payment_id || 'N/A',
+                    // Instante real del pago según Mercado Pago (ISO 8601 con
+                    // offset). El correo lo formatea en hora de Ciudad de
+                    // México; si falta, el servidor usa la hora de envío.
+                    createdAt: result.date_created ?? null,
                     items: items.map(item => ({
                         id: item.id,
                         titulo: item.titulo,
