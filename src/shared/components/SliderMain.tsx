@@ -14,7 +14,7 @@ export default function SliderMain() {
     <div className="overflow-hidden" ref={emblaRef}>
       <div className="flex pb-5 cursor-grab">
         <div className="flex-[0_0_100%] min-w-0">
-          <img loading="lazy" src="/sliders/mainSlider/1.jpg" alt="Envios gratis en compras mayores de 5000 pesos, estado de mexico, cdmx y pachuca hidalgo" className="slider-responsive" />
+          <img loading="lazy" src="/sliders/mainSlider/2.jpg" alt="Envios gratis en compras mayores de 5000 pesos, estado de mexico, cdmx y pachuca hidalgo" className="slider-responsive" />
         </div>
         <div className="flex-[0_0_100%] min-w-0">
           <img loading="lazy" src="/sliders/mainSlider/2.webp" alt="Entregamos desde una pieza hasta una obra completa" className="slider-responsive" />
