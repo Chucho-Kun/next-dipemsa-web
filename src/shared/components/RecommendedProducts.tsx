@@ -34,7 +34,7 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
-          LO MÁS VENDIDO
+          APROVECHA NUESTRAS PROMOCIONES DEL BUEN FIN
         </h2>
 
         <div className="relative">
