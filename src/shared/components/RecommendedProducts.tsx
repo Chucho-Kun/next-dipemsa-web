@@ -129,14 +129,14 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
           {/* Botones de navegación */}
           <button
             onClick={scrollPrev}
-            className="absolute -left-4 top-1/2 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full hover:bg-gray-100 transition hidden md:block"
+            className="absolute -left-4 top-2/5 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full hover:bg-gray-100 transition"
           >
             <ChevronLeft size={24} />
           </button>
 
           <button
             onClick={scrollNext}
-            className="absolute -right-4 top-1/2 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full hover:bg-gray-100 transition hidden md:block"
+            className="absolute -right-4 top-2/5 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full hover:bg-gray-100 transition"
           >
             <ChevronRight size={24} />
           </button>
