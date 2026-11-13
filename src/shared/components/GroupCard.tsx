@@ -72,7 +72,7 @@ export default function GroupCard({ group, listId, listName }: Props) {
         )}
         { selectedVariant.precioant && (
           <div className="bg-[#D70002] text-white text-xs font-bold px-4 py-1.5 w-fit">
-              PROMOCIÓN
+              BUEN FIN
           </div>
         )}
       </div>

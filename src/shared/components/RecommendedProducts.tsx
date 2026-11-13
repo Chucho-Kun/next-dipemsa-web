@@ -52,8 +52,8 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
                         <div className="bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                           
                           {/* Badge */}
-                          <div className="bg-[#FF5E00] text-white text-xs font-bold px-4 py-1 w-fit">
-                            PRODUCTO RECOMENDADO
+                          <div className="bg-[#D70002] text-white text-xs font-bold px-4 py-1 w-fit">
+                            DESCUENTO BUEN FIN
                           </div>
 
                           {/* Imagen */}
