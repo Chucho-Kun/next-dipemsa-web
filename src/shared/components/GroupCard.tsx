@@ -67,7 +67,7 @@ export default function GroupCard({ group, listId, listName }: Props) {
       <div className="flex flex-wrap gap-1">
         { group.variants[0].destacado && (
           <div className="bg-[#FF5E00] text-white text-xs font-bold px-4 py-1.5 w-fit">
-              PRODUCTO RECOMENDADO
+              DESCUENTO BUEN FIN
           </div>
         )}
         { selectedVariant.precioant && (

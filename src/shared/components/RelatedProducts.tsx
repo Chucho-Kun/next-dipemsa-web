@@ -43,7 +43,7 @@ export default function RelatedProducts({ relacionados, orden }: RelatedProducts
                             {/* Badge */}
                             { producto.destacado && (
                                 <div className="bg-[#FF5E00] text-white text-xs font-bold px-4 py-1 w-fit">
-                                    PRODUCTO RECOMENDADO
+                                    DESCUENTO BUEN FIN
                                 </div>
                             ) }
 
