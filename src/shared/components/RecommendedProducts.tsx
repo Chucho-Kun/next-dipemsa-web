@@ -22,9 +22,12 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
       align: 'start',
       slidesToScroll: 1,
       skipSnaps: false,
-      dragFree: false
+      dragFree: false,
+      // Bloquea el arrastre con mouse y touch: el carrusel solo avanza de forma automática
+      watchDrag: false
     },
-    [Autoplay({ delay: 5000, stopOnInteraction: true })]
+    // Sin arrastre no hay interacción que pausar el autoplay
+    [Autoplay({ delay: 5000, stopOnInteraction: false })]
   );
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
@@ -33,7 +36,7 @@ export default function RecommendedProducts( {productosRecomendados} : Props ) {
   return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
+        <h2 className="text-2xl md:text-4xl font-bold text-center mb-12 text-gray-800">
           APROVECHA NUESTRAS PROMOCIONES DEL BUEN FIN
         </h2>
 
