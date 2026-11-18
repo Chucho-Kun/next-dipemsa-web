@@ -7,6 +7,11 @@ import { Metadata } from "next";
 import { productos } from "@/src/shared/db/productos";
 import RecentViewProducts from "@/src/shared/components/RecentViewProducts";
 
+// La portada lee la BD (productos destacados) pero no usa APIs dinámicas, así que
+// Next la prerenderizaba una sola vez en el build y servía ese HTML para siempre.
+// Con esto se regenera cada minuto y los cambios en la BD se reflejan sin redeploy.
+export const revalidate = 60;
+
 // ==================== METADATA SEO ====================
 export const metadata: Metadata = {
   title: "Dipemsa | Materiales de Construcción Ligera",
